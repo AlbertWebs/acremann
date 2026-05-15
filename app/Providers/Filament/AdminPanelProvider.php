@@ -6,14 +6,22 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use App\Filament\Pages\Auth\Login;
 use App\Filament\Pages\Dashboard;
+use App\Filament\Resources\Leads\LeadResource;
+use App\Filament\Resources\Properties\PropertyResource;
+use App\Filament\Resources\SiteSettings\SiteSettingResource;
 use App\Models\SiteSetting;
+use Filament\Actions\Action;
+use Filament\Enums\UserMenuPosition;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Filament\Support\Icons\Heroicon;
 use Filament\View\PanelsRenderHook;
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\HtmlString;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
@@ -29,7 +37,14 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->viteTheme('resources/css/filament/admin/theme.css')
-            ->login()
+            ->renderHook(
+                PanelsRenderHook::HEAD_END,
+                fn (): HtmlString => new HtmlString(
+                    '<link rel="preconnect" href="https://fonts.bunny.net">'
+                    .'<link href="https://fonts.bunny.net/css?family=cormorant-garamond:400,500,600|dm-sans:400,500,600,700" rel="stylesheet">'
+                ),
+            )
+            ->login(Login::class)
             ->profile()
             ->colors([
                 'primary' => Color::hex('#2D4A3E'),   /* Forest — main actions, edit */
@@ -50,11 +65,32 @@ class AdminPanelProvider extends PanelProvider
             ->sidebarWidth('17rem')
             ->collapsedSidebarWidth('4.75rem')
             ->collapsibleNavigationGroups(false)
-            ->userMenu(false)
+            ->userMenu(position: UserMenuPosition::Topbar)
             ->renderHook(
                 PanelsRenderHook::SIDEBAR_FOOTER,
                 fn (): string => Blade::render('filament.hooks.sidebar-footer'),
             )
+            ->renderHook(
+                PanelsRenderHook::GLOBAL_SEARCH_BEFORE,
+                fn (): string => Blade::render('filament.hooks.topbar-visit-website'),
+            )
+            ->userMenuItems([
+                Action::make('leads')
+                    ->label('Leads')
+                    ->icon(Heroicon::OutlinedUserGroup)
+                    ->url(fn (): string => LeadResource::getUrl('index'))
+                    ->sort(-15),
+                Action::make('properties')
+                    ->label('Properties')
+                    ->icon(Heroicon::OutlinedBuildingOffice2)
+                    ->url(fn (): string => PropertyResource::getUrl('index'))
+                    ->sort(-14),
+                Action::make('siteSettings')
+                    ->label('Site settings')
+                    ->icon(Heroicon::OutlinedCog6Tooth)
+                    ->url(fn (): string => SiteSettingResource::getUrl('index'))
+                    ->sort(-13),
+            ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([

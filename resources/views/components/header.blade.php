@@ -55,7 +55,6 @@
             </nav>
 
             <div class="site-header-actions">
-                <x-admin-menu />
                 <a href="{{ route('contact') }}" class="btn-primary hidden sm:inline-flex text-sm !px-4 !py-2">Book visit</a>
                 <button
                     type="button"
@@ -94,17 +93,6 @@
                 >{{ $link['label'] }}</a>
             @endforeach
             <a href="{{ route('client-portal') }}" class="site-header-mobile-link">Client portal</a>
-            <div class="mt-3 border-t border-charcoal/10 pt-3">
-                <p class="px-3 pb-1 text-[0.65rem] font-semibold uppercase tracking-wider text-muted">Admin</p>
-                @auth
-                    @if(auth()->user()->canAccessPanel(\Filament\Facades\Filament::getPanel('admin')))
-                        <a href="{{ url('/admin') }}" class="site-header-mobile-link">Dashboard</a>
-                        <a href="{{ url('/admin/profile') }}" class="site-header-mobile-link">Edit profile</a>
-                    @endif
-                @else
-                    <a href="{{ url('/admin/login') }}" class="site-header-mobile-link">Sign in to CMS</a>
-                @endauth
-            </div>
             <a href="{{ route('contact') }}" class="btn-primary mt-3 text-center">Book site visit</a>
         </nav>
     </div>
