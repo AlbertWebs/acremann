@@ -2,6 +2,9 @@
 @section('content')
 <section class="section-padding bg-forest text-white">
     <div class="container-site max-w-3xl">
+        @if($settings->whiteLogoUrl())
+            <x-site-logo :settings="$settings" variant="white" class="mb-6" />
+        @endif
         <p class="text-sm text-gold">Investment advisory</p>
         <h1 class="mt-2 text-4xl">{{ $page->title ?? 'Why Invest With Acremann' }}</h1>
         <p class="mt-6 text-white/85">{{ $settings->investment_intro }}</p>

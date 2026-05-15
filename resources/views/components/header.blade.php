@@ -29,10 +29,14 @@
         </div>
     </div>
 
-    <div class="site-header-main border-b border-charcoal/10 bg-cream/95 backdrop-blur-md">
+    <div class="site-header-main overflow-visible border-b border-charcoal/10 bg-cream/95 backdrop-blur-md">
         <div class="container-site flex h-16 items-center gap-6 md:h-[4.5rem]">
             <a href="{{ route('home') }}" class="site-header-brand shrink-0">
-                <span class="site-header-brand-name">{{ $settings->company_name }}</span>
+                @if($settings->themeLogoUrl())
+                    <x-site-logo :settings="$settings" variant="theme" class="site-header-brand-logo" />
+                @else
+                    <span class="site-header-brand-name">{{ $settings->company_name }}</span>
+                @endif
                 @if($settings->tagline)
                     <span class="site-header-brand-tagline hidden lg:block">{{ $settings->tagline }}</span>
                 @endif
@@ -50,7 +54,7 @@
                 @endforeach
             </nav>
 
-            <div class="ml-auto flex items-center gap-2 sm:gap-3">
+            <div class="site-header-actions">
                 <x-admin-menu />
                 <a href="{{ route('contact') }}" class="btn-primary hidden sm:inline-flex text-sm !px-4 !py-2">Book visit</a>
                 <button
@@ -90,15 +94,17 @@
                 >{{ $link['label'] }}</a>
             @endforeach
             <a href="{{ route('client-portal') }}" class="site-header-mobile-link">Client portal</a>
-            @auth
-                @if(auth()->user()->canAccessPanel(\Filament\Facades\Filament::getPanel('admin')))
-                    <div class="mt-3 border-t border-charcoal/10 pt-3">
-                        <p class="px-3 pb-1 text-[0.65rem] font-semibold uppercase tracking-wider text-muted">Admin</p>
+            <div class="mt-3 border-t border-charcoal/10 pt-3">
+                <p class="px-3 pb-1 text-[0.65rem] font-semibold uppercase tracking-wider text-muted">Admin</p>
+                @auth
+                    @if(auth()->user()->canAccessPanel(\Filament\Facades\Filament::getPanel('admin')))
                         <a href="{{ url('/admin') }}" class="site-header-mobile-link">Dashboard</a>
                         <a href="{{ url('/admin/profile') }}" class="site-header-mobile-link">Edit profile</a>
-                    </div>
-                @endif
-            @endauth
+                    @endif
+                @else
+                    <a href="{{ url('/admin/login') }}" class="site-header-mobile-link">Sign in to CMS</a>
+                @endauth
+            </div>
             <a href="{{ route('contact') }}" class="btn-primary mt-3 text-center">Book site visit</a>
         </nav>
     </div>

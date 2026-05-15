@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class SiteSetting extends Model
 {
     protected $fillable = [
-        'company_name', 'tagline', 'mission', 'vision', 'about_summary',
+        'company_name', 'tagline', 'logo_path', 'logo_white_path', 'favicon_path',
+        'mission', 'vision', 'about_summary',
         'whatsapp', 'phone', 'email', 'address', 'youtube_url', 'podcast_url',
         'facebook_url', 'instagram_url', 'linkedin_url', 'csr_statement',
         'referral_program', 'sustainability_intro', 'investment_intro',
@@ -23,6 +25,7 @@ class SiteSetting extends Model
                 'company_name' => 'Acremann Properties',
                 'tagline' => 'Trusted guidance. Transparent process. Sustainable value.',
                 'whatsapp' => config('acremann.whatsapp'),
+                'phone' => config('acremann.phone'),
                 'phone' => config('acremann.phone'),
                 'email' => config('acremann.email'),
             ]);
@@ -46,5 +49,34 @@ class SiteSetting extends Model
         }
 
         return $url;
+    }
+
+    public function themeLogoUrl(): ?string
+    {
+        return $this->assetUrl($this->logo_path);
+    }
+
+    public function whiteLogoUrl(): ?string
+    {
+        return $this->assetUrl($this->logo_white_path);
+    }
+
+    public function logoUrl(): ?string
+    {
+        return $this->themeLogoUrl();
+    }
+
+    public function faviconUrl(): ?string
+    {
+        return $this->assetUrl($this->favicon_path);
+    }
+
+    protected function assetUrl(?string $path): ?string
+    {
+        if (blank($path)) {
+            return null;
+        }
+
+        return Storage::disk('public')->url($path);
     }
 }

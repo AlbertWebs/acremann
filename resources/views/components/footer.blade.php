@@ -2,7 +2,11 @@
 <footer class="border-t border-charcoal/10 bg-white section-padding">
     <div class="container-site grid gap-12 md:grid-cols-4">
         <div class="md:col-span-2">
-            <p class="font-serif text-2xl text-forest">{{ $settings->company_name }}</p>
+            @if($settings->themeLogoUrl())
+                <x-site-logo :settings="$settings" variant="theme" class="site-footer-brand-logo" />
+            @else
+                <p class="font-serif text-2xl text-forest">{{ $settings->company_name }}</p>
+            @endif
             <p class="mt-3 max-w-md text-sm text-muted">{{ $settings->tagline }}</p>
             <p class="mt-4 text-xs text-muted">Land for sale in Nairobi · Plots for sale in Kiambu · Clean title deeds Kenya · Diaspora property investment Kenya</p>
         </div>
@@ -47,7 +51,9 @@
         </div>
         <div class="mt-6 flex flex-col items-center gap-3 border-t border-charcoal/5 pt-6 text-center sm:flex-row sm:justify-between sm:text-left">
             <p class="text-xs text-muted">
-                &copy; {{ date('Y') }} {{ $settings->company_name }}. All rights reserved.
+                &copy; {{ date('Y') }}
+                <a href="{{ config('acremann.url') }}" class="transition hover:text-forest">{{ $settings->company_name }}</a>.
+                All rights reserved.
             </p>
             <p class="text-xs text-muted">
                 Powered by

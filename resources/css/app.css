@@ -17,6 +17,10 @@
 }
 
 @layer base {
+    [x-cloak] {
+        display: none !important;
+    }
+
     body {
         @apply bg-cream text-charcoal font-sans antialiased;
     }
@@ -41,11 +45,32 @@
 
     /* Site header */
     .site-header {
-        @apply sticky top-0 z-40;
+        @apply sticky top-0 z-50;
+    }
+
+    .site-header-main {
+        @apply overflow-visible;
+    }
+
+    .site-header-actions {
+        @apply relative z-10 ml-auto flex shrink-0 items-center gap-2 sm:gap-3;
     }
 
     .site-header-brand {
         @apply flex flex-col gap-0.5 transition hover:opacity-90;
+    }
+
+    .site-header-brand-logo,
+    .site-footer-brand-logo {
+        @apply h-9 w-auto max-w-[11rem] object-contain object-left md:h-10;
+    }
+
+    .site-footer-brand-logo {
+        @apply md:h-11;
+    }
+
+    .site-logo-white {
+        @apply h-8 w-auto max-w-[10rem] object-contain object-left md:h-9;
     }
 
     .site-header-brand-name {
@@ -73,15 +98,15 @@
     }
 
     .site-header-admin-trigger {
-        @apply inline-flex items-center gap-1.5 rounded-md border border-charcoal/12 bg-white px-2.5 py-2 text-xs font-medium text-charcoal shadow-sm transition hover:border-forest/35 hover:text-forest focus:outline-none focus:ring-2 focus:ring-forest/20 sm:px-3 sm:text-sm;
+        @apply inline-flex min-h-10 min-w-10 shrink-0 items-center justify-center gap-1.5 rounded-md border border-forest/25 bg-forest px-2.5 py-2 text-xs font-semibold text-white shadow-sm transition hover:border-forest hover:bg-forest/90 focus:outline-none focus:ring-2 focus:ring-forest/40 focus:ring-offset-2 focus:ring-offset-cream sm:min-w-0 sm:px-3 sm:text-sm;
     }
 
     .site-header-admin-icon {
-        @apply flex h-7 w-7 items-center justify-center rounded-full bg-forest/10 text-forest;
+        @apply flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/15 text-white;
     }
 
     .site-header-admin-dropdown {
-        @apply absolute right-0 top-[calc(100%+0.5rem)] z-50 w-60 overflow-hidden rounded-lg border border-charcoal/10 bg-white py-2 shadow-xl;
+        @apply absolute right-0 top-[calc(100%+0.5rem)] z-[60] w-60 overflow-hidden rounded-lg border border-charcoal/10 bg-white py-2 shadow-xl ring-1 ring-charcoal/5;
     }
 
     .site-header-admin-user {

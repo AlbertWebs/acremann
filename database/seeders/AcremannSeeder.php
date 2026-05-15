@@ -29,9 +29,9 @@ class AcremannSeeder extends Seeder
             'mission' => 'To deliver legally-grounded, financially-disciplined land and property solutions that build lasting legacy for our clients.',
             'vision' => 'To be Kenya\'s most trusted advisory-led real estate firm for clean-title land investment.',
             'about_summary' => 'Acremann Properties is a professional real estate firm specialising in verified residential and commercial plots across Nairobi, Kiambu, Kikuyu and Nachu.',
-            'whatsapp' => '254712345678',
-            'phone' => '+254 712 345 678',
-            'email' => 'info@acremann.co.ke',
+            'whatsapp' => '254115874901',
+            'phone' => '0115 874 901',
+            'email' => 'info@acremannproperties.com',
             'address' => 'Nairobi, Kenya',
             'youtube_url' => 'https://youtube.com',
             'podcast_url' => 'https://podcasts.google.com',
@@ -152,7 +152,7 @@ class AcremannSeeder extends Seeder
         ]);
 
         Page::create(['slug' => 'invest', 'title' => 'Why Invest With Acremann', 'subtitle' => 'Future-focused land investment', 'content' => '<p>Land remains one of Kenya\'s most resilient asset classes. Acremann combines legal precision, financial discipline, and sustainability thinking to protect your investment.</p>']);
-        Page::create(['slug' => 'privacy', 'title' => 'Privacy Notice', 'content' => '<p>Acremann Properties collects personal data when you submit enquiries, subscribe to our newsletter, or use our client portal. We use this data to respond to your requests, improve our services, and — with consent — send marketing communications. You may request access, correction, or deletion of your data by contacting info@acremann.co.ke. We retain data only as long as necessary for these purposes.</p>']);
+        Page::create(['slug' => 'privacy', 'title' => 'Privacy Notice', 'content' => '<p>Acremann Properties collects personal data when you submit enquiries, subscribe to our newsletter, or use our client portal. We use this data to respond to your requests, improve our services, and — with consent — send marketing communications. You may request access, correction, or deletion of your data by contacting <a href="mailto:info@acremannproperties.com">info@acremannproperties.com</a>. We retain data only as long as necessary for these purposes.</p>']);
 
         ClientLookup::create(['reference_number' => 'ACR-TITLE-001', 'lookup_type' => 'title', 'status_message' => 'Title search complete. Transfer in progress — estimated completion 14 days.']);
         ClientLookup::create(['reference_number' => 'ACR-PAY-001', 'lookup_type' => 'payment', 'status_message' => 'Account current. Next installment due 1 June 2026.']);

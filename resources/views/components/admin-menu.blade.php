@@ -13,7 +13,7 @@
     x-data="{ open: false }"
     @click.outside="open = false"
     @keydown.escape.window="open = false"
-    class="relative"
+    class="site-header-admin relative shrink-0"
 >
     <button
         type="button"
@@ -28,7 +28,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
             </svg>
         </span>
-        <span class="hidden sm:inline">{{ $isAdmin ? 'Admin' : 'CMS' }}</span>
+        <span class="max-[380px]:sr-only sm:inline">{{ $isAdmin ? 'Admin' : 'CMS' }}</span>
         <svg class="h-3.5 w-3.5 opacity-60 transition" :class="open && 'rotate-180'" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
         </svg>

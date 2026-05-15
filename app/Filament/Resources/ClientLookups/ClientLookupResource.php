@@ -18,7 +18,9 @@ class ClientLookupResource extends Resource
 {
     protected static ?string $model = ClientLookup::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedIdentification;
+
+    protected static ?int $navigationSort = 11;
 
     public static function form(Schema $schema): Schema
     {

@@ -3,7 +3,9 @@
 namespace App\Filament\Resources\SiteSettings\Schemas;
 
 use App\Filament\Support\FormComponents;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
 class SiteSettingForm
@@ -12,6 +14,39 @@ class SiteSettingForm
     {
         return $schema
             ->components([
+                Section::make('Branding')
+                    ->description('Upload both logo variants — theme for light backgrounds, white for dark sections and the CMS sidebar.')
+                    ->columns(2)
+                    ->schema([
+                        FileUpload::make('logo_path')
+                            ->label('Theme logo')
+                            ->image()
+                            ->directory('branding')
+                            ->disk('public')
+                            ->maxSize(2048)
+                            ->helperText('Full-colour / forest mark for light backgrounds (header, footer).'),
+                        FileUpload::make('logo_white_path')
+                            ->label('White logo')
+                            ->image()
+                            ->directory('branding')
+                            ->disk('public')
+                            ->maxSize(2048)
+                            ->helperText('White or light mark for dark backgrounds (forest sections, admin sidebar).'),
+                        FileUpload::make('favicon_path')
+                            ->label('Favicon / site icon')
+                            ->image()
+                            ->directory('branding')
+                            ->disk('public')
+                            ->maxSize(512)
+                            ->acceptedFileTypes([
+                                'image/png',
+                                'image/x-icon',
+                                'image/vnd.microsoft.icon',
+                                'image/svg+xml',
+                            ])
+                            ->helperText('Square icon, 32×32 or 64×64 px recommended.'),
+                    ])
+                    ->columnSpanFull(),
                 TextInput::make('company_name')->required()->default('Acremann Properties'),
                 TextInput::make('tagline'),
                 FormComponents::richEditor('mission'),

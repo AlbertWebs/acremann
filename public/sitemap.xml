@@ -1,71 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
     <url>
-    <loc>http://localhost</loc>
+    <loc>https://acremannproperties.com</loc>
     <changefreq>weekly</changefreq>
             </url>
     <url>
-    <loc>http://localhost/about</loc>
+    <loc>https://acremannproperties.com/about</loc>
     <changefreq>weekly</changefreq>
             </url>
     <url>
-    <loc>http://localhost/services</loc>
+    <loc>https://acremannproperties.com/services</loc>
     <changefreq>weekly</changefreq>
             </url>
     <url>
-    <loc>http://localhost/properties</loc>
+    <loc>https://acremannproperties.com/properties</loc>
     <changefreq>weekly</changefreq>
             </url>
     <url>
-    <loc>http://localhost/invest</loc>
+    <loc>https://acremannproperties.com/invest</loc>
     <changefreq>weekly</changefreq>
             </url>
     <url>
-    <loc>http://localhost/sustainability</loc>
+    <loc>https://acremannproperties.com/sustainability</loc>
     <changefreq>weekly</changefreq>
             </url>
     <url>
-    <loc>http://localhost/certifications</loc>
+    <loc>https://acremannproperties.com/certifications</loc>
     <changefreq>weekly</changefreq>
             </url>
     <url>
-    <loc>http://localhost/insights</loc>
+    <loc>https://acremannproperties.com/insights</loc>
     <changefreq>weekly</changefreq>
             </url>
     <url>
-    <loc>http://localhost/faqs</loc>
+    <loc>https://acremannproperties.com/faqs</loc>
     <changefreq>weekly</changefreq>
             </url>
     <url>
-    <loc>http://localhost/contact</loc>
+    <loc>https://acremannproperties.com/contact</loc>
     <changefreq>weekly</changefreq>
             </url>
     <url>
-    <loc>http://localhost/referrals</loc>
+    <loc>https://acremannproperties.com/referrals</loc>
     <changefreq>weekly</changefreq>
             </url>
     <url>
-    <loc>http://localhost/privacy</loc>
+    <loc>https://acremannproperties.com/privacy</loc>
     <changefreq>weekly</changefreq>
             </url>
     <url>
-    <loc>http://localhost/client-portal</loc>
+    <loc>https://acremannproperties.com/client-portal</loc>
     <changefreq>weekly</changefreq>
             </url>
     <url>
-    <loc>http://localhost/properties/acremann-nachu-gardens</loc>
+    <loc>https://acremannproperties.com/properties/acremann-nachu-gardens</loc>
     <changefreq>weekly</changefreq>
             </url>
     <url>
-    <loc>http://localhost/properties/acremann-kiambu-heights</loc>
+    <loc>https://acremannproperties.com/properties/acremann-kiambu-heights</loc>
     <changefreq>weekly</changefreq>
             </url>
     <url>
-    <loc>http://localhost/properties/acremann-commercial-ridge</loc>
+    <loc>https://acremannproperties.com/properties/acremann-commercial-ridge</loc>
     <changefreq>weekly</changefreq>
             </url>
     <url>
-    <loc>http://localhost/insights/how-to-buy-land-in-kenya-safely</loc>
+    <loc>https://acremannproperties.com/properties/acremann-nachu-gardens-1</loc>
+    <changefreq>weekly</changefreq>
+            </url>
+    <url>
+    <loc>https://acremannproperties.com/properties/acremann-kiambu-heights-1</loc>
+    <changefreq>weekly</changefreq>
+            </url>
+    <url>
+    <loc>https://acremannproperties.com/properties/acremann-commercial-ridge-1</loc>
+    <changefreq>weekly</changefreq>
+            </url>
+    <url>
+    <loc>https://acremannproperties.com/insights/how-to-buy-land-in-kenya-safely-1</loc>
+    <changefreq>monthly</changefreq>
+            </url>
+    <url>
+    <loc>https://acremannproperties.com/insights/how-to-buy-land-in-kenya-safely</loc>
     <changefreq>monthly</changefreq>
             </url>
 </urlset>

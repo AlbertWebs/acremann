@@ -7,6 +7,7 @@ use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use App\Filament\Pages\Dashboard;
+use App\Models\SiteSetting;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
@@ -40,7 +41,15 @@ class AdminPanelProvider extends PanelProvider
                 'gold' => Color::hex('#B8956B'),      /* Accent highlights */
             ])
             ->brandName('Acremann CMS')
+            ->brandLogo(fn (): ?string => SiteSetting::current()->themeLogoUrl())
+            ->darkModeBrandLogo(fn (): ?string => SiteSetting::current()->whiteLogoUrl())
+            ->brandLogoHeight('2rem')
+            ->favicon(fn (): ?string => SiteSetting::current()->faviconUrl())
+            ->topbar()
             ->sidebarCollapsibleOnDesktop()
+            ->sidebarWidth('17rem')
+            ->collapsedSidebarWidth('4.75rem')
+            ->collapsibleNavigationGroups(false)
             ->userMenu(false)
             ->renderHook(
                 PanelsRenderHook::SIDEBAR_FOOTER,
