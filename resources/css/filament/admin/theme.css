@@ -1,0 +1,710 @@
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+@source '../../../../app/Filament/**/*';
+@source '../../../../resources/views/filament/**/*';
+
+/* Acremann admin — dark sidebar */
+.fi-sidebar.fi-main-sidebar {
+    background-color: #1a1a18 !important;
+    border-inline-end: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
+}
+
+.fi-body-has-topbar .fi-sidebar.fi-main-sidebar {
+    background-color: #1a1a18 !important;
+}
+
+.fi-body-has-topbar .fi-sidebar-header {
+    background-color: #1a1a18 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.fi-sidebar .fi-sidebar-group-label {
+    color: #9a9a94 !important;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.fi-sidebar .fi-sidebar-item-label {
+    color: #e8e8e4 !important;
+}
+
+.fi-sidebar .fi-sidebar-item-btn > .fi-icon,
+.fi-sidebar .fi-sidebar-group-btn > .fi-icon {
+    color: #b8956b !important;
+}
+
+.fi-sidebar .fi-sidebar-item.fi-active > .fi-sidebar-item-btn,
+.fi-sidebar .fi-sidebar-item-has-active-child-items > .fi-sidebar-item-btn {
+    background-color: rgba(45, 74, 62, 0.45) !important;
+}
+
+.fi-sidebar .fi-sidebar-item.fi-active > .fi-sidebar-item-btn > .fi-sidebar-item-label,
+.fi-sidebar .fi-sidebar-item.fi-active > .fi-sidebar-item-btn > .fi-icon {
+    color: #d4e8dc !important;
+}
+
+.fi-sidebar .fi-sidebar-item.fi-sidebar-item-has-url > .fi-sidebar-item-btn:hover {
+    background-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+.fi-sidebar .fi-logo {
+    filter: brightness(1.1);
+}
+
+.fi-sidebar-nav {
+    scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+}
+
+/* Sidebar footer — user + logout */
+.acremann-sidebar-footer {
+    margin-top: auto;
+    padding: 0.75rem 1rem 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.2));
+}
+
+.acremann-sidebar-user {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    padding: 0.5rem;
+}
+
+.acremann-sidebar-user-text {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 0.125rem;
+}
+
+.acremann-sidebar-user-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #fafaf8;
+}
+
+.acremann-sidebar-user-email {
+    font-size: 0.75rem;
+    color: #9a9a94;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.acremann-sidebar-logout-form {
+    width: 100%;
+}
+
+.acremann-sidebar-logout-btn {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 0.375rem;
+    border: 1px solid rgba(184, 149, 107, 0.35);
+    background-color: rgba(45, 74, 62, 0.35);
+    padding: 0.625rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #fafaf8;
+    transition: background-color 0.15s, border-color 0.15s;
+}
+
+.acremann-sidebar-logout-btn:hover {
+    background-color: rgba(45, 74, 62, 0.65);
+    border-color: rgba(184, 149, 107, 0.55);
+}
+
+.acremann-sidebar-logout-btn:focus-visible {
+    outline: 2px solid #b8956b;
+    outline-offset: 2px;
+}
+
+/* Form fields — visible borders */
+.fi-fo-field-wrp-label label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.025em;
+    color: #1a1a18;
+}
+
+/* Text, select, textarea, rich editor wrappers */
+.fi-input-wrp,
+.fi-fo-rich-editor.fi-input-wrp {
+    --tw-ring-shadow: 0 0 #0000 !important;
+    --tw-ring-offset-shadow: 0 0 #0000 !important;
+    border: 1.5px solid #b8b6ae !important;
+    border-radius: 0.375rem;
+    background-color: #ffffff;
+    box-shadow: 0 1px 2px rgba(26, 26, 24, 0.05) !important;
+}
+
+.fi-input-wrp:not(.fi-disabled):hover {
+    border-color: #96948c !important;
+}
+
+.fi-input-wrp:not(.fi-disabled):focus-within,
+.fi-fo-rich-editor.fi-input-wrp:not(.fi-disabled):focus-within {
+    border-color: #2d4a3e !important;
+    box-shadow:
+        0 0 0 3px rgba(45, 74, 62, 0.14),
+        0 1px 2px rgba(26, 26, 24, 0.05) !important;
+}
+
+.fi-input-wrp.fi-disabled {
+    border-color: #d4d2cb !important;
+    background-color: #f5f4f0 !important;
+}
+
+.fi-input-wrp.fi-invalid {
+    border-color: #dc2626 !important;
+}
+
+.fi-input-wrp.fi-invalid:focus-within {
+    border-color: #dc2626 !important;
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12) !important;
+}
+
+/* Checkboxes & radios */
+input[type='checkbox'].fi-checkbox-input,
+input[type='radio'].fi-radio-input {
+    --tw-ring-shadow: 0 0 #0000 !important;
+    border: 1.5px solid #b8b6ae !important;
+    box-shadow: 0 1px 2px rgba(26, 26, 24, 0.05) !important;
+}
+
+input[type='checkbox'].fi-checkbox-input:focus,
+input[type='radio'].fi-radio-input:focus {
+    border-color: #2d4a3e !important;
+    box-shadow: 0 0 0 3px rgba(45, 74, 62, 0.14) !important;
+}
+
+input[type='checkbox'].fi-checkbox-input:checked,
+input[type='radio'].fi-radio-input:checked {
+    border-color: #2d4a3e !important;
+}
+
+/* Toggle */
+.fi-toggle {
+    border: 1.5px solid #b8b6ae !important;
+    box-shadow: inset 0 1px 2px rgba(26, 26, 24, 0.06) !important;
+}
+
+/* File upload dropzone */
+.fi-fo-file-upload .filepond--panel-root {
+    border: 1.5px dashed #b8b6ae !important;
+    border-radius: 0.5rem;
+    background-color: #fafaf8 !important;
+}
+
+.fi-fo-file-upload .filepond--panel-root:hover {
+    border-color: #2d4a3e !important;
+    background-color: rgba(45, 74, 62, 0.04) !important;
+}
+
+/* Repeater / builder blocks */
+.fi-fo-repeater-item,
+.fi-fo-builder-item {
+    border: 1.5px solid #d4d2cb !important;
+    border-radius: 0.625rem;
+    box-shadow: 0 1px 3px rgba(26, 26, 24, 0.04) !important;
+}
+
+/* Markdown & code editors */
+.fi-fo-markdown-editor,
+.fi-fo-code-editor {
+    --tw-ring-shadow: 0 0 #0000 !important;
+    border: 1.5px solid #b8b6ae !important;
+    border-radius: 0.375rem;
+    box-shadow: 0 1px 2px rgba(26, 26, 24, 0.05) !important;
+}
+
+.fi-fo-markdown-editor:focus-within,
+.fi-fo-code-editor:focus-within {
+    border-color: #2d4a3e !important;
+    box-shadow: 0 0 0 3px rgba(45, 74, 62, 0.14) !important;
+}
+
+/* Key-value rows */
+.fi-fo-key-value .fi-fo-key-value-row {
+    border: 1px solid #d4d2cb;
+    border-radius: 0.375rem;
+}
+
+/* Table search / filter inputs */
+.fi-ta-search-field .fi-input-wrp,
+.fi-ta-filters .fi-input-wrp {
+    border: 1.5px solid #b8b6ae !important;
+}
+
+/* Tables — fit viewport, no horizontal scroll */
+.fi-main,
+.fi-page-content {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.fi-ta-ctn {
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.fi-ta-content-ctn {
+    overflow-x: hidden !important;
+}
+
+.fi-ta-table {
+    table-layout: auto;
+    width: 100% !important;
+    max-width: 100%;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(26, 26, 24, 0.1);
+}
+
+.fi-ta-header-cell {
+    background-color: rgba(45, 74, 62, 0.05);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #2d4a3e;
+}
+
+/* Checkbox column — fixed width so it never overlaps title */
+.fi-ta-header-cell.fi-ta-selection-cell,
+.fi-ta-cell.fi-ta-selection-cell {
+    width: 3rem;
+    min-width: 3rem;
+    max-width: 3rem;
+    padding-left: 0.75rem !important;
+    padding-right: 0.5rem !important;
+    vertical-align: middle;
+    box-sizing: border-box;
+}
+
+.fi-ta-header-cell.fi-ta-selection-cell .fi-ta-page-checkbox,
+.fi-ta-cell.fi-ta-selection-cell .fi-ta-record-checkbox {
+    margin: 0;
+}
+
+/* Primary column (title, name, etc.) — takes remaining space */
+.fi-ta-header-cell.fi-growable,
+.fi-ta-cell:has(.fi-ta-col.fi-growable) {
+    width: auto;
+    min-width: 14rem;
+    max-width: none;
+    overflow: visible;
+}
+
+.fi-ta-cell:has(.fi-ta-col.fi-growable) .fi-ta-text {
+    overflow: visible;
+}
+
+.fi-ta-cell:has(.fi-ta-col.fi-growable) .fi-ta-text-item {
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    text-overflow: unset;
+    display: block;
+}
+
+.fi-ta-header-cell.fi-growable {
+    white-space: nowrap;
+}
+
+/* Secondary columns — truncate if tight */
+.fi-ta-header-cell:not(.fi-growable):not(.fi-ta-selection-cell):not(.fi-ta-empty-header-cell),
+.fi-ta-cell:not(:has(.fi-growable)):not(.fi-ta-selection-cell):not(:has(.fi-ta-actions)):not(:has(.fi-ta-reorder-handle)) {
+    max-width: 11rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.fi-ta-header-cell.fi-wrapped,
+.fi-ta-cell .fi-ta-text.fi-wrapped .fi-ta-text-item {
+    white-space: normal;
+    word-break: break-word;
+}
+
+/* Action / control columns */
+.fi-ta-cell:has(.fi-ta-actions),
+.fi-ta-cell:has(.fi-ta-reorder-handle),
+.fi-ta-cell.fi-ta-group-selection-cell,
+.fi-ta-empty-header-cell {
+    width: auto;
+    min-width: fit-content;
+    max-width: none;
+    white-space: nowrap;
+}
+
+.fi-ta-row:hover {
+    background-color: rgba(250, 250, 248, 0.6);
+}
+
+.fi-ta-cell {
+    font-size: 0.875rem;
+    color: rgba(26, 26, 24, 0.9);
+    vertical-align: middle;
+}
+
+.fi-ta-text:not(.fi-ta-text-has-line-breaks):not(.fi-wrapped):not(:has(.fi-growable)) .fi-ta-text-item {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Dashboard & relation-manager tables */
+.fi-wi-table .fi-ta-content-ctn,
+.fi-resource-relation-manager .fi-ta-content-ctn {
+    overflow-x: hidden !important;
+}
+
+/* ─── Table & header action buttons (Acremann color codes) ─── */
+/*
+ * #2D4A3E  Forest  — primary / edit
+ * #2D6A4F  Success — positive status
+ * #B8956B  Gold    — warning / accent
+ * #DC2626  Danger  — delete
+ * #4A6B8A  Info    — view / secondary
+ * #6B6B66  Gray    — neutral
+ * #FAFAF8  Cream   — button text on dark fills
+ * #1A1A18  Charcoal — labels
+ */
+
+.fi-ta-actions {
+    gap: 0.375rem;
+}
+
+/* Row action icon buttons (edit, delete, view, …) */
+.fi-ta-actions .fi-icon-btn {
+    width: 2rem;
+    height: 2rem;
+    margin: 0;
+    border-radius: 0.375rem;
+    border: 1.5px solid transparent;
+    transition:
+        color 0.15s ease,
+        background-color 0.15s ease,
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.fi-ta-actions .fi-icon-btn.fi-color-primary {
+    color: #2d4a3e !important;
+    background-color: rgba(45, 74, 62, 0.1) !important;
+    border-color: rgba(45, 74, 62, 0.28) !important;
+}
+
+.fi-ta-actions .fi-icon-btn.fi-color-primary:hover,
+.fi-ta-actions .fi-icon-btn.fi-color-primary:focus-visible {
+    color: #fafaf8 !important;
+    background-color: #2d4a3e !important;
+    border-color: #2d4a3e !important;
+    box-shadow: 0 2px 8px rgba(45, 74, 62, 0.28);
+}
+
+.fi-ta-actions .fi-icon-btn.fi-color-danger {
+    color: #dc2626 !important;
+    background-color: rgba(220, 38, 38, 0.08) !important;
+    border-color: rgba(220, 38, 38, 0.25) !important;
+}
+
+.fi-ta-actions .fi-icon-btn.fi-color-danger:hover,
+.fi-ta-actions .fi-icon-btn.fi-color-danger:focus-visible {
+    color: #fafaf8 !important;
+    background-color: #dc2626 !important;
+    border-color: #dc2626 !important;
+    box-shadow: 0 2px 8px rgba(220, 38, 38, 0.25);
+}
+
+.fi-ta-actions .fi-icon-btn.fi-color-warning,
+.fi-ta-actions .fi-icon-btn.fi-color-gold {
+    color: #8a7048 !important;
+    background-color: rgba(184, 149, 107, 0.14) !important;
+    border-color: rgba(184, 149, 107, 0.35) !important;
+}
+
+.fi-ta-actions .fi-icon-btn.fi-color-warning:hover,
+.fi-ta-actions .fi-icon-btn.fi-color-warning:focus-visible,
+.fi-ta-actions .fi-icon-btn.fi-color-gold:hover,
+.fi-ta-actions .fi-icon-btn.fi-color-gold:focus-visible {
+    color: #1a1a18 !important;
+    background-color: #b8956b !important;
+    border-color: #b8956b !important;
+    box-shadow: 0 2px 8px rgba(184, 149, 107, 0.35);
+}
+
+.fi-ta-actions .fi-icon-btn.fi-color-success {
+    color: #2d6a4f !important;
+    background-color: rgba(45, 106, 79, 0.1) !important;
+    border-color: rgba(45, 106, 79, 0.28) !important;
+}
+
+.fi-ta-actions .fi-icon-btn.fi-color-success:hover,
+.fi-ta-actions .fi-icon-btn.fi-color-success:focus-visible {
+    color: #fafaf8 !important;
+    background-color: #2d6a4f !important;
+    border-color: #2d6a4f !important;
+}
+
+.fi-ta-actions .fi-icon-btn.fi-color-info {
+    color: #4a6b8a !important;
+    background-color: rgba(74, 107, 138, 0.1) !important;
+    border-color: rgba(74, 107, 138, 0.28) !important;
+}
+
+.fi-ta-actions .fi-icon-btn.fi-color-info:hover,
+.fi-ta-actions .fi-icon-btn.fi-color-info:focus-visible {
+    color: #fafaf8 !important;
+    background-color: #4a6b8a !important;
+    border-color: #4a6b8a !important;
+}
+
+.fi-ta-actions .fi-icon-btn.fi-color-gray {
+    color: #6b6b66 !important;
+    background-color: rgba(107, 107, 102, 0.08) !important;
+    border-color: rgba(107, 107, 102, 0.22) !important;
+}
+
+.fi-ta-actions .fi-icon-btn.fi-color-gray:hover,
+.fi-ta-actions .fi-icon-btn.fi-color-gray:focus-visible {
+    color: #fafaf8 !important;
+    background-color: #6b6b66 !important;
+    border-color: #6b6b66 !important;
+}
+
+/* Labeled row actions (if shown) */
+.fi-ta-actions .fi-btn.fi-size-sm {
+    border-radius: 0.375rem;
+    font-weight: 500;
+    border: 1.5px solid transparent;
+}
+
+.fi-ta-actions .fi-btn.fi-color-primary:not(.fi-outlined) {
+    background-color: #2d4a3e !important;
+    color: #fafaf8 !important;
+    border-color: #2d4a3e !important;
+}
+
+.fi-ta-actions .fi-btn.fi-color-danger:not(.fi-outlined) {
+    background-color: #dc2626 !important;
+    color: #fafaf8 !important;
+    border-color: #dc2626 !important;
+}
+
+.fi-ta-actions .fi-btn.fi-color-primary.fi-outlined {
+    color: #2d4a3e !important;
+    border-color: #2d4a3e !important;
+    background-color: rgba(45, 74, 62, 0.06) !important;
+}
+
+.fi-ta-actions .fi-btn.fi-color-danger.fi-outlined {
+    color: #dc2626 !important;
+    border-color: #dc2626 !important;
+    background-color: rgba(220, 38, 38, 0.06) !important;
+}
+
+/* Toolbar: Create, filters, column manager */
+.fi-ta-header-toolbar .fi-btn.fi-color-primary:not(.fi-outlined),
+.fi-header-actions-ctn .fi-btn.fi-color-primary:not(.fi-outlined) {
+    background-color: #2d4a3e !important;
+    color: #fafaf8 !important;
+    border: 1.5px solid #2d4a3e !important;
+    box-shadow: 0 1px 3px rgba(45, 74, 62, 0.2);
+}
+
+.fi-ta-header-toolbar .fi-btn.fi-color-primary:not(.fi-outlined):hover,
+.fi-header-actions-ctn .fi-btn.fi-color-primary:not(.fi-outlined):hover {
+    background-color: #243d32 !important;
+    border-color: #243d32 !important;
+}
+
+.fi-ta-header-toolbar .fi-btn.fi-outlined,
+.fi-header-actions-ctn .fi-btn.fi-outlined {
+    color: #2d4a3e !important;
+    border-color: rgba(45, 74, 62, 0.35) !important;
+    background-color: #ffffff !important;
+}
+
+.fi-ta-header-toolbar .fi-btn.fi-outlined:hover,
+.fi-header-actions-ctn .fi-btn.fi-outlined:hover {
+    background-color: rgba(45, 74, 62, 0.08) !important;
+    border-color: #2d4a3e !important;
+}
+
+/* Bulk selection bar */
+.fi-ta-selection-indicator .fi-btn.fi-color-danger:not(.fi-outlined),
+.fi-ta-selection-indicator .fi-btn.fi-color-gray:not(.fi-outlined) {
+    font-weight: 500;
+}
+
+.fi-ta-selection-indicator .fi-btn.fi-color-danger:not(.fi-outlined) {
+    background-color: #dc2626 !important;
+    color: #fafaf8 !important;
+    border: 1.5px solid #dc2626 !important;
+}
+
+.fi-ta-selection-indicator .fi-btn.fi-color-danger:not(.fi-outlined):hover {
+    background-color: #b91c1c !important;
+    border-color: #b91c1c !important;
+}
+
+/* Empty state CTA */
+.fi-ta-empty-state .fi-btn.fi-color-primary:not(.fi-outlined) {
+    background-color: #2d4a3e !important;
+    color: #fafaf8 !important;
+}
+
+/* ─── Admin form pages — card layout & warm canvas ─── */
+
+.fi-body {
+    background-color: #f3f2ee !important;
+}
+
+.fi-main {
+    background-color: #f3f2ee;
+}
+
+.fi-page-content:has(.fi-sc-form) {
+    padding-top: 0.25rem;
+    padding-bottom: 2rem;
+}
+
+/* Primary form card */
+.fi-sc-form {
+    background-color: #ffffff;
+    border: 1px solid rgba(26, 26, 24, 0.09);
+    border-radius: 0.75rem;
+    box-shadow:
+        0 1px 2px rgba(26, 26, 24, 0.04),
+        0 4px 16px rgba(26, 26, 24, 0.06),
+        0 12px 40px rgba(45, 74, 62, 0.04);
+    padding: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .fi-sc-form {
+        padding: 2rem 2.25rem;
+    }
+}
+
+/* Field grid inside the card */
+.fi-sc-form > .fi-sc {
+    gap: 1.25rem;
+}
+
+.fi-sc-form .fi-fo-field-wrp {
+    border-radius: 0.375rem;
+}
+
+/* Section blocks (when used) */
+.fi-sc-form .fi-section:not(.fi-section-not-contained):not(.fi-aside) {
+    border: 1px solid rgba(26, 26, 24, 0.07);
+    border-radius: 0.625rem;
+    background-color: #fafaf8;
+    box-shadow: 0 1px 2px rgba(26, 26, 24, 0.03);
+}
+
+.fi-sc-form .fi-section:not(.fi-section-not-contained) > .fi-section-header {
+    background: linear-gradient(180deg, rgba(45, 74, 62, 0.06) 0%, transparent 100%);
+    border-bottom: 1px solid rgba(26, 26, 24, 0.06);
+}
+
+.fi-sc-form .fi-section-header-heading {
+    color: #2d4a3e;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+}
+
+.fi-sc-form .fi-section-header-description {
+    color: #6b6b66;
+}
+
+/* Schema section labels (Filament v5) */
+.fi-sc-form .fi-sc-section-label {
+    color: #2d4a3e;
+    font-weight: 600;
+    font-size: 0.8125rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+/* Form footer — save / cancel actions */
+.fi-sc-form > .fi-sc-actions {
+    margin-top: 1.75rem;
+    margin-left: -1.5rem;
+    margin-right: -1.5rem;
+    margin-bottom: -1.5rem;
+    padding: 1.25rem 1.5rem 1.5rem;
+    border-top: 1px solid rgba(26, 26, 24, 0.08);
+    background: linear-gradient(180deg, #fafaf8 0%, #f5f4f0 100%);
+    border-radius: 0 0 0.75rem 0.75rem;
+}
+
+@media (min-width: 768px) {
+    .fi-sc-form > .fi-sc-actions {
+        margin-left: -2.25rem;
+        margin-right: -2.25rem;
+        margin-bottom: -2rem;
+        padding: 1.25rem 2.25rem 1.75rem;
+    }
+}
+
+.fi-sc-form > .fi-sc-actions .fi-ac-btn-action[type='submit'],
+.fi-sc-form > .fi-sc-actions .fi-btn.fi-color-primary {
+    background-color: #2d4a3e;
+    border-color: #2d4a3e;
+}
+
+.fi-sc-form > .fi-sc-actions .fi-ac-btn-action[type='submit']:hover,
+.fi-sc-form > .fi-sc-actions .fi-btn.fi-color-primary:hover {
+    background-color: #243d32;
+}
+
+/* Modals & slide-overs with forms */
+.fi-modal-window .fi-sc-form,
+.fi-slide-over-panel .fi-sc-form {
+    border-radius: 0.625rem;
+    box-shadow: none;
+    border-color: rgba(26, 26, 24, 0.08);
+}
+
+.fi-modal-window .fi-sc-form > .fi-sc-actions,
+.fi-slide-over-panel .fi-sc-form > .fi-sc-actions {
+    margin-left: -1.5rem;
+    margin-right: -1.5rem;
+    margin-bottom: -1.5rem;
+}
+
+/* List / table pages — keep content flush */
+.fi-resource-list-records-page .fi-page-content:not(:has(.fi-sc-form)),
+.fi-page-dashboard .fi-page-content {
+    padding-top: 0;
+}
+
+/* Profile & standalone auth forms */
+.fi-simple-page .fi-sc-form,
+.fi-width-lg .fi-sc-form,
+.fi-width-xl .fi-sc-form,
+.fi-width-2xl .fi-sc-form,
+.fi-width-3xl .fi-sc-form,
+.fi-width-4xl .fi-sc-form,
+.fi-width-5xl .fi-sc-form,
+.fi-width-6xl .fi-sc-form,
+.fi-width-7xl .fi-sc-form {
+    background-color: #ffffff;
+    border: 1px solid rgba(26, 26, 24, 0.09);
+    border-radius: 0.75rem;
+    box-shadow:
+        0 1px 2px rgba(26, 26, 24, 0.04),
+        0 8px 24px rgba(26, 26, 24, 0.06);
+}

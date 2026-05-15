@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Certification;
+use App\Models\Post;
+use App\Models\Property;
+use App\Models\TeamMember;
+use App\Models\Testimonial;
+
+class HomeController extends Controller
+{
+    public function index()
+    {
+        return view('pages.home', [
+            'settings' => $this->settings(),
+            'featuredProperties' => Property::published()->featured()->orderBy('sort_order')->take(6)->get(),
+            'properties' => Property::published()->orderBy('sort_order')->take(3)->get(),
+            'testimonials' => Testimonial::published()->where('is_featured', true)->take(6)->get(),
+            'team' => TeamMember::published()->take(4)->get(),
+            'certifications' => Certification::published()->take(8)->get(),
+            'posts' => Post::published()->take(3)->get(),
+        ]);
+    }
+}

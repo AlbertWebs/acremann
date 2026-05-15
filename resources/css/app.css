@@ -1,0 +1,122 @@
+@import 'tailwindcss';
+@import './forms-tables.css';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-serif: 'Cormorant Garamond', ui-serif, Georgia, serif;
+    --color-cream: #FAFAF8;
+    --color-charcoal: #1A1A18;
+    --color-forest: #2D4A3E;
+    --color-gold: #B8956B;
+    --color-muted: #6B6B66;
+}
+
+@layer base {
+    body {
+        @apply bg-cream text-charcoal font-sans antialiased;
+    }
+    h1, h2, h3, h4 {
+        @apply font-serif font-medium tracking-tight;
+    }
+}
+
+@layer components {
+    .container-site {
+        @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+    }
+    .section-padding {
+        @apply py-16 md:py-24;
+    }
+    .card {
+        @apply rounded-sm border border-charcoal/10 bg-white p-6 shadow-sm;
+    }
+    .btn-outline {
+        @apply inline-flex items-center justify-center gap-2 rounded-md border border-charcoal/15 bg-white px-5 py-2.5 text-sm font-medium text-charcoal shadow-sm transition duration-200 hover:border-forest hover:text-forest focus:outline-none focus:ring-2 focus:ring-forest/30 focus:ring-offset-2;
+    }
+
+    /* Site header */
+    .site-header {
+        @apply sticky top-0 z-40;
+    }
+
+    .site-header-brand {
+        @apply flex flex-col gap-0.5 transition hover:opacity-90;
+    }
+
+    .site-header-brand-name {
+        @apply font-serif text-lg font-medium leading-tight text-forest md:text-xl;
+    }
+
+    .site-header-brand-tagline {
+        @apply max-w-[14rem] truncate text-[0.65rem] leading-snug tracking-wide text-muted;
+    }
+
+    .site-header-nav-link {
+        @apply rounded-md px-2.5 py-2 text-sm text-charcoal/85 transition hover:bg-forest/5 hover:text-forest lg:px-3;
+    }
+
+    .site-header-nav-link-active {
+        @apply bg-forest/8 font-medium text-forest;
+    }
+
+    .site-header-menu-btn {
+        @apply inline-flex h-10 w-10 items-center justify-center rounded-md border border-charcoal/10 text-charcoal transition hover:border-forest/30 hover:bg-forest/5 hover:text-forest;
+    }
+
+    .site-header-mobile-link {
+        @apply rounded-md px-3 py-2.5 text-sm text-charcoal transition hover:bg-forest/5 hover:text-forest;
+    }
+
+    .site-header-admin-trigger {
+        @apply inline-flex items-center gap-1.5 rounded-md border border-charcoal/12 bg-white px-2.5 py-2 text-xs font-medium text-charcoal shadow-sm transition hover:border-forest/35 hover:text-forest focus:outline-none focus:ring-2 focus:ring-forest/20 sm:px-3 sm:text-sm;
+    }
+
+    .site-header-admin-icon {
+        @apply flex h-7 w-7 items-center justify-center rounded-full bg-forest/10 text-forest;
+    }
+
+    .site-header-admin-dropdown {
+        @apply absolute right-0 top-[calc(100%+0.5rem)] z-50 w-60 overflow-hidden rounded-lg border border-charcoal/10 bg-white py-2 shadow-xl;
+    }
+
+    .site-header-admin-user {
+        @apply px-4 py-2;
+    }
+
+    .site-header-admin-user-name {
+        @apply truncate text-sm font-medium text-charcoal;
+    }
+
+    .site-header-admin-user-email {
+        @apply truncate text-xs text-muted;
+    }
+
+    .site-header-admin-section {
+        @apply px-4 pb-1 pt-2 text-[0.65rem] font-semibold uppercase tracking-wider text-muted;
+    }
+
+    .site-header-admin-guest-label {
+        @apply px-4 py-2 text-xs text-muted;
+    }
+
+    .site-header-admin-divider {
+        @apply my-2 border-t border-charcoal/8;
+    }
+
+    .site-header-admin-link {
+        @apply flex w-full items-center gap-2.5 px-4 py-2 text-left text-sm text-charcoal transition hover:bg-forest/5 hover:text-forest;
+    }
+
+    .site-header-admin-link-danger {
+        @apply hover:bg-red-50 hover:text-red-700;
+    }
+
+    .site-header-admin-logout {
+        @apply block w-full;
+    }
+}

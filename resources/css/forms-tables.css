@@ -1,0 +1,216 @@
+/* Acremann — unified forms & tables */
+
+@layer components {
+    .acremann-form {
+        @apply space-y-6;
+    }
+
+    .form-group {
+        @apply flex flex-col gap-1.5;
+    }
+
+    .form-label {
+        @apply text-sm font-medium tracking-wide text-charcoal;
+    }
+
+    .form-label-required::after {
+        content: ' *';
+        @apply text-gold;
+    }
+
+    .form-hint {
+        @apply text-xs text-muted;
+    }
+
+    .form-control {
+        @apply w-full rounded-md border border-charcoal/12 bg-white px-4 py-3 text-sm text-charcoal shadow-sm transition duration-200;
+        @apply placeholder:text-muted/70;
+        @apply hover:border-charcoal/25;
+        @apply focus:border-forest focus:outline-none focus:ring-2 focus:ring-forest/15;
+    }
+
+  .form-control:disabled {
+        @apply cursor-not-allowed bg-cream opacity-70;
+    }
+
+    select.form-control {
+        @apply cursor-pointer appearance-none bg-white pr-10;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236B6B66'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 0.75rem center;
+        background-size: 1.25rem;
+    }
+
+    textarea.form-control {
+        @apply min-h-[120px] resize-y leading-relaxed;
+    }
+
+    .form-check {
+        @apply flex items-start gap-3 rounded-md border border-charcoal/8 bg-cream/50 p-3 transition hover:border-forest/20;
+    }
+
+    .form-check-input {
+        @apply mt-0.5 h-4 w-4 shrink-0 rounded border-charcoal/25 text-forest focus:ring-forest/30;
+    }
+
+    .form-check-label {
+        @apply text-sm leading-snug text-charcoal/90;
+    }
+
+    .form-actions {
+        @apply flex flex-wrap items-center gap-3 border-t border-charcoal/10 pt-6;
+    }
+
+    .form-card {
+        @apply rounded-lg border border-charcoal/10 bg-white p-6 shadow-sm md:p-8;
+    }
+
+    /* Rich editor (Quill) */
+    .rich-editor-wrap {
+        @apply overflow-hidden rounded-md border border-charcoal/12 bg-white shadow-sm transition focus-within:border-forest focus-within:ring-2 focus-within:ring-forest/15;
+    }
+
+    .rich-editor-wrap .ql-toolbar.ql-snow {
+        @apply border-0 border-b border-charcoal/10 bg-cream/80 font-sans;
+    }
+
+    .rich-editor-wrap .ql-container.ql-snow {
+        @apply border-0 font-sans text-sm;
+    }
+
+    .rich-editor-wrap .ql-editor {
+        @apply min-h-[160px] px-4 py-3 text-charcoal;
+    }
+
+    .rich-editor-wrap .ql-editor.ql-blank::before {
+        @apply text-muted/60 not-italic;
+    }
+
+    .rich-editor-wrap .ql-snow .ql-stroke {
+        stroke: #6b6b66;
+    }
+
+    .rich-editor-wrap .ql-snow .ql-fill {
+        fill: #6b6b66;
+    }
+
+    .rich-editor-wrap .ql-snow .ql-picker {
+        @apply text-charcoal;
+    }
+
+    .rich-editor-wrap .ql-snow button:hover .ql-stroke,
+    .rich-editor-wrap .ql-snow .ql-active .ql-stroke {
+        stroke: #2d4a3e;
+    }
+
+    .rich-editor-wrap .ql-snow button:hover .ql-fill,
+    .rich-editor-wrap .ql-snow .ql-active .ql-fill {
+        fill: #2d4a3e;
+    }
+
+    /* Tables */
+    .table-wrap {
+        @apply overflow-x-auto rounded-lg border border-charcoal/10 bg-white shadow-sm;
+    }
+
+    .acremann-table {
+        @apply w-full min-w-[32rem] border-collapse text-left text-sm;
+    }
+
+    .acremann-table thead {
+        @apply border-b border-charcoal/10 bg-forest/5;
+    }
+
+    .acremann-table thead th {
+        @apply px-4 py-3.5 text-xs font-semibold uppercase tracking-wider text-forest;
+    }
+
+    .acremann-table tbody tr {
+        @apply border-b border-charcoal/5 transition-colors last:border-0;
+    }
+
+    .acremann-table tbody tr:hover {
+        @apply bg-cream/80;
+    }
+
+    .acremann-table tbody td {
+        @apply px-4 py-3.5 text-charcoal/90;
+    }
+
+    .acremann-table tbody td:first-child {
+        @apply font-medium text-charcoal;
+    }
+
+    /* Status badges in tables */
+    .table-badge {
+        @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium capitalize;
+    }
+
+    .table-badge-available {
+        @apply bg-forest/10 text-forest;
+    }
+
+    .table-badge-reserved {
+        @apply bg-gold/15 text-charcoal;
+    }
+
+    .table-badge-sold {
+        @apply bg-charcoal/10 text-muted;
+    }
+
+    /* Buttons */
+    .btn {
+        @apply inline-flex items-center justify-center gap-2 rounded-md px-5 py-2.5 text-sm font-medium transition duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
+    }
+
+    .btn-primary {
+        @apply inline-flex items-center justify-center gap-2 rounded-md px-5 py-2.5 text-sm font-medium transition duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
+        @apply bg-forest text-white shadow-sm hover:bg-forest/90 focus:ring-forest/40;
+    }
+
+    .btn-secondary {
+        @apply inline-flex items-center justify-center gap-2 rounded-md px-5 py-2.5 text-sm font-medium transition duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
+        @apply border border-charcoal/15 bg-white text-charcoal shadow-sm hover:border-forest hover:text-forest focus:ring-forest/30;
+    }
+
+    .btn-gold {
+        @apply inline-flex items-center justify-center gap-2 rounded-md px-5 py-2.5 text-sm font-medium transition duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
+        @apply bg-gold text-white shadow-sm hover:bg-gold/90 focus:ring-gold/40;
+    }
+
+    .btn-sm {
+        @apply px-3.5 py-1.5 text-xs;
+    }
+
+    .btn-table {
+        @apply inline-flex items-center justify-center gap-2 rounded-md border border-charcoal/15 bg-white px-3.5 py-1.5 text-xs font-medium text-charcoal shadow-sm transition duration-200 hover:border-forest hover:text-forest focus:outline-none focus:ring-2 focus:ring-forest/30 focus:ring-offset-2;
+    }
+
+    .btn-table-primary {
+        @apply inline-flex items-center justify-center gap-2 rounded-md bg-forest px-3.5 py-1.5 text-xs font-medium text-white shadow-sm transition duration-200 hover:bg-forest/90 focus:outline-none focus:ring-2 focus:ring-forest/40 focus:ring-offset-2;
+    }
+
+    /* Pagination */
+    .acremann-pagination nav a,
+    .acremann-pagination nav span {
+        @apply inline-flex items-center rounded-md border border-charcoal/12 bg-white px-3 py-1.5 text-sm text-charcoal shadow-sm transition hover:border-forest hover:text-forest;
+    }
+
+    .acremann-pagination nav span[aria-current="page"] span,
+    .acremann-pagination nav span[aria-current="page"] {
+        @apply border-forest bg-forest text-white;
+    }
+
+    .acremann-pagination nav span[aria-disabled="true"] span {
+        @apply cursor-not-allowed opacity-50;
+    }
+
+    /* Legacy aliases */
+    .input-field {
+        @apply w-full rounded-md border border-charcoal/12 bg-white px-4 py-3 text-sm text-charcoal shadow-sm transition duration-200 placeholder:text-muted/70 hover:border-charcoal/25 focus:border-forest focus:outline-none focus:ring-2 focus:ring-forest/15;
+    }
+
+    .label-field {
+        @apply text-sm font-medium tracking-wide text-charcoal;
+    }
+}
