@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Services\Tables;
 
 use App\Filament\Support\TableActions;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -13,12 +14,22 @@ class ServicesTable
     {
         return $table
             ->columns([
+                ImageColumn::make('featured_image')
+                    ->label('Featured')
+                    ->toggleable(),
+                ImageColumn::make('header_image')
+                    ->label('Header')
+                    ->toggleable(),
                 TextColumn::make('title')
                     ->searchable()
                     ->grow()
                     ->wrap(),
+                TextColumn::make('slug')
+                    ->searchable()
+                    ->copyable(),
                 TextColumn::make('icon')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(),
                 TextColumn::make('sort_order')
                     ->numeric()
                     ->sortable(),

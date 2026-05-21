@@ -41,7 +41,7 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => rtrim(env('APP_URL', 'https://acremannproperties.com'), '/').'/storage',
+            // Omit `url` so generated paths are root-relative (/storage/...) and work on any host.
             'visibility' => 'public',
             'throw' => false,
             'report' => false,

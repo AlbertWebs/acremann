@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Properties;
 
 use App\Filament\Resources\Properties\Pages\CreateProperty;
 use App\Filament\Resources\Properties\Pages\EditProperty;
+use App\Filament\Resources\Properties\Pages\ListFeaturedProperties;
 use App\Filament\Resources\Properties\Pages\ListProperties;
 use App\Filament\Resources\Properties\Pages\ViewProperty;
 use App\Filament\Resources\Properties\Schemas\PropertyForm;
@@ -50,6 +51,7 @@ class PropertyResource extends Resource
     {
         return [
             'index' => ListProperties::route('/'),
+            'featured' => ListFeaturedProperties::route('/featured'),
             'create' => CreateProperty::route('/create'),
             'view' => ViewProperty::route('/{record}'),
             'edit' => EditProperty::route('/{record}/edit'),

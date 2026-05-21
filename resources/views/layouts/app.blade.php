@@ -21,13 +21,42 @@
     </script>
     @stack('head')
 </head>
-<body class="min-h-screen flex flex-col" x-data="{ mobileMenu: false }">
+<body
+    class="min-h-screen flex flex-col"
+    x-data="{ mobileMenu: false, utilityCollapsed: false, headerScrolled: false, showScrollTop: false }"
+    x-init="
+        let scrollTicking = false;
+        const syncScroll = () => {
+            const y = window.scrollY;
+            if (y > 72) {
+                utilityCollapsed = true;
+            } else if (y < 20) {
+                utilityCollapsed = false;
+            }
+            headerScrolled = y > 48;
+            showScrollTop = y > 320;
+            scrollTicking = false;
+        };
+        const onScroll = () => {
+            if (! scrollTicking) {
+                scrollTicking = true;
+                requestAnimationFrame(syncScroll);
+            }
+        };
+        syncScroll();
+        window.addEventListener('scroll', onScroll, { passive: true });
+    "
+    :class="{ 'overflow-hidden': mobileMenu }"
+>
     <x-header :settings="$settings ?? \App\Models\SiteSetting::current()" />
     <main class="flex-1">@yield('content')</main>
     <x-footer :settings="$settings ?? \App\Models\SiteSetting::current()" />
-    <x-whatsapp-fab :settings="$settings ?? \App\Models\SiteSetting::current()" :property="$property ?? null" />
-    <x-chatbot :settings="$settings ?? \App\Models\SiteSetting::current()" />
+    <x-chatbot
+        :settings="$settings ?? \App\Models\SiteSetting::current()"
+        :property="$property ?? null"
+    />
     <x-cookie-banner :settings="$settings ?? \App\Models\SiteSetting::current()" />
+    <x-scroll-to-top />
     @stack('scripts')
 </body>
 </html>

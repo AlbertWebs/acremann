@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\AssistantMenuItem;
 use App\Models\Certification;
 use App\Models\ClientLookup;
 use App\Models\Lead;
@@ -26,6 +27,16 @@ class AcremannSeeder extends Seeder
         SiteSetting::create([
             'company_name' => 'Acremann Properties',
             'tagline' => 'Trusted guidance. Transparent process. Sustainable value.',
+            'hero_eyebrow' => 'Trusted real estate company Kenya',
+            'hero_headline' => 'Trusted guidance. Transparent process. Sustainable value.',
+            'hero_description' => 'Clean title deeds, verified plots, and professional property advisory across Nairobi, Kiambu, Kikuyu and Nachu. Buy land in Kenya with confidence — including diaspora-friendly remote purchase support.',
+            'hero_cta_primary_label' => 'View properties',
+            'hero_cta_primary_url' => '/properties',
+            'hero_cta_secondary_label' => 'Book a site visit',
+            'hero_cta_secondary_url' => '/book-visit',
+            'hero_show_whatsapp_cta' => true,
+            'hero_whatsapp_label' => 'WhatsApp us',
+            'hero_media_mode' => 'featured_properties',
             'mission' => 'To deliver legally-grounded, financially-disciplined land and property solutions that build lasting legacy for our clients.',
             'vision' => 'To be Kenya\'s most trusted advisory-led real estate firm for clean-title land investment.',
             'about_summary' => 'Acremann Properties is a professional real estate firm specialising in verified residential and commercial plots across Nairobi, Kiambu, Kikuyu and Nachu.',
@@ -39,7 +50,41 @@ class AcremannSeeder extends Seeder
             'referral_program' => 'Refer a friend to Acremann and earn rewards when they complete a purchase. Our loyalty program recognises clients who grow with us.',
             'sustainability_intro' => 'Responsible land use, green open spaces, solar-ready planning, and long-term community value guide every Acremann development.',
             'investment_intro' => 'Whether you are an end-user, investor, or diaspora buyer, Acremann provides transparent advisory from site visit to title handover.',
+            'assistant_heading' => 'Acremann Assistant',
+            'assistant_subheading' => 'How can we help you today?',
+            'assistant_title_body' => 'Every Acremann project comes with verified documentation and a transparent conveyancing process. Our team guides you from reservation to title registration.',
+            'assistant_title_link_label' => 'View all FAQs →',
+            'assistant_title_link_url' => '/faqs',
+            'assistant_whatsapp_label' => 'Chat on WhatsApp',
+            'assistant_consent_text' => 'I consent to Acremann contacting me.',
+            'assistant_success_message' => "Thank you! We'll be in touch.",
+            'assistant_buyer_types' => [
+                ['value' => 'individual', 'label' => 'Individual buyer'],
+                ['value' => 'diaspora', 'label' => 'Diaspora investor'],
+                ['value' => 'investor', 'label' => 'Institutional investor'],
+                ['value' => 'developer', 'label' => 'Developer / partner'],
+            ],
+            'assistant_budget_ranges' => [
+                ['value' => 'under_1m', 'label' => 'Under KES 1M'],
+                ['value' => '1m_3m', 'label' => 'KES 1M – 3M'],
+                ['value' => '3m_10m', 'label' => 'KES 3M – 10M'],
+                ['value' => 'over_10m', 'label' => 'Over KES 10M'],
+            ],
         ]);
+
+        foreach ([
+            ['label' => 'Project information', 'action' => 'faq', 'journey' => 'faq', 'sort_order' => 1],
+            ['label' => 'Title & process questions', 'action' => 'title', 'journey' => 'title', 'sort_order' => 2],
+            ['label' => 'Book a site visit', 'action' => 'lead', 'journey' => 'site_visit', 'lead_form_title' => 'Book a site visit', 'sort_order' => 3],
+            ['label' => 'Pricing & financing', 'action' => 'lead', 'journey' => 'financing', 'lead_form_title' => 'Pricing & financing', 'sort_order' => 4],
+            ['label' => 'Chat on WhatsApp', 'action' => 'whatsapp', 'sort_order' => 5],
+        ] as $item) {
+            AssistantMenuItem::create([
+                ...$item,
+                'is_published' => true,
+                'open_in_new_tab' => true,
+            ]);
+        }
 
         $nachu = Property::create([
             'title' => 'Acremann Nachu Gardens',
@@ -128,36 +173,131 @@ class AcremannSeeder extends Seeder
             ['title' => 'Green Building Council Affiliate', 'description' => 'Sustainable development standards', 'sort_order' => 2, 'is_published' => true, 'created_at' => now(), 'updated_at' => now()],
         ]);
 
-        Service::insert([
-            ['title' => 'Land Sales', 'icon' => 'land', 'summary' => 'Residential and commercial plots with clean titles.', 'sort_order' => 1, 'is_published' => true, 'created_at' => now(), 'updated_at' => now()],
-            ['title' => 'Investment Advisory', 'icon' => 'advisory', 'summary' => 'Data-led guidance for investors and end-users.', 'sort_order' => 2, 'is_published' => true, 'created_at' => now(), 'updated_at' => now()],
-            ['title' => 'Conveyancing', 'icon' => 'legal', 'summary' => 'Full title search, transfer and registration support.', 'sort_order' => 3, 'is_published' => true, 'created_at' => now(), 'updated_at' => now()],
-            ['title' => 'Diaspora Support', 'icon' => 'global', 'summary' => 'Remote purchase Kenya with documented processes.', 'sort_order' => 4, 'is_published' => true, 'created_at' => now(), 'updated_at' => now()],
-        ]);
+        $this->seedServices();
 
         Faq::insert([
-            ['category' => 'general', 'question' => 'How do I buy land in Kenya safely?', 'answer' => 'Verify the title, conduct an official search, use a qualified advocate, and work with a trusted firm like Acremann for end-to-end transparency.', 'sort_order' => 1, 'is_published' => true, 'created_at' => now(), 'updated_at' => now()],
-            ['category' => 'title', 'question' => 'What is a clean title deed?', 'answer' => 'A clean title has no encumbrances, disputes, or unpaid charges. Acremann provides verified documentation before you commit.', 'sort_order' => 2, 'is_published' => true, 'created_at' => now(), 'updated_at' => now()],
-            ['category' => 'diaspora', 'question' => 'Can I buy land from abroad?', 'answer' => 'Yes. Acremann supports diaspora buyers with virtual site visits, documented POA, and secure payment milestones.', 'sort_order' => 3, 'is_published' => true, 'created_at' => now(), 'updated_at' => now()],
+            ['category' => 'general', 'question' => 'How do I buy land in Kenya safely?', 'answer' => 'Verify the title, conduct an official search, use a qualified advocate, and work with a trusted firm like Acremann for end-to-end transparency.', 'sort_order' => 1, 'is_published' => true, 'show_in_assistant' => true, 'created_at' => now(), 'updated_at' => now()],
+            ['category' => 'title', 'question' => 'What is a clean title deed?', 'answer' => 'A clean title has no encumbrances, disputes, or unpaid charges. Acremann provides verified documentation before you commit.', 'sort_order' => 2, 'is_published' => true, 'show_in_assistant' => true, 'created_at' => now(), 'updated_at' => now()],
+            ['category' => 'diaspora', 'question' => 'Can I buy land from abroad?', 'answer' => 'Yes. Acremann supports diaspora buyers with virtual site visits, documented POA, and secure payment milestones.', 'sort_order' => 3, 'is_published' => true, 'show_in_assistant' => true, 'created_at' => now(), 'updated_at' => now()],
         ]);
 
-        Post::create([
-            'title' => 'How to Buy Land in Kenya Safely: A Complete Guide',
-            'slug' => 'how-to-buy-land-in-kenya-safely',
-            'excerpt' => 'Essential steps for secure land investment in Kenya.',
-            'body' => '<p>Buying land in Kenya requires due diligence, title verification, and professional advisory. Here is what every buyer should know...</p>',
-            'author' => 'Acremann Team',
-            'published_at' => now()->subDays(3),
-            'is_published' => true,
+        Post::insert([
+            [
+                'title' => 'How to Buy Land in Kenya Safely: A Complete Guide',
+                'slug' => 'how-to-buy-land-in-kenya-safely',
+                'excerpt' => 'Essential steps for secure land investment in Kenya — from title search to handover.',
+                'body' => '<p>Buying land in Kenya requires due diligence, title verification, and professional advisory. Here is what every buyer should know...</p>',
+                'author' => 'Acremann Team',
+                'published_at' => now()->subDays(10),
+                'is_published' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'title' => 'Diaspora Land Purchase: What to Expect Remotely',
+                'slug' => 'diaspora-land-purchase-kenya',
+                'excerpt' => 'Video walkthroughs, milestone payments, and documented POA — how remote buyers stay in control.',
+                'body' => '<p>Investing from abroad does not mean compromising on due diligence. Acremann structures diaspora purchases with clear milestones and verified title packs at every stage.</p>',
+                'author' => 'Acremann Team',
+                'published_at' => now()->subDays(5),
+                'is_published' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'title' => 'Understanding Clean Title Deeds in Kenya',
+                'slug' => 'clean-title-deeds-kenya',
+                'excerpt' => 'What a clean title means, how encumbrances are checked, and why verification matters before you pay.',
+                'body' => '<p>A clean title deed is the foundation of every secure plot purchase. Learn how official searches, survey confirmations, and advocate review protect your investment.</p>',
+                'author' => 'Acremann Team',
+                'published_at' => now()->subDay(),
+                'is_published' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
 
         Page::create(['slug' => 'invest', 'title' => 'Why Invest With Acremann', 'subtitle' => 'Future-focused land investment', 'content' => '<p>Land remains one of Kenya\'s most resilient asset classes. Acremann combines legal precision, financial discipline, and sustainability thinking to protect your investment.</p>']);
         Page::create(['slug' => 'privacy', 'title' => 'Privacy Notice', 'content' => '<p>Acremann Properties collects personal data when you submit enquiries, subscribe to our newsletter, or use our client portal. We use this data to respond to your requests, improve our services, and — with consent — send marketing communications. You may request access, correction, or deletion of your data by contacting <a href="mailto:info@acremannproperties.com">info@acremannproperties.com</a>. We retain data only as long as necessary for these purposes.</p>']);
+        Page::create(['slug' => 'terms', 'title' => 'Terms and Conditions', 'content' => '<p>These terms govern your use of the Acremann Properties website and services. By submitting an enquiry, booking a site visit, or engaging our advisory team, you agree to receive communications related to your request and to provide accurate information. Property availability, pricing, and title status are subject to verification at the time of transaction. Acremann does not guarantee outcomes of third-party searches or financing. For questions about these terms, contact <a href="mailto:info@acremannproperties.com">info@acremannproperties.com</a>.</p>']);
 
         ClientLookup::create(['reference_number' => 'ACR-TITLE-001', 'lookup_type' => 'title', 'status_message' => 'Title search complete. Transfer in progress — estimated completion 14 days.']);
         ClientLookup::create(['reference_number' => 'ACR-PAY-001', 'lookup_type' => 'payment', 'status_message' => 'Account current. Next installment due 1 June 2026.']);
 
         $this->seedAnalyticsData($nachu);
+    }
+
+    protected function seedServices(): void
+    {
+        $services = [
+            [
+                'slug' => 'land-sales',
+                'title' => 'Land Sales',
+                'icon' => 'land',
+                'summary' => 'Residential and commercial plots with clean title deeds across Nairobi, Kiambu, Kikuyu and Nachu.',
+                'body' => '<p>Acremann lists verified land for sale in Kenya with transparent pricing and documented title status. Every plot is presented with location context, access notes, and payment plan options where applicable.</p><p>Whether you are building a family home or securing a growth-corridor plot, our team guides you from shortlist to site visit and reservation — with no hidden encumbrances.</p><h2>What you can expect</h2><ul><li>Clean-title focus and official search coordination</li><li>On-ground or virtual site visits</li><li>Clear pricing and milestone-based payments</li></ul>',
+                'local_summary' => 'Walk plots in Nairobi, Kiambu, Kikuyu or Nachu with our sales team. We verify access, beacons, and title packs before you pay a deposit.',
+                'diaspora_summary' => 'Shortlist plots remotely with video walkthroughs, verified documentation, and milestone updates until registration — ideal for UK, US, UAE and other diaspora buyers.',
+                'meta_title' => 'Land for sale Kenya | Clean title plots Nairobi & Kiambu',
+                'meta_description' => 'Buy verified land in Kenya with clean title deeds. Residential & commercial plots in Nairobi, Kiambu, Kikuyu & Nachu — local & diaspora buyers welcome.',
+                'sort_order' => 1,
+                'is_published' => true,
+            ],
+            [
+                'slug' => 'investment-advisory',
+                'title' => 'Investment Advisory',
+                'icon' => 'advisory',
+                'summary' => 'Data-led land investment guidance for Kenyan investors and diaspora capital.',
+                'body' => '<p>Our investment advisory service helps you match budget, horizon, and risk profile to verified opportunities — not generic listings. We focus on growth corridors, title clarity, and realistic exit or hold strategies.</p><p>From first-time investors to experienced portfolio builders, you receive a curated shortlist and documented due diligence before capital is committed.</p><h2>Advisory includes</h2><ul><li>Market and location context for each plot</li><li>Title and encumbrance summaries</li><li>Coordination with advocates and surveyors</li></ul>',
+                'local_summary' => 'Kenya-based investors receive growth-corridor shortlists, site visits, and handover support aligned with your investment goals.',
+                'diaspora_summary' => 'Invest from abroad with structured remote due diligence, currency-aware payment planning, and regular progress reports through to title registration.',
+                'meta_title' => 'Land investment advisory Kenya | Diaspora & local investors',
+                'meta_description' => 'Professional land investment advisory in Kenya. Curated plots, title verification & diaspora-friendly remote purchase support in Nairobi, Kiambu & beyond.',
+                'sort_order' => 2,
+                'is_published' => true,
+            ],
+            [
+                'slug' => 'conveyancing',
+                'title' => 'Conveyancing',
+                'icon' => 'legal',
+                'summary' => 'Title search, sale agreements, transfer and registration — legally grounded conveyancing in Kenya.',
+                'body' => '<p>Conveyancing is where many land deals succeed or fail. Acremann coordinates qualified advocates, official searches, and sale agreement structures so you understand every step before signing.</p><p>We explain charges, timelines, and registration requirements in plain language — for local buyers and those purchasing through power of attorney from abroad.</p><h2>Our conveyancing support</h2><ul><li>Official title and encumbrance searches</li><li>Sale agreement review and milestone schedules</li><li>Transfer and registration tracking to completion</li></ul>',
+                'local_summary' => 'Work with advocates we trust for searches, agreements, and registration — with Acremann keeping your file coordinated through handover.',
+                'diaspora_summary' => 'Remote purchasers receive documented POA guidance, encrypted document packs, and milestone alerts so legal steps complete correctly while you are overseas.',
+                'meta_title' => 'Conveyancing Kenya | Title transfer & registration support',
+                'meta_description' => 'Transparent conveyancing in Kenya — title search, sale agreements & registration. Support for local buyers and diaspora land purchases.',
+                'sort_order' => 3,
+                'is_published' => true,
+            ],
+            [
+                'slug' => 'diaspora-support',
+                'title' => 'Diaspora Support',
+                'icon' => 'global',
+                'summary' => 'Buy land in Kenya from abroad — documented remote purchase, virtual visits, and milestone updates.',
+                'body' => '<p>Acremann\'s diaspora support is built for Kenyans and friends of Kenya purchasing from the UK, US, Europe, the Gulf, and beyond. Time zones do not reduce the standard of due diligence.</p><p>We combine video walkthroughs, verified title packs, advocate coordination, and payment milestones you can track from anywhere.</p><h2>How we support remote buyers</h2><ul><li>Virtual site visits and beacon checks</li><li>Documented sale agreements and POA guidance</li><li>Regular updates until title registration</li></ul>',
+                'local_summary' => 'Relatives or representatives on the ground can attend visits we coordinate — while you retain full visibility of the file.',
+                'diaspora_summary' => 'Purpose-built for overseas buyers: secure processes, plain-language milestones, and a direct advisory contact from enquiry to registered title.',
+                'meta_title' => 'Buy land in Kenya from abroad | Diaspora property support',
+                'meta_description' => 'Diaspora land purchase Kenya — virtual visits, clean titles, documented milestones & remote conveyancing. Trusted advisory for buyers abroad.',
+                'sort_order' => 4,
+                'is_published' => true,
+            ],
+        ];
+
+        $canonicalSlugs = array_column($services, 'slug');
+
+        Service::query()
+            ->whereNotIn('slug', $canonicalSlugs)
+            ->where(function ($query) use ($canonicalSlugs) {
+                foreach ($canonicalSlugs as $slug) {
+                    $query->orWhere('slug', 'like', $slug.'-%');
+                }
+            })
+            ->delete();
+
+        foreach ($services as $data) {
+            Service::updateOrCreate(['slug' => $data['slug']], $data);
+        }
     }
 
     protected function seedAnalyticsData(Property $nachu): void

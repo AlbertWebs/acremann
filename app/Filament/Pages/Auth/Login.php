@@ -6,13 +6,14 @@ use Filament\Auth\Pages\Login as BaseLogin;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Component;
 use Filament\Support\Enums\Width;
+use Filament\Support\Icons\Heroicon;
 use Illuminate\Contracts\Support\Htmlable;
 
 class Login extends BaseLogin
 {
     protected static string $layout = 'filament.layouts.auth';
 
-    protected Width | string | null $maxWidth = Width::Large;
+    protected Width | string | null $maxWidth = Width::Medium;
 
     public function hasTopbar(): bool
     {
@@ -44,7 +45,7 @@ class Login extends BaseLogin
             return parent::getSubheading();
         }
 
-        return 'Sign in to manage properties, leads, and site content.';
+        return 'Sign in to manage properties, leads, assistant conversations, and site content.';
     }
 
     protected function getEmailFormComponent(): Component
@@ -55,19 +56,29 @@ class Login extends BaseLogin
             ->required()
             ->autocomplete('username')
             ->autofocus()
-            ->placeholder('info@acremannproperties.com');
+            ->prefixIcon(Heroicon::OutlinedEnvelope)
+            ->placeholder('you@company.com')
+            ->extraInputAttributes(['spellcheck' => 'false']);
     }
 
     protected function getPasswordFormComponent(): Component
     {
         return parent::getPasswordFormComponent()
             ->label('Password')
-            ->placeholder('••••••••');
+            ->prefixIcon(Heroicon::OutlinedLockClosed)
+            ->placeholder('Enter your password');
+    }
+
+    protected function getRememberFormComponent(): Component
+    {
+        return parent::getRememberFormComponent()
+            ->label('Keep me signed in on this device');
     }
 
     protected function getAuthenticateFormAction(): \Filament\Actions\Action
     {
         return parent::getAuthenticateFormAction()
-            ->label('Sign in');
+            ->label('Sign in to CMS')
+            ->icon(Heroicon::OutlinedArrowRightEndOnRectangle);
     }
 }

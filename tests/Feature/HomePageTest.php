@@ -17,6 +17,8 @@ class HomePageTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertSee('Acremann Properties');
+        $response->assertSee('Insights');
+        $response->assertSee('How to Buy Land in Kenya Safely');
     }
 
     public function test_properties_page_loads(): void

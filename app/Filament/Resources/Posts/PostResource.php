@@ -18,6 +18,12 @@ class PostResource extends Resource
 {
     protected static ?string $model = Post::class;
 
+    protected static ?string $navigationLabel = 'Insights';
+
+    protected static ?string $modelLabel = 'insight';
+
+    protected static ?string $pluralModelLabel = 'insights';
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedNewspaper;
 
     protected static ?int $navigationSort = 4;

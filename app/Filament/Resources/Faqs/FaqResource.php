@@ -13,6 +13,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class FaqResource extends Resource
 {
@@ -20,7 +21,11 @@ class FaqResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedQuestionMarkCircle;
 
-    protected static ?int $navigationSort = 9;
+    protected static string|UnitEnum|null $navigationGroup = 'Acremann Assistant';
+
+    protected static ?string $navigationLabel = 'Assistant FAQs';
+
+    protected static ?int $navigationSort = 7;
 
     public static function form(Schema $schema): Schema
     {

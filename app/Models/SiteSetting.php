@@ -2,19 +2,40 @@
 
 namespace App\Models;
 
+use App\Support\PublicStorage;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
 
 class SiteSetting extends Model
 {
+    public const HOMEPAGE_HERO_GRID_LIMIT = 3;
+
     protected $fillable = [
         'company_name', 'tagline', 'logo_path', 'logo_white_path', 'favicon_path',
+        'hero_eyebrow', 'hero_headline', 'hero_description',
+        'hero_cta_primary_label', 'hero_cta_primary_url',
+        'hero_cta_secondary_label', 'hero_cta_secondary_url',
+        'hero_show_whatsapp_cta', 'hero_whatsapp_label',
+        'hero_media_mode', 'hero_image_path', 'hero_images',
+        'assistant_heading', 'assistant_subheading', 'assistant_title_body',
+        'assistant_title_link_label', 'assistant_title_link_url', 'assistant_whatsapp_label',
+        'assistant_consent_text', 'assistant_success_message',
+        'assistant_buyer_types', 'assistant_budget_ranges',
         'mission', 'vision', 'about_summary',
         'whatsapp', 'phone', 'email', 'address', 'youtube_url', 'podcast_url',
         'facebook_url', 'instagram_url', 'linkedin_url', 'csr_statement',
         'referral_program', 'sustainability_intro', 'investment_intro',
         'ga_measurement_id', 'gtm_container_id', 'meta_pixel_id',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'hero_show_whatsapp_cta' => 'boolean',
+            'hero_images' => 'array',
+            'assistant_buyer_types' => 'array',
+            'assistant_budget_ranges' => 'array',
+        ];
+    }
 
     public static function current(): self
     {
@@ -71,12 +92,217 @@ class SiteSetting extends Model
         return $this->assetUrl($this->favicon_path);
     }
 
-    protected function assetUrl(?string $path): ?string
+    public function heroImageUrl(): ?string
     {
-        if (blank($path)) {
-            return null;
+        return $this->heroImageUrls()[0] ?? null;
+    }
+
+    /**
+     * @return list<string>
+     */
+    public function heroImagePaths(): array
+    {
+        $images = $this->hero_images;
+
+        if (is_array($images) && $images !== []) {
+            return array_values(array_filter($images, fn (mixed $path): bool => is_string($path) && $path !== ''));
         }
 
-        return Storage::disk('public')->url($path);
+        if (filled($this->hero_image_path)) {
+            return [$this->hero_image_path];
+        }
+
+        return [];
+    }
+
+    /**
+     * @return list<string>
+     */
+    public function heroImageUrls(): array
+    {
+        return array_values(array_filter(array_map(
+            fn (string $path): ?string => $this->assetUrl($path),
+            $this->heroImagePaths(),
+        )));
+    }
+
+    /**
+     * Images shown in the homepage hero grid (1 large + 2 small).
+     *
+     * @return list<string>
+     */
+    public function homepageHeroImageUrls(): array
+    {
+        return array_slice($this->heroImageUrls(), 0, self::HOMEPAGE_HERO_GRID_LIMIT);
+    }
+
+    public function heroEyebrow(): string
+    {
+        return $this->hero_eyebrow ?: 'Trusted real estate company Kenya';
+    }
+
+    public function heroHeadline(): string
+    {
+        return $this->hero_headline ?: $this->tagline ?: 'Trusted guidance. Transparent process. Sustainable value.';
+    }
+
+    public function heroDescription(): string
+    {
+        return $this->hero_description ?: 'Clean title deeds, verified plots, and professional property advisory across Nairobi, Kiambu, Kikuyu and Nachu. Buy land in Kenya with confidence — including diaspora-friendly remote purchase support.';
+    }
+
+    /**
+     * Plain-text version of a rich-editor field (no visible HTML tags on the public site).
+     */
+    public function plainTextFromRich(?string $html, string $default = ''): string
+    {
+        if (blank($html)) {
+            return $default;
+        }
+
+        $text = html_entity_decode($html, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+
+        return \Illuminate\Support\Str::squish(strip_tags($text));
+    }
+
+    public function aboutSummary(): string
+    {
+        return $this->plainTextFromRich(
+            $this->about_summary,
+            'Acremann Properties is a professional real estate firm specialising in verified residential and commercial plots across Nairobi, Kiambu, Kikuyu and Nachu.',
+        );
+    }
+
+    public function missionStatement(): string
+    {
+        return $this->plainTextFromRich(
+            $this->mission,
+            'To deliver legally-grounded, financially-disciplined land and property solutions that build lasting legacy for our clients.',
+        );
+    }
+
+    public function visionStatement(): string
+    {
+        return $this->plainTextFromRich(
+            $this->vision,
+            'To be Kenya\'s most trusted advisory-led real estate firm for clean-title land investment.',
+        );
+    }
+
+    public function investmentIntro(): string
+    {
+        return $this->plainTextFromRich(
+            $this->investment_intro,
+            'Whether you are building, investing, or buying from abroad, Acremann provides transparent advisory from first conversation to title handover.',
+        );
+    }
+
+    public function sustainabilityIntro(): string
+    {
+        return $this->plainTextFromRich(
+            $this->sustainability_intro,
+            'Responsible land use, green open spaces, solar-ready planning, and long-term community value guide every Acremann development.',
+        );
+    }
+
+    public function csrStatement(): string
+    {
+        return $this->plainTextFromRich(
+            $this->csr_statement,
+            'We invest in community tree planting, drainage improvements, and ethical land stewardship across every project.',
+        );
+    }
+
+    public function heroPrimaryCta(): array
+    {
+        return [
+            'label' => $this->hero_cta_primary_label ?: 'View properties',
+            'url' => $this->resolveUrl($this->hero_cta_primary_url, route('properties.index')),
+        ];
+    }
+
+    public function heroSecondaryCta(): array
+    {
+        return [
+            'label' => $this->hero_cta_secondary_label ?: 'Book a site visit',
+            'url' => $this->resolveUrl($this->hero_cta_secondary_url, route('contact')),
+        ];
+    }
+
+    public function heroWhatsappLabel(): string
+    {
+        return $this->hero_whatsapp_label ?: 'WhatsApp us';
+    }
+
+    public function heroShowsWhatsappCta(): bool
+    {
+        return $this->hero_show_whatsapp_cta ?? true;
+    }
+
+    public function heroShowsFeaturedProperties(): bool
+    {
+        return ($this->hero_media_mode ?: 'featured_properties') === 'featured_properties';
+    }
+
+    public function heroShowsImage(): bool
+    {
+        return $this->heroShowsGallery();
+    }
+
+    public function heroShowsGallery(): bool
+    {
+        return in_array($this->hero_media_mode, ['gallery', 'image'], true)
+            && $this->heroImagePaths() !== [];
+    }
+
+    public function heroIsTextOnly(): bool
+    {
+        return $this->hero_media_mode === 'none';
+    }
+
+    /**
+     * @return list<array{value: string, label: string}>
+     */
+    public function assistantBuyerTypes(): array
+    {
+        return $this->assistant_buyer_types ?: [
+            ['value' => 'individual', 'label' => 'Individual buyer'],
+            ['value' => 'diaspora', 'label' => 'Diaspora investor'],
+            ['value' => 'investor', 'label' => 'Institutional investor'],
+            ['value' => 'developer', 'label' => 'Developer / partner'],
+        ];
+    }
+
+    /**
+     * @return list<array{value: string, label: string}>
+     */
+    public function assistantBudgetRanges(): array
+    {
+        return $this->assistant_budget_ranges ?: [
+            ['value' => 'under_1m', 'label' => 'Under KES 1M'],
+            ['value' => '1m_3m', 'label' => 'KES 1M – 3M'],
+            ['value' => '3m_10m', 'label' => 'KES 3M – 10M'],
+            ['value' => 'over_10m', 'label' => 'Over KES 10M'],
+        ];
+    }
+
+    protected function resolveUrl(?string $url, string $default): string
+    {
+        $url = trim((string) $url);
+
+        if ($url === '') {
+            return $default;
+        }
+
+        if (str_starts_with($url, 'http://') || str_starts_with($url, 'https://') || str_starts_with($url, '//')) {
+            return $url;
+        }
+
+        return '/'.ltrim($url, '/');
+    }
+
+    protected function assetUrl(?string $path): ?string
+    {
+        return PublicStorage::url($path);
     }
 }

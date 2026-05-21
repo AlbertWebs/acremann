@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Services;
 
 use App\Filament\Resources\Services\Pages\CreateService;
 use App\Filament\Resources\Services\Pages\EditService;
+use App\Filament\Resources\Services\Pages\ListInvestServices;
 use App\Filament\Resources\Services\Pages\ListServices;
 use App\Filament\Resources\Services\Schemas\ServiceForm;
 use App\Filament\Resources\Services\Tables\ServicesTable;
@@ -17,6 +18,12 @@ use Filament\Tables\Table;
 class ServiceResource extends Resource
 {
     protected static ?string $model = Service::class;
+
+    protected static ?string $navigationLabel = 'Services';
+
+    protected static ?string $modelLabel = 'service';
+
+    protected static ?string $pluralModelLabel = 'services';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBriefcase;
 
@@ -43,6 +50,7 @@ class ServiceResource extends Resource
     {
         return [
             'index' => ListServices::route('/'),
+            'for-invest' => ListInvestServices::route('/for-invest'),
             'create' => CreateService::route('/create'),
             'edit' => EditService::route('/{record}/edit'),
         ];

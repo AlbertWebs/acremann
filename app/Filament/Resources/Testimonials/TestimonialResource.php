@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Testimonials;
 
 use App\Filament\Resources\Testimonials\Pages\CreateTestimonial;
 use App\Filament\Resources\Testimonials\Pages\EditTestimonial;
+use App\Filament\Resources\Testimonials\Pages\ListInvestTestimonials;
 use App\Filament\Resources\Testimonials\Pages\ListTestimonials;
 use App\Filament\Resources\Testimonials\Schemas\TestimonialForm;
 use App\Filament\Resources\Testimonials\Tables\TestimonialsTable;
@@ -43,6 +44,7 @@ class TestimonialResource extends Resource
     {
         return [
             'index' => ListTestimonials::route('/'),
+            'for-invest' => ListInvestTestimonials::route('/for-invest'),
             'create' => CreateTestimonial::route('/create'),
             'edit' => EditTestimonial::route('/{record}/edit'),
         ];

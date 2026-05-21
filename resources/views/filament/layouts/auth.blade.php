@@ -21,7 +21,24 @@
                     ($maxContentWidth instanceof Width) ? "fi-width-{$maxContentWidth->value}" : $maxContentWidth,
                 ])
             >
-                {{ $slot }}
+                @php($authSettings = \App\Models\SiteSetting::current())
+                <div class="acremann-auth-card">
+                    <div class="acremann-auth-card-top">
+                        <a href="{{ config('acremann.url') }}" class="acremann-auth-form-logo-link" target="_blank" rel="noopener noreferrer">
+                            @if ($logo = $authSettings->themeLogoUrl())
+                                <img src="{{ $logo }}" alt="{{ $authSettings->company_name }}" class="acremann-auth-form-logo">
+                            @else
+                                <span class="acremann-auth-form-logo-text">{{ $authSettings->company_name }}</span>
+                            @endif
+                        </a>
+                        <span class="acremann-auth-cms-badge">CMS</span>
+                    </div>
+                    {{ $slot }}
+                </div>
+                <p class="acremann-auth-help">
+                    Trouble signing in?
+                    <a href="mailto:{{ $authSettings->email ?: config('acremann.email') }}">Contact {{ $authSettings->email ?: config('acremann.email') }}</a>
+                </p>
             </main>
         </div>
     </div>

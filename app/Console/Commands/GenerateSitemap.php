@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Post;
 use App\Models\Property;
+use App\Models\Service;
 use Illuminate\Console\Command;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\Tags\Url;
@@ -18,7 +19,7 @@ class GenerateSitemap extends Command
     {
         $sitemap = Sitemap::create();
 
-        foreach (['/', '/about', '/services', '/properties', '/invest', '/sustainability', '/certifications', '/insights', '/faqs', '/contact', '/referrals', '/privacy', '/client-portal'] as $path) {
+        foreach (['/', '/about', '/services', '/properties', '/invest', '/sustainability', '/certifications', '/insights', '/faqs', '/contact', '/book-visit', '/referrals', '/privacy', '/terms', '/client-portal'] as $path) {
             $sitemap->add(Url::create(url($path))->setChangeFrequency(Url::CHANGE_FREQUENCY_WEEKLY));
         }
 
@@ -28,6 +29,10 @@ class GenerateSitemap extends Command
 
         Post::published()->each(fn ($p) => $sitemap->add(
             Url::create(route('posts.show', $p->slug))->setChangeFrequency(Url::CHANGE_FREQUENCY_MONTHLY)
+        ));
+
+        Service::published()->each(fn ($s) => $sitemap->add(
+            Url::create(route('services.show', $s->slug))->setChangeFrequency(Url::CHANGE_FREQUENCY_MONTHLY)
         ));
 
         $sitemap->writeToFile(public_path('sitemap.xml'));

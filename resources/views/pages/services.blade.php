@@ -1,20 +1,65 @@
 @extends('layouts.app')
+@php
+    $metaTitle = 'Property services Kenya | Land sales, advisory & diaspora support';
+    $metaDescription = 'Professional real estate services in Nairobi, Kiambu, Kikuyu and Nachu — land sales, investment advisory, conveyancing, and diaspora-friendly remote purchase support.';
+@endphp
 @section('content')
-<section class="section-padding">
+<section class="services-hero section-padding" aria-labelledby="services-hero-heading">
     <div class="container-site">
-        <p class="text-sm text-gold">What we offer</p>
-        <h1 class="mt-2 text-4xl">Professional property services</h1>
-        <p class="mt-4 max-w-2xl text-muted">From land sales and investment advisory to conveyancing and diaspora support — Acremann delivers transparent, legally-grounded real estate solutions.</p>
-        <div class="mt-12 grid gap-6 md:grid-cols-2">
+        <div class="services-hero-inner">
+            @if($settings->whiteLogoUrl())
+                <x-site-logo :settings="$settings" variant="white" class="mb-6 max-h-10 w-auto" />
+            @endif
+            <p class="services-eyebrow">What we offer</p>
+            <h1 id="services-hero-heading" class="services-hero-title">Professional property services</h1>
+            <p class="services-hero-lead">
+                From verified land sales and investment advisory to conveyancing and diaspora support — transparent, legally-grounded solutions for buyers in Kenya and abroad.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="services-list-section section-padding bg-white" aria-labelledby="services-list-heading">
+    <div class="container-site">
+        <div class="services-section-header">
+            <h2 id="services-list-heading" class="services-section-title">Explore our services</h2>
+            <p class="services-section-lead">Each service has a dedicated page with guidance for local buyers and diaspora investors.</p>
+        </div>
+
+        <div class="services-grid">
             @foreach($services as $service)
-                <div class="card">
-                    <h3 class="font-serif text-xl">{{ $service->title }}</h3>
-                    <p class="mt-2 text-muted">{{ $service->summary }}</p>
-                    @if($service->body)<p class="mt-3 text-sm text-muted">{{ $service->body }}</p>@endif
-                </div>
+                <a href="{{ route('services.show', $service->slug) }}" class="services-card group">
+                    @if($featuredUrl = $service->featuredImageUrl())
+                        <div class="services-card-media">
+                            <img src="{{ $featuredUrl }}" alt="" class="services-card-media-img" loading="lazy" decoding="async">
+                        </div>
+                    @else
+                        <div class="services-card-icon" aria-hidden="true">
+                            @include('services.partials.icon', ['icon' => $service->icon, 'class' => 'h-6 w-6'])
+                        </div>
+                    @endif
+                    <h3 class="services-card-title">{{ $service->title }}</h3>
+                    <p class="services-card-summary">{{ $service->plainSummary() }}</p>
+                    <span class="services-card-link">
+                        View service
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/>
+                        </svg>
+                    </span>
+                </a>
             @endforeach
         </div>
-        <a href="{{ route('contact') }}" class="btn-primary mt-10 inline-flex">Enquire about our services</a>
+
+        <div class="services-cta-band">
+            <div>
+                <h2 class="services-cta-title">Not sure which service you need?</h2>
+                <p class="services-cta-lead">Tell us your goals — residential plot, investment, or diaspora purchase — and we will point you to the right advisory path.</p>
+            </div>
+            <div class="services-cta-buttons">
+                <a href="{{ route('contact') }}" class="btn-primary">Speak to advisory</a>
+                <a href="{{ route('invest') }}" class="btn-outline">Invest with Acremann</a>
+            </div>
+        </div>
     </div>
 </section>
 @endsection

@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Certifications;
 
 use App\Filament\Resources\Certifications\Pages\CreateCertification;
 use App\Filament\Resources\Certifications\Pages\EditCertification;
+use App\Filament\Resources\Certifications\Pages\ListInvestCertifications;
 use App\Filament\Resources\Certifications\Pages\ListCertifications;
 use App\Filament\Resources\Certifications\Schemas\CertificationForm;
 use App\Filament\Resources\Certifications\Tables\CertificationsTable;
@@ -43,6 +44,7 @@ class CertificationResource extends Resource
     {
         return [
             'index' => ListCertifications::route('/'),
+            'for-invest' => ListInvestCertifications::route('/for-invest'),
             'create' => CreateCertification::route('/create'),
             'edit' => EditCertification::route('/{record}/edit'),
         ];

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\NewsletterSubscriber;
 use App\Models\Property;
+use App\Services\AssistantSessionService;
 use App\Services\LeadService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -11,7 +12,10 @@ use Illuminate\Validation\Rule;
 
 class LeadController extends Controller
 {
-    public function __construct(protected LeadService $leadService) {}
+    public function __construct(
+        protected LeadService $leadService,
+        protected AssistantSessionService $assistantSessions,
+    ) {}
 
     public function store(Request $request)
     {
@@ -88,23 +92,39 @@ class LeadController extends Controller
     public function chatbot(Request $request)
     {
         $validated = $request->validate([
-            'name' => ['nullable', 'string', 'max:255'],
-            'phone' => ['nullable', 'string', 'max:30'],
+            'session_id' => ['nullable', 'string', 'max:64'],
+            'name' => ['required', 'string', 'max:255'],
+            'phone' => ['required', 'string', 'max:30'],
             'email' => ['nullable', 'email', 'max:255'],
             'message' => ['nullable', 'string', 'max:2000'],
+            'buyer_type' => ['nullable', 'string', 'max:50'],
+            'budget' => ['nullable', 'string', 'max:50'],
             'journey' => ['required', 'string', 'max:100'],
-            'consent_callback' => ['nullable'],
+            'page_url' => ['nullable', 'string', 'max:500'],
+            'property_id' => ['nullable', 'exists:properties,id'],
+            'consent_callback' => ['accepted'],
         ]);
 
-        $this->leadService->store([
+        $lead = $this->leadService->store([
             'source' => 'chatbot',
             'name' => $validated['name'] ?? null,
             'phone' => $validated['phone'] ?? null,
             'email' => $validated['email'] ?? null,
             'message' => $validated['message'] ?? null,
-            'metadata' => ['journey' => $validated['journey']],
+            'buyer_type' => $validated['buyer_type'] ?? null,
+            'budget' => $validated['budget'] ?? null,
+            'property_id' => $validated['property_id'] ?? null,
+            'metadata' => [
+                'journey' => $validated['journey'],
+                'session_id' => $validated['session_id'] ?? null,
+                'page_url' => $validated['page_url'] ?? null,
+            ],
             'consent_callback' => true,
         ]);
+
+        if (! empty($validated['session_id'])) {
+            $this->assistantSessions->attachLead($validated['session_id'], $lead, $validated);
+        }
 
         return response()->json(['success' => true]);
     }

@@ -22,7 +22,7 @@
 
         <ul class="acremann-auth-brand-features">
             <li>Manage listings &amp; property media</li>
-            <li>Review leads &amp; enquiries</li>
+            <li>Review leads &amp; assistant conversations</li>
             <li>Update site settings &amp; content</li>
         </ul>
 

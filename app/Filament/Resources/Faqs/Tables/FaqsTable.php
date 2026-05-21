@@ -22,6 +22,9 @@ class FaqsTable
                     ->sortable(),
                 IconColumn::make('is_published')
                     ->boolean(),
+                IconColumn::make('show_in_assistant')
+                    ->label('Assistant')
+                    ->boolean(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

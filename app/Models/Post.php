@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Support\PublicStorage;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -34,5 +35,10 @@ class Post extends Model
             ->whereNotNull('published_at')
             ->where('published_at', '<=', now())
             ->orderByDesc('published_at');
+    }
+
+    public function featuredImageUrl(): ?string
+    {
+        return PublicStorage::url($this->featured_image);
     }
 }
