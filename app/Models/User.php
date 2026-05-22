@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\AdminRole;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -24,6 +25,7 @@ class User extends Authenticatable implements FilamentUser
         'name',
         'email',
         'password',
+        'admin_role',
     ];
 
     /**
@@ -46,11 +48,23 @@ class User extends Authenticatable implements FilamentUser
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'admin_role' => AdminRole::class,
         ];
+    }
+
+    public function isSuperAdmin(): bool
+    {
+        return $this->admin_role === AdminRole::SuperAdmin;
+    }
+
+    public function canAccessFinance(): bool
+    {
+        return $this->isSuperAdmin();
     }
 
     public function canAccessPanel(Panel $panel): bool
     {
-        return true;
+        return $panel->getId() === 'admin';
     }
 }
+
