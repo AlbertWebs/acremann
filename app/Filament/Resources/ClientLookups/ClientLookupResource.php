@@ -13,14 +13,23 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class ClientLookupResource extends Resource
 {
     protected static ?string $model = ClientLookup::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedIdentification;
+    protected static ?string $navigationLabel = 'Client portal records';
 
-    protected static ?int $navigationSort = 11;
+    protected static ?string $modelLabel = 'client record';
+
+    protected static ?string $pluralModelLabel = 'client portal records';
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedKey;
+
+    protected static string|UnitEnum|null $navigationGroup = 'Client Portal';
+
+    protected static ?int $navigationSort = 1;
 
     public static function form(Schema $schema): Schema
     {

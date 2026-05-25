@@ -2,35 +2,38 @@
 
 namespace App\Providers\Filament;
 
-use Filament\Http\Middleware\Authenticate;
-use Filament\Http\Middleware\AuthenticateSession;
-use Filament\Http\Middleware\DisableBladeIconComponents;
-use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use App\Filament\Pages\Auth\Login;
 use App\Filament\Pages\Dashboard;
 use App\Filament\Resources\AssistantMenuItems\AssistantMenuItemResource;
 use App\Filament\Resources\AssistantSessions\AssistantSessionResource;
-use App\Filament\Resources\SiteSettings\Pages\ManageAssistantSettings;
+use App\Filament\Resources\Invest\Pages\ManageInvestPage;
 use App\Filament\Resources\Leads\LeadResource;
 use App\Filament\Resources\Properties\PropertyResource;
-use App\Filament\Resources\Invest\Pages\ManageInvestPage;
+use App\Filament\Resources\Services\ServiceResource;
+use App\Filament\Resources\SiteSettings\Pages\ManageAssistantSettings;
 use App\Filament\Resources\SiteSettings\Pages\ManageHomepageHero;
+use App\Filament\Resources\SiteSettings\Pages\ManageServicesPage;
 use App\Filament\Resources\SiteSettings\SiteSettingResource;
+use App\Filament\Resources\SiteVisitBookings\SiteVisitBookingResource;
 use App\Models\SiteSetting;
 use Filament\Actions\Action;
 use Filament\Enums\UserMenuPosition;
+use Filament\Http\Middleware\Authenticate;
+use Filament\Http\Middleware\AuthenticateSession;
+use Filament\Http\Middleware\DisableBladeIconComponents;
+use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\Support\Icons\Heroicon;
 use Filament\View\PanelsRenderHook;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
-use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\HtmlString;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\HtmlString;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 class AdminPanelProvider extends PanelProvider
@@ -92,7 +95,7 @@ class AdminPanelProvider extends PanelProvider
                 Action::make('assistantContent')
                     ->label('Assistant content')
                     ->icon(Heroicon::OutlinedAdjustmentsHorizontal)
-                    ->url(fn (): string => ManageAssistantSettings::getUrl())
+                    ->url(fn (): string => ManageAssistantSettings::getUrl(['record' => SiteSetting::current()]))
                     ->sort(-16),
                 Action::make('assistantMenu')
                     ->label('Assistant menu')
@@ -104,6 +107,11 @@ class AdminPanelProvider extends PanelProvider
                     ->icon(Heroicon::OutlinedUserGroup)
                     ->url(fn (): string => LeadResource::getUrl('index'))
                     ->sort(-14),
+                Action::make('siteVisitBookings')
+                    ->label('Site visit bookings')
+                    ->icon(Heroicon::OutlinedCalendarDays)
+                    ->url(fn (): string => SiteVisitBookingResource::getUrl('index'))
+                    ->sort(-13),
                 Action::make('investPage')
                     ->label('Invest page')
                     ->icon(Heroicon::OutlinedChartBarSquare)
@@ -112,13 +120,23 @@ class AdminPanelProvider extends PanelProvider
                 Action::make('homepageHero')
                     ->label('Homepage Hero')
                     ->icon(Heroicon::OutlinedHomeModern)
-                    ->url(fn (): string => ManageHomepageHero::getUrl())
+                    ->url(fn (): string => ManageHomepageHero::getUrl(['record' => SiteSetting::current()]))
                     ->sort(-13),
                 Action::make('properties')
                     ->label('Properties')
                     ->icon(Heroicon::OutlinedBuildingOffice2)
                     ->url(fn (): string => PropertyResource::getUrl('index'))
                     ->sort(-12),
+                Action::make('services')
+                    ->label('Services')
+                    ->icon(Heroicon::OutlinedBriefcase)
+                    ->url(fn (): string => ServiceResource::getUrl('index'))
+                    ->sort(-11),
+                Action::make('servicesPage')
+                    ->label('Services page intro')
+                    ->icon(Heroicon::OutlinedRectangleStack)
+                    ->url(fn (): string => ManageServicesPage::getUrl(['record' => SiteSetting::current()]))
+                    ->sort(-10),
                 Action::make('siteSettings')
                     ->label('Site settings')
                     ->icon(Heroicon::OutlinedCog6Tooth)

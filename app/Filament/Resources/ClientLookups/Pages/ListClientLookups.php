@@ -10,6 +10,8 @@ class ListClientLookups extends ListRecords
 {
     protected static string $resource = ClientLookupResource::class;
 
+    protected static ?string $title = 'Client portal records';
+
     protected function getHeaderActions(): array
     {
         return [

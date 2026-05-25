@@ -3,8 +3,6 @@
 namespace App\Filament\Resources\SiteSettings\Pages;
 
 use App\Filament\Resources\Invest\Pages\ManageInvestPage;
-use App\Filament\Resources\SiteSettings\Pages\ManageAssistantSettings;
-use App\Filament\Resources\SiteSettings\Pages\ManageHomepageHero;
 use App\Filament\Resources\SiteSettings\SiteSettingResource;
 use App\Models\SiteSetting;
 use Filament\Actions\Action;
@@ -27,7 +25,7 @@ class ManageSiteSetting extends EditRecord
         parent::mount(SiteSetting::current()->getKey());
     }
 
-    public function getSubheading(): string | Htmlable | null
+    public function getSubheading(): string|Htmlable|null
     {
         return 'Your public identity, contact channels, page copy, and analytics — organised in tabs below.';
     }
@@ -44,12 +42,12 @@ class ManageSiteSetting extends EditRecord
                 ->label('Homepage hero')
                 ->icon(Heroicon::OutlinedHomeModern)
                 ->color('gray')
-                ->url(ManageHomepageHero::getUrl()),
+                ->url(ManageHomepageHero::getUrl(['record' => SiteSetting::current()])),
             Action::make('assistantContent')
                 ->label('Assistant')
                 ->icon(Heroicon::OutlinedChatBubbleLeftRight)
                 ->color('gray')
-                ->url(ManageAssistantSettings::getUrl()),
+                ->url(ManageAssistantSettings::getUrl(['record' => SiteSetting::current()])),
         ];
     }
 

@@ -6,10 +6,13 @@
     'messageLabel' => 'Message',
     'messagePlaceholder' => 'Tell us about your interest, timeline, or questions…',
     'siteVisit' => false,
+    'action' => null,
 ])
-<form action="{{ route('leads.store') }}" method="POST" class="acremann-form">
+<form action="{{ $action ?? route('leads.store') }}" method="POST" class="acremann-form">
     @csrf
-    <input type="hidden" name="source" value="{{ $source }}">
+    @if(! $siteVisit)
+        <input type="hidden" name="source" value="{{ $source }}">
+    @endif
     @if($property)
         <input type="hidden" name="property_id" value="{{ $property->id }}">
     @endif

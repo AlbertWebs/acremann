@@ -7,11 +7,13 @@ use App\Filament\Resources\Legal\Pages\ManageTermsPage;
 use App\Models\Page;
 use BackedEnum;
 use Filament\Facades\Filament;
+use Filament\Resources\Pages\EditRecord;
 use Filament\Resources\Pages\Page as ResourcePage;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
 use UnitEnum;
 
 class LegalPagesResource extends Resource
@@ -75,7 +77,7 @@ class LegalPagesResource extends Resource
             return false;
         }
 
-        if (is_subclass_of($page, \Filament\Resources\Pages\EditRecord::class)) {
+        if (is_subclass_of($page, EditRecord::class)) {
             return (new \ReflectionClass($page))->getStaticPropertyValue('shouldRegisterNavigation');
         }
 
@@ -108,5 +110,20 @@ class LegalPagesResource extends Resource
     public static function canCreate(): bool
     {
         return false;
+    }
+
+    /**
+     * No list page — breadcrumbs link to the privacy editor.
+     *
+     * @param  array<mixed>  $parameters
+     */
+    public static function getIndexUrl(
+        array $parameters = [],
+        bool $isAbsolute = true,
+        ?string $panel = null,
+        ?Model $tenant = null,
+        bool $shouldGuessMissingParameters = false,
+    ): string {
+        return static::getUrl('privacy', $parameters, $isAbsolute, $panel, $tenant, $shouldGuessMissingParameters);
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'company_name' => env('ACREMANN_COMPANY_NAME', 'Acremann Properties'),
     'domain' => env('ACREMANN_DOMAIN', 'acremannproperties.com'),
     'url' => rtrim(env('APP_URL', 'https://acremannproperties.com'), '/'),
     'whatsapp' => env('ACREMANN_WHATSAPP', '254115874901'),

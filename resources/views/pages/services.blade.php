@@ -7,14 +7,21 @@
 <section class="services-hero section-padding" aria-labelledby="services-hero-heading">
     <div class="container-site">
         <div class="services-hero-inner">
-            @if($settings->whiteLogoUrl())
-                <x-site-logo :settings="$settings" variant="white" class="mb-6 max-h-10 w-auto" />
+            @if($settings->servicesHeroLogoUrl())
+                <a href="{{ route('home') }}" class="services-hero-brand mb-6 inline-block" aria-label="{{ $settings->company_name }}">
+                    <img
+                        src="{{ $settings->servicesHeroLogoUrl() }}"
+                        alt=""
+                        class="services-hero-logo"
+                        width="176"
+                        height="40"
+                        decoding="async"
+                    />
+                </a>
             @endif
-            <p class="services-eyebrow">What we offer</p>
-            <h1 id="services-hero-heading" class="services-hero-title">Professional property services</h1>
-            <p class="services-hero-lead">
-                From verified land sales and investment advisory to conveyancing and diaspora support — transparent, legally-grounded solutions for buyers in Kenya and abroad.
-            </p>
+            <p class="services-eyebrow">{{ $settings->servicesPageEyebrow() }}</p>
+            <h1 id="services-hero-heading" class="services-hero-title">{{ $settings->servicesPageHeadline() }}</h1>
+            <p class="services-hero-lead">{{ $settings->servicesPageLead() }}</p>
         </div>
     </div>
 </section>
@@ -22,8 +29,8 @@
 <section class="services-list-section section-padding bg-white" aria-labelledby="services-list-heading">
     <div class="container-site">
         <div class="services-section-header">
-            <h2 id="services-list-heading" class="services-section-title">Explore our services</h2>
-            <p class="services-section-lead">Each service has a dedicated page with guidance for local buyers and diaspora investors.</p>
+            <h2 id="services-list-heading" class="services-section-title">{{ $settings->servicesPageSectionTitle() }}</h2>
+            <p class="services-section-lead">{{ $settings->servicesPageSectionLead() }}</p>
         </div>
 
         <div class="services-grid">

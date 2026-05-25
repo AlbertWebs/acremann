@@ -63,7 +63,7 @@ class SiteSettingForm
                         ->directory('branding')
                         ->disk('public')
                         ->maxSize(2048)
-                        ->helperText('For dark backgrounds.'),
+                        ->helperText('For dark backgrounds (e.g. /services hero). Upload cream or white artwork on a transparent PNG — not the green theme logo.'),
                     FileUpload::make('favicon_path')
                         ->label('Favicon')
                         ->image()

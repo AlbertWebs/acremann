@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -58,6 +59,14 @@ class Property extends Model implements HasMedia
         $this->addMediaCollection('hero')->singleFile();
         $this->addMediaCollection('gallery');
         $this->addMediaCollection('brochure')->singleFile();
+    }
+
+    public function registerMediaConversions(?Media $media = null): void
+    {
+        $this->addMediaConversion('preview')
+            ->width(800)
+            ->height(600)
+            ->performOnCollections('hero', 'gallery');
     }
 
     public function scopePublished($query)

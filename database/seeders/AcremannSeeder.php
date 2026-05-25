@@ -2,11 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\AssistantMenuItem;
 use App\Models\Certification;
 use App\Models\ClientLookup;
 use App\Models\Lead;
-use App\Models\Faq;
 use App\Models\NewsletterSubscriber;
 use App\Models\Page;
 use App\Models\Plot;
@@ -50,6 +48,11 @@ class AcremannSeeder extends Seeder
             'referral_program' => 'Refer a friend to Acremann and earn rewards when they complete a purchase. Our loyalty program recognises clients who grow with us.',
             'sustainability_intro' => 'Responsible land use, green open spaces, solar-ready planning, and long-term community value guide every Acremann development. Beyond marketing claims, we plan tree planting, drainage improvements, and protected open space from the earliest master-plan stage — so infrastructure, access, and environmental choices support families and investors for decades. Whether you are buying to build, hold, or pass land to the next generation, our sustainability markers are documented on every project we represent across Nairobi, Kiambu, Kikuyu and Nachu.',
             'investment_intro' => 'Whether you are an end-user, investor, or diaspora buyer, Acremann provides transparent advisory from site visit to title handover.',
+            'services_page_eyebrow' => 'What we offer',
+            'services_page_headline' => 'Professional property services',
+            'services_page_lead' => 'From verified land sales and investment advisory to conveyancing and diaspora support — transparent, legally-grounded solutions for buyers in Kenya and abroad.',
+            'services_page_section_title' => 'Explore our services',
+            'services_page_section_lead' => 'Each service has a dedicated page with guidance for local buyers and diaspora investors.',
             'assistant_heading' => 'Acremann Assistant',
             'assistant_subheading' => 'How can we help you today?',
             'assistant_title_body' => 'Every Acremann project comes with verified documentation and a transparent conveyancing process. Our team guides you from reservation to title registration.',
@@ -71,20 +74,6 @@ class AcremannSeeder extends Seeder
                 ['value' => 'over_10m', 'label' => 'Over KES 10M'],
             ],
         ]);
-
-        foreach ([
-            ['label' => 'Project information', 'action' => 'faq', 'journey' => 'faq', 'sort_order' => 1],
-            ['label' => 'Title & process questions', 'action' => 'title', 'journey' => 'title', 'sort_order' => 2],
-            ['label' => 'Book a site visit', 'action' => 'lead', 'journey' => 'site_visit', 'lead_form_title' => 'Book a site visit', 'sort_order' => 3],
-            ['label' => 'Pricing & financing', 'action' => 'lead', 'journey' => 'financing', 'lead_form_title' => 'Pricing & financing', 'sort_order' => 4],
-            ['label' => 'Chat on WhatsApp', 'action' => 'whatsapp', 'sort_order' => 5],
-        ] as $item) {
-            AssistantMenuItem::create([
-                ...$item,
-                'is_published' => true,
-                'open_in_new_tab' => true,
-            ]);
-        }
 
         $nachu = Property::create([
             'title' => 'Acremann Nachu Gardens',
@@ -166,11 +155,7 @@ class AcremannSeeder extends Seeder
 
         $this->seedServices();
 
-        Faq::insert([
-            ['category' => 'general', 'question' => 'How do I buy land in Kenya safely?', 'answer' => 'Verify the title, conduct an official search, use a qualified advocate, and work with a trusted firm like Acremann for end-to-end transparency.', 'sort_order' => 1, 'is_published' => true, 'show_in_assistant' => true, 'created_at' => now(), 'updated_at' => now()],
-            ['category' => 'title', 'question' => 'What is a clean title deed?', 'answer' => 'A clean title has no encumbrances, disputes, or unpaid charges. Acremann provides verified documentation before you commit.', 'sort_order' => 2, 'is_published' => true, 'show_in_assistant' => true, 'created_at' => now(), 'updated_at' => now()],
-            ['category' => 'diaspora', 'question' => 'Can I buy land from abroad?', 'answer' => 'Yes. Acremann supports diaspora buyers with virtual site visits, documented POA, and secure payment milestones.', 'sort_order' => 3, 'is_published' => true, 'show_in_assistant' => true, 'created_at' => now(), 'updated_at' => now()],
-        ]);
+        $this->call(AssistantContentSeeder::class);
 
         Post::insert([
             [
@@ -212,8 +197,7 @@ class AcremannSeeder extends Seeder
         Page::create(['slug' => 'privacy', 'title' => 'Privacy Notice', 'content' => '<p>Acremann Properties collects personal data when you submit enquiries, subscribe to our newsletter, or use our client portal. We use this data to respond to your requests, improve our services, and — with consent — send marketing communications. You may request access, correction, or deletion of your data by contacting <a href="mailto:info@acremannproperties.com">info@acremannproperties.com</a>. We retain data only as long as necessary for these purposes.</p>']);
         Page::create(['slug' => 'terms', 'title' => 'Terms and Conditions', 'content' => '<p>These terms govern your use of the Acremann Properties website and services. By submitting an enquiry, booking a site visit, or engaging our advisory team, you agree to receive communications related to your request and to provide accurate information. Property availability, pricing, and title status are subject to verification at the time of transaction. Acremann does not guarantee outcomes of third-party searches or financing. For questions about these terms, contact <a href="mailto:info@acremannproperties.com">info@acremannproperties.com</a>.</p>']);
 
-        ClientLookup::create(['reference_number' => 'ACR-TITLE-001', 'lookup_type' => 'title', 'status_message' => 'Title search complete. Transfer in progress — estimated completion 14 days.']);
-        ClientLookup::create(['reference_number' => 'ACR-PAY-001', 'lookup_type' => 'payment', 'status_message' => 'Account current. Next installment due 1 June 2026.']);
+        $this->seedClientLookups();
 
         $this->seedAnalyticsData($nachu);
     }
@@ -261,6 +245,35 @@ class AcremannSeeder extends Seeder
                     'name' => $data['name'],
                     'sort_order' => $data['sort_order'],
                 ],
+                $data
+            );
+        }
+    }
+
+    protected function seedClientLookups(): void
+    {
+        $records = [
+            [
+                'reference_number' => 'ACR-TITLE-001',
+                'lookup_type' => 'title',
+                'client_name' => 'Demo Title Client',
+                'client_phone' => '254712345678',
+                'client_email' => 'title.client@example.com',
+                'status_message' => 'Title search complete. Transfer in progress — estimated completion 14 days.',
+            ],
+            [
+                'reference_number' => 'ACR-PAY-001',
+                'lookup_type' => 'payment',
+                'client_name' => 'Demo Payment Client',
+                'client_phone' => '254798765432',
+                'client_email' => 'payment.client@example.com',
+                'status_message' => 'Account current. Next installment due 1 June 2026.',
+            ],
+        ];
+
+        foreach ($records as $data) {
+            ClientLookup::updateOrCreate(
+                ['reference_number' => $data['reference_number']],
                 $data
             );
         }

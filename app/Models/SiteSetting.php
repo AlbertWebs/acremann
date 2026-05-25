@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Support\PublicStorage;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class SiteSetting extends Model
 {
@@ -24,6 +25,8 @@ class SiteSetting extends Model
         'whatsapp', 'phone', 'email', 'address', 'youtube_url', 'podcast_url',
         'facebook_url', 'instagram_url', 'linkedin_url', 'csr_statement',
         'referral_program', 'sustainability_intro', 'investment_intro',
+        'services_page_eyebrow', 'services_page_headline', 'services_page_lead',
+        'services_page_section_title', 'services_page_section_lead',
         'ga_measurement_id', 'gtm_container_id', 'meta_pixel_id',
     ];
 
@@ -80,6 +83,14 @@ class SiteSetting extends Model
     public function whiteLogoUrl(): ?string
     {
         return $this->assetUrl($this->logo_white_path);
+    }
+
+    /**
+     * Logo for dark hero sections (e.g. /services). Uses the white logo only — never the theme logo.
+     */
+    public function servicesHeroLogoUrl(): ?string
+    {
+        return $this->whiteLogoUrl();
     }
 
     public function logoUrl(): ?string
@@ -151,6 +162,31 @@ class SiteSetting extends Model
         return $this->hero_description ?: 'Clean title deeds, verified plots, and professional property advisory across Nairobi, Kiambu, Kikuyu and Nachu. Buy land in Kenya with confidence — including diaspora-friendly remote purchase support.';
     }
 
+    public function servicesPageEyebrow(): string
+    {
+        return $this->services_page_eyebrow ?: 'What we offer';
+    }
+
+    public function servicesPageHeadline(): string
+    {
+        return $this->services_page_headline ?: 'Professional property services';
+    }
+
+    public function servicesPageLead(): string
+    {
+        return $this->services_page_lead ?: 'From verified land sales and investment advisory to conveyancing and diaspora support — transparent, legally-grounded solutions for buyers in Kenya and abroad.';
+    }
+
+    public function servicesPageSectionTitle(): string
+    {
+        return $this->services_page_section_title ?: 'Explore our services';
+    }
+
+    public function servicesPageSectionLead(): string
+    {
+        return $this->services_page_section_lead ?: 'Each service has a dedicated page with guidance for local buyers and diaspora investors.';
+    }
+
     /**
      * Plain-text version of a rich-editor field (no visible HTML tags on the public site).
      */
@@ -162,7 +198,7 @@ class SiteSetting extends Model
 
         $text = html_entity_decode($html, ENT_QUOTES | ENT_HTML5, 'UTF-8');
 
-        return \Illuminate\Support\Str::squish(strip_tags($text));
+        return Str::squish(strip_tags($text));
     }
 
     public function aboutSummary(): string

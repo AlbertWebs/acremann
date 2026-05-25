@@ -84,15 +84,18 @@
             </a>
 
             <nav class="site-header-nav hidden flex-1 items-center justify-center xl:flex" aria-label="Main">
-                @foreach($navLinks as $link)
-                    <a
-                        href="{{ route($link['route']) }}"
-                        @class([
-                            'site-header-nav-link',
-                            'site-header-nav-link-active' => $isNavActive($link),
-                        ])
-                    >{{ $link['label'] }}</a>
-                @endforeach
+                <div class="site-header-nav-track" role="list">
+                    @foreach($navLinks as $link)
+                        <a
+                            href="{{ route($link['route']) }}"
+                            role="listitem"
+                            @class([
+                                'site-header-nav-link',
+                                'site-header-nav-link-active' => $isNavActive($link),
+                            ])
+                        >{{ $link['label'] }}</a>
+                    @endforeach
+                </div>
             </nav>
 
             <div class="site-header-actions">
@@ -165,19 +168,28 @@
         @endif
 
         <nav class="container-site site-header-mobile-nav" aria-label="Mobile">
-            @foreach($navLinks as $link)
-                <a
-                    href="{{ route($link['route']) }}"
-                    @click="mobileMenu = false"
-                    @class([
-                        'site-header-mobile-link',
-                        'site-header-nav-link-active' => $isNavActive($link),
-                    ])
-                >{{ $link['label'] }}</a>
-            @endforeach
+            <p class="site-header-mobile-label">Explore</p>
+            <div class="site-header-mobile-primary">
+                @foreach($navLinks as $link)
+                    <a
+                        href="{{ route($link['route']) }}"
+                        @click="mobileMenu = false"
+                        @class([
+                            'site-header-mobile-link',
+                            'site-header-mobile-link-active' => $isNavActive($link),
+                        ])
+                    >
+                        <span>{{ $link['label'] }}</span>
+                        <svg class="site-header-mobile-link-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                @endforeach
+            </div>
+            <p class="site-header-mobile-label">More</p>
             <div class="site-header-mobile-secondary">
-                <a href="{{ route('contact') }}" @click="mobileMenu = false" class="site-header-mobile-link">Contact us</a>
-                <a href="{{ route('certifications') }}" @click="mobileMenu = false" class="site-header-mobile-link">Certifications</a>
+                <a href="{{ route('contact') }}" @click="mobileMenu = false" class="site-header-mobile-link site-header-mobile-link-simple">Contact us</a>
+                <a href="{{ route('certifications') }}" @click="mobileMenu = false" class="site-header-mobile-link site-header-mobile-link-simple">Certifications</a>
             </div>
             <div class="site-header-mobile-actions">
                 @if($settings->whatsapp)
