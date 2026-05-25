@@ -1182,6 +1182,9 @@ input[type='radio'].fi-radio-input:checked {
 }
 
 .acremann-auth-form-shell.fi-simple-main {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
     margin: 0;
     width: 100%;
     max-width: 24rem;
@@ -1290,6 +1293,7 @@ input[type='radio'].fi-radio-input:checked {
 .acremann-auth-layout .fi-sc-form {
     margin-top: 0;
     padding: 1.25rem 1.5rem 0;
+    margin-bottom: 0;
     border: none;
     border-radius: 0;
     box-shadow: none;
@@ -1329,20 +1333,20 @@ input[type='radio'].fi-radio-input:checked {
     color: #6b6b66;
 }
 
-.acremann-auth-layout .fi-sc-form > .fi-sc-actions {
+.acremann-auth-layout .fi-sc-form .fi-sc-actions {
     margin: 1.25rem -1.5rem 0;
-    padding: 1.25rem 1.5rem 1.5rem;
+    padding: 1.5rem 1.5rem 2.5rem;
     border-top: 1px solid rgba(26, 26, 24, 0.08);
     background: linear-gradient(180deg, #fafaf8 0%, #f5f4f0 100%);
-    border-radius: 0;
+    border-radius: 0 0 0.75rem 0.75rem;
 }
 
-.acremann-auth-layout .fi-sc-form > .fi-sc-actions .fi-ac-btn-action[type='submit'] {
+.acremann-auth-layout .fi-sc-form .fi-sc-actions .fi-ac-btn-action[type='submit'] {
     width: 100%;
     justify-content: center;
     gap: 0.5rem;
-    padding-top: 0.8125rem;
-    padding-bottom: 0.8125rem;
+    padding-top: 0.875rem;
+    padding-bottom: 1.125rem;
     font-size: 0.9375rem;
     font-weight: 600;
     letter-spacing: 0.01em;
@@ -1351,12 +1355,12 @@ input[type='radio'].fi-radio-input:checked {
     transition: transform 0.12s ease, box-shadow 0.15s ease, background-color 0.15s ease;
 }
 
-.acremann-auth-layout .fi-sc-form > .fi-sc-actions .fi-ac-btn-action[type='submit']:hover {
+.acremann-auth-layout .fi-sc-form .fi-sc-actions .fi-ac-btn-action[type='submit']:hover {
     transform: translateY(-1px);
     box-shadow: 0 4px 14px rgba(45, 74, 62, 0.28);
 }
 
-.acremann-auth-layout .fi-sc-form > .fi-sc-actions .fi-ac-btn-action[type='submit']:active {
+.acremann-auth-layout .fi-sc-form .fi-sc-actions .fi-ac-btn-action[type='submit']:active {
     transform: translateY(0);
 }
 
@@ -1366,7 +1370,8 @@ input[type='radio'].fi-radio-input:checked {
 }
 
 .acremann-auth-help {
-    margin-top: 1.25rem;
+    margin-top: 0;
+    padding-top: 0.25rem;
     text-align: center;
     font-size: 0.8125rem;
     line-height: 1.5;

@@ -69,64 +69,47 @@
     </div>
 </section>
 
-@if($leadership->isNotEmpty())
-<section class="about-team-section section-padding" aria-labelledby="about-leadership-heading">
+@if($leadership->isNotEmpty() || $team->isNotEmpty())
+<section class="about-team-section section-padding" aria-labelledby="about-team-heading">
     <div class="container-site">
         <div class="about-team-header">
-            <div>
-                <p class="about-eyebrow-dark">Leadership</p>
-                <h2 id="about-leadership-heading" class="about-section-title">People who set the standard</h2>
-                <p class="about-section-lead about-section-lead-left">Experienced advisors overseeing title discipline, client care, and project integrity.</p>
-            </div>
-        </div>
-        <div class="about-team-grid about-team-grid-leadership">
-            @foreach($leadership as $member)
-                <article class="about-team-card about-team-card-leadership">
-                    <div class="about-team-avatar" aria-hidden="true">
-                        <span>{{ collect(explode(' ', $member->name))->map(fn ($w) => strtoupper(substr($w, 0, 1)))->take(2)->join('') }}</span>
-                    </div>
-                    <h3 class="about-team-name">{{ $member->name }}</h3>
-                    <p class="about-team-role">{{ $member->role }}</p>
-                    @if($member->plainBio())
-                        <p class="about-team-bio">{{ $member->plainBio() }}</p>
-                    @endif
-                </article>
-            @endforeach
-        </div>
-    </div>
-</section>
-@endif
-
-@if($team->isNotEmpty())
-<section class="about-team-section about-team-section-alt section-padding" aria-labelledby="about-team-heading">
-    <div class="container-site">
-        <div class="about-team-header">
-            <div>
+            <div class="about-team-intro">
                 <p class="about-eyebrow-dark">Our team</p>
-                <h2 id="about-team-heading" class="about-section-title">Advisory &amp; sales specialists</h2>
-                <p class="about-section-lead about-section-lead-left">The people you will work with from first enquiry through to handover.</p>
+                <h2 id="about-team-heading" class="about-section-title">People behind every verified plot</h2>
+                <p class="about-section-lead about-section-lead-left">
+                    Experienced advisors and client specialists — from title discipline and diaspora support to on-ground site visits.
+                </p>
             </div>
-            <a href="{{ route('contact') }}" class="about-team-cta hidden shrink-0 md:inline-flex">
+            <a href="{{ route('contact') }}" class="about-team-cta about-team-cta-desktop">
                 Work with us
                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/>
                 </svg>
             </a>
         </div>
-        <div class="about-team-grid">
-            @foreach($team as $member)
-                <article class="about-team-card">
-                    <div class="about-team-avatar about-team-avatar-muted" aria-hidden="true">
-                        <span>{{ collect(explode(' ', $member->name))->map(fn ($w) => strtoupper(substr($w, 0, 1)))->take(2)->join('') }}</span>
-                    </div>
-                    <h3 class="about-team-name">{{ $member->name }}</h3>
-                    <p class="about-team-role about-team-role-muted">{{ $member->role }}</p>
-                    @if($member->plainBio())
-                        <p class="about-team-bio">{{ $member->plainBio() }}</p>
-                    @endif
-                </article>
-            @endforeach
-        </div>
+
+        @if($leadership->isNotEmpty())
+            <div class="about-team-leadership" aria-label="Leadership">
+                <p class="about-team-subheading">Leadership</p>
+                <div class="about-team-leadership-grid">
+                    @foreach($leadership as $member)
+                        <x-team-member-card :member="$member" variant="leadership" />
+                    @endforeach
+                </div>
+            </div>
+        @endif
+
+        @if($team->isNotEmpty())
+            <div @class(['about-team-specialists', 'about-team-specialists-spaced' => $leadership->isNotEmpty()]) aria-label="Advisory and sales team">
+                <p class="about-team-subheading">Advisory &amp; sales specialists</p>
+                <div class="about-team-grid">
+                    @foreach($team as $member)
+                        <x-team-member-card :member="$member" />
+                    @endforeach
+                </div>
+            </div>
+        @endif
+
         <div class="about-team-footer">
             <a href="{{ route('contact') }}" class="about-team-cta about-team-cta-full">
                 Contact the team

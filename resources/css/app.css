@@ -124,7 +124,11 @@
     }
 
     .site-footer {
-        @apply bg-gradient-to-b from-white to-cream/35;
+        @apply relative border-t border-charcoal/10 bg-gradient-to-b from-white via-white to-cream/50;
+    }
+
+    .site-footer-accent {
+        @apply absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-forest via-gold/80 to-forest;
     }
 
     .site-footer-grid {
@@ -135,12 +139,34 @@
         @apply sm:col-span-2 lg:col-span-2 xl:col-span-4;
     }
 
+    @media (min-width: 1280px) {
+        .site-footer-brand {
+            @apply rounded-sm border border-charcoal/8 bg-cream/30 p-6;
+        }
+    }
+
+    .site-footer-brand-lockup {
+        @apply inline-flex flex-col gap-3 transition hover:opacity-90;
+    }
+
+    .site-footer-brand-lockup .site-footer-brand-logo {
+        @apply order-first;
+    }
+
     .site-footer-brand-name {
-        @apply font-serif text-2xl text-forest;
+        @apply font-serif text-2xl leading-tight text-forest;
     }
 
     .site-footer-tagline {
         @apply mt-3 max-w-md text-sm leading-relaxed text-muted;
+    }
+
+    .site-footer-cta {
+        @apply mt-5 flex flex-wrap gap-2.5;
+    }
+
+    .site-footer-cta-btn {
+        @apply text-sm !px-4 !py-2;
     }
 
     /* In DOM for crawlers; not shown to visitors */
@@ -152,44 +178,89 @@
         @apply xl:col-span-2;
     }
 
+    @media (min-width: 1280px) {
+        .site-footer-col {
+            @apply border-s border-charcoal/8 ps-6;
+        }
+
+        .site-footer-brand {
+            @apply border-s-0;
+        }
+    }
+
     .site-footer-newsletter {
         @apply sm:col-span-2 lg:col-span-2 xl:col-span-4;
     }
 
-    .site-footer-heading {
-        @apply text-xs font-semibold uppercase tracking-widest text-forest;
+    @media (min-width: 1280px) {
+        .site-footer-newsletter {
+            @apply border-s-0 ps-0;
+        }
     }
 
-    .site-footer-heading-social {
-        @apply mt-5;
+    .site-footer-heading {
+        @apply flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-forest;
+    }
+
+    .site-footer-heading::before {
+        content: '';
+        @apply h-px w-6 shrink-0 bg-gold/70;
     }
 
     .site-footer-links {
-        @apply mt-4 space-y-2.5;
+        @apply mt-4 space-y-1;
+    }
+
+    .site-footer-links li {
+        @apply -mx-2 rounded-md px-2 py-0.5 transition-colors hover:bg-forest/[0.04];
     }
 
     .site-footer-link {
-        @apply text-sm text-muted transition hover:text-forest;
+        @apply inline-block text-sm text-muted underline-offset-2 transition hover:text-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-forest/30 focus-visible:ring-offset-2;
     }
 
     .site-footer-link-active {
         @apply font-medium text-forest;
     }
 
+    .site-footer-link-highlight {
+        @apply font-medium text-forest;
+    }
+
     .site-footer-contact {
-        @apply mt-5 space-y-2.5;
+        @apply mt-6 space-y-3 border-t border-charcoal/8 pt-6;
+    }
+
+    .site-footer-contact-item {
+        @apply flex items-start gap-3;
+    }
+
+    .site-footer-contact-icon {
+        @apply mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-forest/8 text-forest;
     }
 
     .site-footer-address {
         @apply text-sm leading-relaxed text-muted;
     }
 
+    .site-footer-social-bar {
+        @apply border-t border-charcoal/10 bg-white/50 py-8;
+    }
+
+    .site-footer-social-bar-inner {
+        @apply flex flex-col items-center text-center;
+    }
+
+    .site-footer-social-label {
+        @apply mb-4 text-xs font-semibold uppercase tracking-widest text-forest;
+    }
+
     .site-footer-social {
-        @apply mt-3 flex flex-wrap items-center gap-2.5;
+        @apply flex flex-wrap items-center justify-center gap-3;
     }
 
     .site-footer-social-link {
-        @apply inline-flex h-10 w-10 items-center justify-center rounded-full border border-charcoal/10 bg-white text-muted shadow-sm transition hover:border-forest/25 hover:bg-forest/5 hover:text-forest;
+        @apply inline-flex h-10 w-10 items-center justify-center rounded-full border border-charcoal/10 bg-white text-muted shadow-sm transition hover:-translate-y-0.5 hover:border-forest/25 hover:bg-forest/5 hover:text-forest hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-forest/30 focus-visible:ring-offset-2;
     }
 
     .site-footer-social-link[aria-label='Facebook']:hover {
@@ -208,20 +279,43 @@
         @apply border-[#25D366]/30 text-[#128C7E];
     }
 
+    .site-footer-newsletter-card {
+        @apply rounded-sm border border-charcoal/10 bg-white p-5 shadow-sm md:p-6;
+        box-shadow:
+            0 1px 2px rgba(26, 26, 24, 0.04),
+            0 8px 24px rgba(26, 26, 24, 0.06);
+    }
+
+    .site-footer-newsletter-card .site-footer-heading::before {
+        @apply w-8 bg-forest/40;
+    }
+
     .site-footer-newsletter-lead {
-        @apply mt-2 text-sm text-muted;
+        @apply mt-2 text-sm leading-relaxed text-muted;
+    }
+
+    .site-footer-newsletter-success {
+        @apply mt-4 rounded-md border border-forest/20 bg-forest/5 px-3 py-2.5 text-sm font-medium text-forest;
     }
 
     .site-footer-form {
-        @apply max-w-sm;
+        @apply mt-4 max-w-none;
+    }
+
+    .site-footer-form .form-group:last-of-type {
+        @apply mb-0;
     }
 
     .site-footer-bar {
-        @apply border-t border-charcoal/10 bg-white/60 py-6;
+        @apply border-t border-charcoal/10 bg-charcoal/[0.02] py-5 md:py-6;
     }
 
     .site-footer-bar-inner {
-        @apply flex flex-col items-center gap-4 text-center text-xs text-muted md:flex-row md:flex-wrap md:justify-between md:text-left;
+        @apply grid gap-4 text-center text-xs text-muted md:grid-cols-3 md:items-center md:text-left;
+    }
+
+    .site-footer-copyright {
+        @apply md:justify-self-start;
     }
 
     .site-footer-copyright a {
@@ -229,7 +323,7 @@
     }
 
     .site-footer-legal {
-        @apply flex flex-wrap items-center justify-center gap-x-3 gap-y-1;
+        @apply flex flex-wrap items-center justify-center gap-x-3 gap-y-1 md:justify-self-center;
     }
 
     .site-footer-legal-divider {
@@ -237,11 +331,15 @@
     }
 
     .site-footer-legal-link {
-        @apply transition hover:text-forest;
+        @apply transition hover:text-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-forest/30 focus-visible:ring-offset-2;
     }
 
     .site-footer-legal-link-active {
         @apply font-semibold text-forest;
+    }
+
+    .site-footer-credit {
+        @apply md:justify-self-end;
     }
 
     /* Legal pages (privacy, terms) */
@@ -543,6 +641,176 @@
 
     .home-insights-footer {
         @apply mt-10 flex justify-center md:hidden;
+    }
+
+    /* Testimonials carousel (home) */
+    .testimonials-carousel-section {
+        @apply bg-white;
+    }
+
+    .testimonials-carousel-header {
+        @apply flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between;
+    }
+
+    .testimonials-carousel-controls {
+        @apply flex shrink-0 items-center gap-2;
+    }
+
+    .testimonials-carousel-btn {
+        @apply inline-flex h-10 w-10 items-center justify-center rounded-full border border-charcoal/12 bg-white text-forest shadow-sm transition hover:border-forest/30 hover:bg-forest/5 focus:outline-none focus:ring-2 focus:ring-forest/30 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-40;
+    }
+
+    .testimonials-carousel-viewport {
+        @apply overflow-hidden;
+    }
+
+    .testimonials-carousel-track {
+        @apply flex transition-transform duration-500 ease-out;
+    }
+
+    .testimonials-carousel-slide {
+        @apply w-full shrink-0;
+    }
+
+    .testimonials-carousel-grid {
+        @apply grid grid-cols-1 gap-6 md:grid-cols-3;
+    }
+
+    .testimonials-carousel-card {
+        @apply flex h-full flex-col;
+    }
+
+    .testimonials-carousel-quote {
+        @apply flex-1 font-serif text-lg italic leading-relaxed text-charcoal md:text-xl;
+    }
+
+    .testimonials-carousel-author {
+        @apply mt-5 border-t border-charcoal/8 pt-4 text-sm text-muted;
+    }
+
+    .testimonials-carousel-dots {
+        @apply mt-8 flex items-center justify-center gap-2;
+    }
+
+    .testimonials-carousel-dot {
+        @apply h-2 w-2 rounded-full bg-charcoal/20 transition hover:bg-charcoal/35 focus:outline-none focus:ring-2 focus:ring-forest/30 focus:ring-offset-2;
+    }
+
+    .testimonials-carousel-dot.is-active {
+        @apply w-6 bg-forest;
+    }
+
+    /* Certifications */
+    .certifications-section {
+        @apply border-y border-charcoal/10 bg-gradient-to-b from-cream/50 via-white to-white;
+    }
+
+    .certifications-section-header {
+        @apply flex flex-col gap-6 md:flex-row md:items-start md:justify-between;
+    }
+
+    .certifications-section-intro {
+        @apply max-w-2xl;
+    }
+
+    .certifications-eyebrow {
+        @apply text-sm font-semibold uppercase tracking-widest text-gold;
+    }
+
+    .certifications-title {
+        @apply mt-2 text-3xl md:text-4xl;
+    }
+
+    .certifications-lead {
+        @apply mt-4 text-base leading-relaxed text-muted;
+    }
+
+    .certifications-trust-badge {
+        @apply flex h-16 w-16 shrink-0 items-center justify-center rounded-full border border-gold/30 bg-forest/5;
+    }
+
+    .certifications-grid {
+        @apply mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5;
+    }
+
+    .certifications-grid-page {
+        @apply mt-0 sm:grid-cols-2 lg:grid-cols-3;
+    }
+
+    .certifications-card {
+        @apply flex h-full flex-col rounded-sm border border-charcoal/10 bg-white p-5 shadow-sm transition duration-300;
+        box-shadow: 0 1px 2px rgba(26, 26, 24, 0.04);
+    }
+
+    .certifications-card-link {
+        @apply no-underline hover:-translate-y-0.5 hover:border-forest/20 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-forest/30 focus-visible:ring-offset-2;
+    }
+
+    .certifications-card-page {
+        @apply p-6 md:p-7;
+    }
+
+    .certifications-card-logo {
+        @apply flex h-14 w-14 items-center justify-center rounded-md border border-charcoal/8 bg-cream/60;
+    }
+
+    .certifications-card-logo-img {
+        @apply h-10 w-auto max-w-[3.25rem] object-contain;
+    }
+
+    .certifications-card-initials {
+        @apply font-serif text-lg font-medium tracking-wide text-forest;
+    }
+
+    .certifications-card-body {
+        @apply mt-4 flex flex-1 flex-col;
+    }
+
+    .certifications-card-title {
+        @apply font-serif text-lg leading-snug text-charcoal;
+    }
+
+    .certifications-card-page .certifications-card-title {
+        @apply text-xl;
+    }
+
+    .certifications-card-desc {
+        @apply mt-2 flex-1 text-sm leading-relaxed text-muted;
+    }
+
+    .certifications-card-desc p {
+        @apply m-0;
+    }
+
+    .certifications-card-more {
+        @apply mt-4 inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-wide text-forest transition group-hover:text-gold;
+    }
+
+    .certifications-card-link:hover .certifications-card-more {
+        @apply text-gold;
+    }
+
+    .certifications-page-hero {
+        @apply bg-forest text-cream;
+        background-image:
+            radial-gradient(ellipse 55% 45% at 0% 0%, rgba(184, 149, 107, 0.2), transparent 55%),
+            radial-gradient(ellipse 50% 40% at 100% 100%, rgba(255, 255, 255, 0.06), transparent 50%);
+    }
+
+    .certifications-page-hero-inner {
+        @apply max-w-3xl;
+    }
+
+    .certifications-page-title {
+        @apply mt-2 text-4xl md:text-5xl;
+    }
+
+    .certifications-page-lead {
+        @apply mt-5 max-w-2xl text-base leading-relaxed text-cream/80;
+    }
+
+    .certifications-page-hero .certifications-eyebrow {
+        @apply text-gold;
     }
 
     .value-pillar-link {
@@ -910,72 +1178,161 @@
         @apply mt-4 text-base leading-relaxed text-muted;
     }
 
-    .about-team-section-alt {
-        @apply border-t border-charcoal/8 bg-gradient-to-b from-cream/40 to-white;
+    .about-team-section {
+        @apply border-t border-charcoal/8 bg-gradient-to-b from-cream/50 via-white to-cream/30;
     }
 
     .about-team-header {
         @apply flex flex-col gap-6 md:flex-row md:items-end md:justify-between md:gap-10;
     }
 
+    .about-team-intro {
+        @apply max-w-2xl;
+    }
+
+    .about-team-subheading {
+        @apply text-xs font-semibold uppercase tracking-widest text-gold;
+    }
+
+    .about-team-leadership-grid {
+        @apply mt-5 grid gap-6 lg:grid-cols-2 lg:gap-8;
+    }
+
+    .about-team-specialists-spaced {
+        @apply mt-14 border-t border-charcoal/8 pt-14;
+    }
+
+    .about-team-specialists .about-team-subheading {
+        @apply mb-5;
+    }
+
     .about-team-grid {
-        @apply mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-7;
-    }
-
-    .about-team-grid-leadership {
-        @apply lg:grid-cols-2;
-    }
-
-    .about-team-card {
-        @apply flex flex-col rounded-sm border border-charcoal/10 bg-white p-6 text-center shadow-sm transition duration-300 hover:border-forest/15 hover:shadow-md;
-    }
-
-    .about-team-card-leadership {
-        @apply text-left md:p-7;
-    }
-
-    .about-team-avatar {
-        @apply mx-auto mb-4 inline-flex h-14 w-14 items-center justify-center rounded-full border-2 border-gold/40 bg-forest/5 font-serif text-lg font-medium text-forest;
-    }
-
-    .about-team-card-leadership .about-team-avatar {
-        @apply mx-0;
-    }
-
-    .about-team-avatar-muted {
-        @apply border-charcoal/15 bg-charcoal/5 text-charcoal/70;
-    }
-
-    .about-team-name {
-        @apply font-serif text-xl text-forest;
-    }
-
-    .about-team-role {
-        @apply mt-1 text-sm font-semibold text-gold;
-    }
-
-    .about-team-role-muted {
-        @apply font-medium text-muted;
-    }
-
-    .about-team-bio {
-        @apply mt-3 text-sm leading-relaxed text-muted;
-    }
-
-    .about-team-card-leadership .about-team-bio {
-        @apply text-left;
+        @apply grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4;
     }
 
     .about-team-cta {
-        @apply inline-flex items-center justify-center gap-2 rounded-md border border-forest/20 bg-forest/5 px-5 py-2.5 text-sm font-semibold text-forest transition hover:border-forest/35 hover:bg-forest/10;
+        @apply inline-flex items-center justify-center gap-2 rounded-md border border-forest/20 bg-white px-5 py-2.5 text-sm font-semibold text-forest shadow-sm transition hover:border-forest/35 hover:bg-forest/5 hover:shadow;
+    }
+
+    .about-team-cta-desktop {
+        @apply hidden shrink-0 md:inline-flex;
     }
 
     .about-team-cta-full {
-        @apply w-full md:w-auto;
+        @apply w-full sm:w-auto;
     }
 
     .about-team-footer {
-        @apply mt-10 flex justify-center md:hidden;
+        @apply mt-12 flex justify-center md:hidden;
+    }
+
+    /* Team member cards (about + home) */
+    .team-card {
+        @apply flex h-full flex-col overflow-hidden rounded-sm border border-charcoal/10 bg-white shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-forest/20 hover:shadow-md;
+    }
+
+    .team-card-leadership {
+        @apply sm:flex-row sm:items-stretch;
+    }
+
+    .team-card-compact {
+        @apply text-center;
+    }
+
+    .team-card-media {
+        @apply relative flex aspect-[4/5] items-center justify-center overflow-hidden bg-gradient-to-br from-forest/8 to-gold/10;
+    }
+
+    .team-card-media-leadership {
+        @apply aspect-[4/5] w-full shrink-0 sm:aspect-auto sm:h-auto sm:w-36 md:w-44;
+    }
+
+    .team-card-media-compact {
+        @apply aspect-square;
+    }
+
+    .team-card-photo {
+        @apply h-full w-full object-cover object-top transition duration-500 group-hover:scale-[1.02];
+    }
+
+    .team-card-initials {
+        @apply font-serif text-2xl font-medium tracking-wide text-forest/80;
+    }
+
+    .team-card-media-leadership .team-card-initials {
+        @apply text-3xl;
+    }
+
+    .team-card-media-compact .team-card-initials {
+        @apply text-xl;
+    }
+
+    .team-card-badge {
+        @apply absolute bottom-3 left-3 rounded-sm bg-forest px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-cream;
+    }
+
+    .team-card-body {
+        @apply flex flex-1 flex-col p-5 md:p-6;
+    }
+
+    .team-card-leadership .team-card-body {
+        @apply justify-center;
+    }
+
+    .team-card-compact .team-card-body {
+        @apply p-4;
+    }
+
+    .team-card-name {
+        @apply font-serif text-xl leading-snug text-forest;
+    }
+
+    .team-card-name-compact {
+        @apply text-base;
+    }
+
+    .team-card-role {
+        @apply mt-1.5 text-sm font-medium text-muted;
+    }
+
+    .team-card-role-leadership {
+        @apply font-semibold text-gold;
+    }
+
+    .team-card-role-compact {
+        @apply mt-1 text-xs;
+    }
+
+    .team-card-bio {
+        @apply mt-3 line-clamp-4 text-sm leading-relaxed text-muted;
+    }
+
+    .team-card-leadership .team-card-bio {
+        @apply line-clamp-5;
+    }
+
+    .home-team-preview {
+        @apply flex flex-col;
+    }
+
+    .home-team-eyebrow {
+        @apply text-sm font-semibold text-gold;
+    }
+
+    .home-team-title {
+        @apply mt-2 font-serif text-3xl text-forest;
+    }
+
+    .home-team-lead {
+        @apply mt-3 max-w-md text-sm leading-relaxed text-muted;
+    }
+
+    .home-team-grid {
+        @apply mt-6 grid grid-cols-2 gap-3 sm:gap-4;
+    }
+
+    .home-team-link {
+        @apply mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-forest transition hover:text-gold;
     }
 
     .about-cta-section {

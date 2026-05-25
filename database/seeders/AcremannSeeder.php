@@ -48,7 +48,7 @@ class AcremannSeeder extends Seeder
             'podcast_url' => 'https://podcasts.google.com',
             'csr_statement' => 'We invest in community tree planting, drainage improvements, and ethical land stewardship across every project.',
             'referral_program' => 'Refer a friend to Acremann and earn rewards when they complete a purchase. Our loyalty program recognises clients who grow with us.',
-            'sustainability_intro' => 'Responsible land use, green open spaces, solar-ready planning, and long-term community value guide every Acremann development.',
+            'sustainability_intro' => 'Responsible land use, green open spaces, solar-ready planning, and long-term community value guide every Acremann development. Beyond marketing claims, we plan tree planting, drainage improvements, and protected open space from the earliest master-plan stage — so infrastructure, access, and environmental choices support families and investors for decades. Whether you are buying to build, hold, or pass land to the next generation, our sustainability markers are documented on every project we represent across Nairobi, Kiambu, Kikuyu and Nachu.',
             'investment_intro' => 'Whether you are an end-user, investor, or diaspora buyer, Acremann provides transparent advisory from site visit to title handover.',
             'assistant_heading' => 'Acremann Assistant',
             'assistant_subheading' => 'How can we help you today?',
@@ -158,20 +158,11 @@ class AcremannSeeder extends Seeder
             'sort_order' => 3,
         ]);
 
-        TeamMember::insert([
-            ['name' => 'Grace Wanjiku', 'role' => 'Managing Director', 'bio' => '15+ years in Kenyan real estate advisory.', 'is_leadership' => true, 'sort_order' => 1, 'is_published' => true, 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'James Ochieng', 'role' => 'Head of Conveyancing', 'bio' => 'Legal precision in every title transfer.', 'is_leadership' => true, 'sort_order' => 2, 'is_published' => true, 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Sarah Muthoni', 'role' => 'Diaspora Relations', 'bio' => 'Supporting buyers abroad with confidence.', 'is_leadership' => false, 'sort_order' => 3, 'is_published' => true, 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Peter Kamau', 'role' => 'Project Sales Lead', 'bio' => 'Guiding clients from enquiry to handover.', 'is_leadership' => false, 'sort_order' => 4, 'is_published' => true, 'created_at' => now(), 'updated_at' => now()],
-        ]);
+        $this->seedTeamMembers();
 
-        Testimonial::create(['quote' => 'Acremann made buying land in Kenya safe and transparent. The title process was clear from day one.', 'client_name' => 'Mary K.', 'client_detail' => 'Nachu plot owner', 'property_id' => $nachu->id, 'is_featured' => true, 'sort_order' => 1]);
-        Testimonial::create(['quote' => 'As a diaspora investor, I appreciated the regular updates and verified documentation.', 'client_name' => 'David N.', 'client_detail' => 'Diaspora buyer — UK', 'is_featured' => true, 'sort_order' => 2]);
+        $this->seedTestimonials($nachu);
 
-        Certification::insert([
-            ['title' => 'Estate Agents Registration', 'description' => 'Registered real estate practitioners', 'sort_order' => 1, 'is_published' => true, 'created_at' => now(), 'updated_at' => now()],
-            ['title' => 'Green Building Council Affiliate', 'description' => 'Sustainable development standards', 'sort_order' => 2, 'is_published' => true, 'created_at' => now(), 'updated_at' => now()],
-        ]);
+        $this->seedCertifications();
 
         $this->seedServices();
 
@@ -225,6 +216,153 @@ class AcremannSeeder extends Seeder
         ClientLookup::create(['reference_number' => 'ACR-PAY-001', 'lookup_type' => 'payment', 'status_message' => 'Account current. Next installment due 1 June 2026.']);
 
         $this->seedAnalyticsData($nachu);
+    }
+
+    protected function seedTeamMembers(): void
+    {
+        $members = [
+            [
+                'name' => 'Grace Wanjiku',
+                'role' => 'Managing Director',
+                'bio' => '15+ years in Kenyan real estate advisory.',
+                'is_leadership' => true,
+                'sort_order' => 1,
+                'is_published' => true,
+            ],
+            [
+                'name' => 'James Ochieng',
+                'role' => 'Head of Conveyancing',
+                'bio' => 'Legal precision in every title transfer.',
+                'is_leadership' => true,
+                'sort_order' => 2,
+                'is_published' => true,
+            ],
+            [
+                'name' => 'Sarah Muthoni',
+                'role' => 'Diaspora Relations',
+                'bio' => 'Supporting buyers abroad with confidence.',
+                'is_leadership' => false,
+                'sort_order' => 3,
+                'is_published' => true,
+            ],
+            [
+                'name' => 'Peter Kamau',
+                'role' => 'Project Sales Lead',
+                'bio' => 'Guiding clients from enquiry to handover.',
+                'is_leadership' => false,
+                'sort_order' => 4,
+                'is_published' => true,
+            ],
+        ];
+
+        foreach ($members as $data) {
+            TeamMember::updateOrCreate(
+                [
+                    'name' => $data['name'],
+                    'sort_order' => $data['sort_order'],
+                ],
+                $data
+            );
+        }
+    }
+
+    protected function seedTestimonials(Property $nachu): void
+    {
+        $testimonials = [
+            [
+                'quote' => 'Acremann made buying land in Kenya safe and transparent. The title process was clear from day one.',
+                'client_name' => 'Mary K.',
+                'client_detail' => 'Nachu plot owner',
+                'property_id' => $nachu->id,
+                'is_featured' => true,
+                'sort_order' => 1,
+                'is_published' => true,
+            ],
+            [
+                'quote' => 'As a diaspora investor, I appreciated the regular updates and verified documentation.',
+                'client_name' => 'David N.',
+                'client_detail' => 'Diaspora buyer — UK',
+                'is_featured' => true,
+                'sort_order' => 2,
+                'is_published' => true,
+            ],
+            [
+                'quote' => 'Professional advisory from site visit to title handover. We felt informed at every step.',
+                'client_name' => 'James & Grace W.',
+                'client_detail' => 'Kiambu Heights buyers',
+                'is_featured' => true,
+                'sort_order' => 3,
+                'is_published' => true,
+            ],
+            [
+                'quote' => 'The team answered every legal question patiently. Our plot purchase was smooth and well documented.',
+                'client_name' => 'Peter O.',
+                'client_detail' => 'End-user buyer',
+                'is_featured' => true,
+                'sort_order' => 4,
+                'is_published' => true,
+            ],
+            [
+                'quote' => 'We compared several projects; Acremann stood out for clean titles and honest pricing.',
+                'client_name' => 'Sarah M.',
+                'client_detail' => 'Investor — Nairobi',
+                'is_featured' => true,
+                'sort_order' => 5,
+                'is_published' => true,
+            ],
+            [
+                'quote' => 'Remote purchase support worked brilliantly. Video updates and signed documents gave us real peace of mind.',
+                'client_name' => 'Ahmed R.',
+                'client_detail' => 'Diaspora buyer — UAE',
+                'is_featured' => true,
+                'sort_order' => 6,
+                'is_published' => true,
+            ],
+        ];
+
+        foreach ($testimonials as $data) {
+            Testimonial::updateOrCreate(
+                [
+                    'client_name' => $data['client_name'],
+                    'sort_order' => $data['sort_order'],
+                ],
+                $data
+            );
+        }
+    }
+
+    protected function seedCertifications(): void
+    {
+        $certifications = [
+            [
+                'title' => 'Estate Agents Registration',
+                'description' => 'Registered real estate practitioners operating under Kenyan regulatory standards.',
+                'sort_order' => 1,
+                'is_published' => true,
+            ],
+            [
+                'title' => 'Green Building Council Affiliate',
+                'description' => 'Aligned with sustainable development and responsible land-use practices.',
+                'sort_order' => 2,
+                'is_published' => true,
+            ],
+            [
+                'title' => 'Law Society of Kenya — Partner Advocates',
+                'description' => 'Conveyancing and title verification supported by qualified legal counsel.',
+                'sort_order' => 3,
+                'is_published' => true,
+            ],
+            [
+                'title' => 'NCA Development Compliance',
+                'description' => 'Projects planned with infrastructure and compliance considerations from the outset.',
+                'sort_order' => 4,
+                'is_published' => true,
+            ],
+        ];
+
+        foreach ($certifications as $data) {
+            Certification::updateOrCreate(['title' => $data['title']], $data);
+        }
     }
 
     protected function seedServices(): void

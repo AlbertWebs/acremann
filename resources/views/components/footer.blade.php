@@ -12,7 +12,7 @@
     ];
 
     $footerAdvisory = [
-        ['route' => 'book-visit', 'label' => 'Book a site visit'],
+        ['route' => 'book-visit', 'label' => 'Book a site visit', 'highlight' => true],
         ['route' => 'contact', 'label' => 'Contact us'],
         ['route' => 'faqs', 'label' => 'FAQs'],
         ['route' => 'certifications', 'label' => 'Certifications'],
@@ -35,56 +35,63 @@
     ]));
 @endphp
 
-<footer class="site-footer border-t border-charcoal/10 bg-white">
+<footer class="site-footer">
+    <div class="site-footer-accent" aria-hidden="true"></div>
+
     <div class="site-footer-main section-padding pb-10 md:pb-12">
         <div class="container-site site-footer-grid">
             {{-- Brand, contact & social --}}
             <div class="site-footer-brand">
-                <p class="site-footer-brand-name">{{ $settings->company_name }}</p>
-                @if($settings->themeLogoUrl())
-                    <a href="{{ route('home') }}" class="site-footer-brand-logo-link mt-3 inline-block">
+                <a href="{{ route('home') }}" class="site-footer-brand-lockup">
+                    @if($settings->themeLogoUrl())
                         <x-site-logo :settings="$settings" variant="theme" class="site-footer-brand-logo" />
-                    </a>
-                @endif
+                    @endif
+                    <span class="site-footer-brand-name">{{ $settings->company_name }}</span>
+                </a>
+
                 @if($settings->tagline)
                     <p class="site-footer-tagline">{{ $settings->tagline }}</p>
                 @endif
 
+                <div class="site-footer-cta">
+                    <a href="{{ route('book-visit') }}" class="btn btn-primary site-footer-cta-btn">Book a site visit</a>
+                    @if($settings->whatsapp)
+                        <a
+                            href="{{ $settings->whatsappUrl() }}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="btn btn-outline site-footer-cta-btn"
+                            data-track="whatsapp_click"
+                        >WhatsApp us</a>
+                    @endif
+                </div>
+
                 <ul class="site-footer-contact">
                     @if($settings->phone)
-                        <li>
+                        <li class="site-footer-contact-item">
+                            <span class="site-footer-contact-icon" aria-hidden="true">
+                                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.352.469-.906.713-1.473.513a12.04 12.04 0 01-7.09-7.09c-.2-.567.044-1.121.513-1.473l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 6.75z"/></svg>
+                            </span>
                             <a href="tel:{{ $settings->phone }}" class="site-footer-link" data-track="call_click">{{ $settings->phone }}</a>
                         </li>
                     @endif
                     @if($settings->email)
-                        <li>
+                        <li class="site-footer-contact-item">
+                            <span class="site-footer-contact-icon" aria-hidden="true">
+                                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+                            </span>
                             <a href="mailto:{{ $settings->email }}" class="site-footer-link">{{ $settings->email }}</a>
                         </li>
                     @endif
                     @if($settings->address)
-                        <li class="site-footer-address">{{ $settings->address }}</li>
+                        <li class="site-footer-contact-item">
+                            <span class="site-footer-contact-icon" aria-hidden="true">
+                                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
+                            </span>
+                            <span class="site-footer-address">{{ $settings->address }}</span>
+                        </li>
                     @endif
                 </ul>
-
-                @if(count($socialLinks) > 0)
-                    <p class="site-footer-heading site-footer-heading-social">Follow us</p>
-                    <ul class="site-footer-social" role="list">
-                        @foreach($socialLinks as $social)
-                            <li>
-                                <a
-                                    href="{{ $social['url'] }}"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    class="site-footer-social-link"
-                                    aria-label="{{ $social['label'] }}"
-                                    @if($social['icon'] === 'whatsapp') data-track="whatsapp_click" @endif
-                                >
-                                    <x-icons.social-icon :icon="$social['icon']" class="h-5 w-5" />
-                                </a>
-                            </li>
-                        @endforeach
-                    </ul>
-                @endif
 
                 <p class="site-footer-seo">Land for sale in Nairobi · Plots in Kiambu · Clean title deeds · Diaspora investment Kenya</p>
             </div>
@@ -109,9 +116,14 @@
                 <ul class="site-footer-links">
                     @foreach($footerAdvisory as $link)
                         <li>
-                            <a href="{{ route($link['route']) }}" @class(['site-footer-link', 'site-footer-link-active' => request()->routeIs($link['route'])])>
-                                {{ $link['label'] }}
-                            </a>
+                            <a
+                                href="{{ route($link['route']) }}"
+                                @class([
+                                    'site-footer-link',
+                                    'site-footer-link-highlight' => ! empty($link['highlight']),
+                                    'site-footer-link-active' => request()->routeIs($link['route']),
+                                ])
+                            >{{ $link['label'] }}</a>
                         </li>
                     @endforeach
                 </ul>
@@ -119,17 +131,48 @@
 
             {{-- Newsletter --}}
             <div class="site-footer-col site-footer-newsletter">
-                <p class="site-footer-heading">Stay informed</p>
-                <p class="site-footer-newsletter-lead">Project updates, new listings, and investment insights.</p>
-                <form action="{{ route('newsletter.subscribe') }}" method="POST" class="acremann-form site-footer-form mt-4 space-y-4">
-                    @csrf
-                    <x-form.input label="Email address" name="email" type="email" :required="true" placeholder="you@example.com" />
-                    <x-form.checkbox label="I agree to receive project updates and marketing from Acremann." name="consent_marketing" :required="true" />
-                    <button type="submit" class="btn btn-primary w-full">Subscribe</button>
-                </form>
+                <div class="site-footer-newsletter-card">
+                    <p class="site-footer-heading">Stay informed</p>
+                    <p class="site-footer-newsletter-lead">Project updates, new listings, and investment insights delivered to your inbox.</p>
+
+                    @if(session('success') && str_contains(session('success'), 'subscribed'))
+                        <p class="site-footer-newsletter-success" role="status">{{ session('success') }}</p>
+                    @endif
+
+                    <form action="{{ route('newsletter.subscribe') }}" method="POST" class="acremann-form site-footer-form space-y-4">
+                        @csrf
+                        <x-form.input label="Email address" name="email" type="email" :required="true" placeholder="you@acremannproperties.com" />
+                        <x-form.checkbox label="I agree to receive project updates and marketing from Acremann." name="consent_marketing" :required="true" />
+                        <button type="submit" class="btn btn-primary w-full">Subscribe</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
+
+    @if(count($socialLinks) > 0)
+        <div class="site-footer-social-bar">
+            <div class="container-site site-footer-social-bar-inner">
+                <p class="site-footer-social-label">Follow us</p>
+                <ul class="site-footer-social" role="list">
+                    @foreach($socialLinks as $social)
+                        <li>
+                            <a
+                                href="{{ $social['url'] }}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="site-footer-social-link"
+                                aria-label="{{ $social['label'] }}"
+                                @if($social['icon'] === 'whatsapp') data-track="whatsapp_click" @endif
+                            >
+                                <x-icons.social-icon :icon="$social['icon']" class="h-5 w-5" />
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+    @endif
 
     <div class="site-footer-bar">
         <div class="container-site site-footer-bar-inner">

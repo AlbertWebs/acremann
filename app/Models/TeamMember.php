@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Support\PublicStorage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
@@ -22,6 +23,19 @@ class TeamMember extends Model
     public function scopePublished($query)
     {
         return $query->where('is_published', true)->orderBy('sort_order');
+    }
+
+    public function photoUrl(): ?string
+    {
+        return PublicStorage::url($this->photo_path);
+    }
+
+    public function initials(): string
+    {
+        return collect(explode(' ', $this->name))
+            ->map(fn (string $word): string => strtoupper(Str::substr($word, 0, 1)))
+            ->take(2)
+            ->join('');
     }
 
     public function plainBio(): string

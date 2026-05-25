@@ -15,8 +15,8 @@ class PageController extends Controller
     {
         return view('pages.about', [
             'settings' => $this->settings(),
-            'team' => TeamMember::published()->get(),
             'leadership' => TeamMember::published()->where('is_leadership', true)->get(),
+            'team' => TeamMember::published()->where('is_leadership', false)->get(),
         ]);
     }
 

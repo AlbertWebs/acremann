@@ -168,30 +168,11 @@
 </section>
 
 @if($testimonials->isNotEmpty())
-<section class="section-padding">
-    <div class="container-site">
-        <h2 class="text-3xl">What our clients say</h2>
-        <div class="mt-10 grid gap-6 md:grid-cols-3">
-            @foreach($testimonials as $t)
-                <blockquote class="card"><p class="font-serif text-lg italic">"{{ $t->quote }}"</p><footer class="mt-4 text-sm text-muted">— {{ $t->client_name }}</footer></blockquote>
-            @endforeach
-        </div>
-    </div>
-</section>
+    <x-testimonials-carousel :testimonials="$testimonials" />
 @endif
 
 @if($certifications->isNotEmpty())
-<section class="section-padding border-y border-charcoal/10 bg-white">
-    <div class="container-site text-center">
-        <h2 class="text-2xl">Certifications & affiliations</h2>
-        <div class="mt-8 flex flex-wrap justify-center gap-8">
-            @foreach($certifications as $cert)
-                <div class="text-sm text-muted">{{ $cert->title }}</div>
-            @endforeach
-        </div>
-        <a href="{{ route('certifications') }}" class="mt-6 inline-block text-sm text-forest">View all →</a>
-    </div>
-</section>
+    <x-certifications-section :certifications="$certifications" />
 @endif
 
 <section class="section-padding">
@@ -203,15 +184,21 @@
             <a href="{{ route('sustainability') }}" class="mt-6 inline-block text-forest">Our sustainability story →</a>
         </div>
         @if($team->isNotEmpty())
-        <div>
-            <p class="text-sm text-gold">Our team</p>
-            <h2 class="mt-2 text-3xl">People you can trust</h2>
-            <div class="mt-6 grid grid-cols-2 gap-4">
+        <div class="home-team-preview">
+            <p class="home-team-eyebrow">Our team</p>
+            <h2 class="home-team-title">People you can trust</h2>
+            <p class="home-team-lead">Advisors who guide you from first enquiry through title handover.</p>
+            <div class="home-team-grid">
                 @foreach($team as $member)
-                    <div class="card text-center"><p class="font-medium">{{ $member->name }}</p><p class="text-xs text-muted">{{ $member->role }}</p></div>
+                    <x-team-member-card :member="$member" variant="compact" />
                 @endforeach
             </div>
-            <a href="{{ route('about') }}" class="mt-4 inline-block text-sm text-forest">Meet the team →</a>
+            <a href="{{ route('about') }}" class="home-team-link">
+                Meet the full team
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/>
+                </svg>
+            </a>
         </div>
         @endif
     </div>

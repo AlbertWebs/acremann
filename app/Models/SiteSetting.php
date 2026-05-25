@@ -201,7 +201,7 @@ class SiteSetting extends Model
     {
         return $this->plainTextFromRich(
             $this->sustainability_intro,
-            'Responsible land use, green open spaces, solar-ready planning, and long-term community value guide every Acremann development.',
+            'Responsible land use, green open spaces, solar-ready planning, and long-term community value guide every Acremann development. Beyond marketing claims, we plan tree planting, drainage improvements, and protected open space from the earliest master-plan stage — so infrastructure, access, and environmental choices support families and investors for decades. Whether you are buying to build, hold, or pass land to the next generation, our sustainability markers are documented on every project we represent across Nairobi, Kiambu, Kikuyu and Nachu.',
         );
     }
 
