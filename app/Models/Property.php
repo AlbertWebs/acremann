@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Support\PublicStorage;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -69,6 +71,33 @@ class Property extends Model implements HasMedia
             ->performOnCollections('hero', 'gallery');
     }
 
+    /**
+     * @return Collection<int, Media>
+     */
+    public function galleryMedia(): Collection
+    {
+        $items = collect();
+
+        if ($hero = $this->getFirstMedia('hero')) {
+            $items->push($hero);
+        }
+
+        return $items->merge($this->getMedia('gallery'));
+    }
+
+    public function mediaUrl(?Media $media, ?string $conversion = 'preview'): ?string
+    {
+        if (! $media) {
+            return null;
+        }
+
+        $relative = ($conversion && $media->hasGeneratedConversion($conversion))
+            ? $media->getUrl($conversion)
+            : $media->getUrl();
+
+        return PublicStorage::absoluteUrl($relative);
+    }
+
     public function scopePublished($query)
     {
         return $query->where('is_published', true);
@@ -91,17 +120,106 @@ class Property extends Model implements HasMedia
         return 'Contact for pricing';
     }
 
+    public function hasPlotInventory(): bool
+    {
+        if ($this->relationLoaded('plots')) {
+            return $this->plots->isNotEmpty();
+        }
+
+        return $this->plots()->exists();
+    }
+
+    /**
+     * @return array{available: int, reserved: int, sold: int, total: int}
+     */
     public function availabilityCounts(): array
     {
-        $plots = $this->plots;
+        $plots = $this->relationLoaded('plots') ? $this->plots : $this->plots()->get();
+
         if ($plots->isEmpty()) {
-            return ['available' => 1, 'reserved' => 0, 'sold' => 0];
+            return ['available' => 0, 'reserved' => 0, 'sold' => 0, 'total' => 0];
         }
 
         return [
             'available' => $plots->where('status', 'available')->count(),
             'reserved' => $plots->where('status', 'reserved')->count(),
             'sold' => $plots->where('status', 'sold')->count(),
+            'total' => $plots->count(),
         ];
+    }
+
+    public function isSoldOut(): bool
+    {
+        if ($this->project_status === 'sold_out' || $this->status === 'sold') {
+            return true;
+        }
+
+        $counts = $this->availabilityCounts();
+
+        if ($counts['total'] === 0) {
+            return false;
+        }
+
+        return $counts['available'] === 0 && $counts['reserved'] === 0;
+    }
+
+    /**
+     * @return array{
+     *     has_plots: bool,
+     *     total: int,
+     *     available: int,
+     *     reserved: int,
+     *     sold: int,
+     *     remaining: int,
+     *     is_sold_out: bool,
+     *     label: string
+     * }
+     */
+    public function availabilitySummary(): array
+    {
+        $counts = $this->availabilityCounts();
+
+        return [
+            'has_plots' => $counts['total'] > 0,
+            'total' => $counts['total'],
+            'available' => $counts['available'],
+            'reserved' => $counts['reserved'],
+            'sold' => $counts['sold'],
+            'remaining' => $counts['available'],
+            'is_sold_out' => $this->isSoldOut(),
+            'label' => $this->availabilityDisplayLabel(),
+        ];
+    }
+
+    public function availabilityDisplayLabel(): string
+    {
+        if ($this->isSoldOut()) {
+            return 'Sold out';
+        }
+
+        $counts = $this->availabilityCounts();
+
+        if ($counts['total'] === 0) {
+            return match ($this->status) {
+                'sold' => 'Sold out',
+                'reserved' => 'Reserved',
+                'coming_soon' => 'Coming soon',
+                default => 'Available',
+            };
+        }
+
+        $remaining = $counts['available'];
+        $sold = $counts['sold'];
+        $reserved = $counts['reserved'];
+
+        if ($remaining === 0 && $reserved > 0) {
+            return $reserved.' reserved · '.$sold.' sold';
+        }
+
+        $remainingLabel = $remaining.' '.str('plot')->plural($remaining).' remaining';
+
+        return $sold > 0
+            ? $remainingLabel.' · '.$sold.' sold'
+            : $remainingLabel;
     }
 }

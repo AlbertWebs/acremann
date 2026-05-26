@@ -42,7 +42,7 @@ class PropertiesByCountyChart extends ChartWidget
                 [
                     'label' => 'Properties',
                     'data' => $counties->values()->all(),
-                    'backgroundColor' => '#B8956B',
+                    'backgroundColor' => '#FBB13A',
                     'borderRadius' => 4,
                 ],
             ],

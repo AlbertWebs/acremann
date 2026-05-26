@@ -2,85 +2,225 @@
 @php
     $metaTitle = $property->meta_title ?? $property->title;
     $metaDescription = $property->meta_description ?? $property->summary;
-    $counts = $property->availabilityCounts();
+    $availability = $property->availabilitySummary();
     $waMessage = "Hello Acremann, I'm interested in {$property->title} at {$property->location}.";
+    $heroSummary = filled($property->summary) ? strip_tags($property->summary) : null;
+
+    $jumpLinks = array_values(array_filter([
+        $property->galleryMedia()->isNotEmpty() ? ['href' => '#photos', 'label' => 'Photos'] : null,
+        filled($property->description) ? ['href' => '#overview', 'label' => 'Overview'] : null,
+        $property->plots->isNotEmpty() ? ['href' => '#plots', 'label' => 'Plots'] : null,
+        $property->map_embed ? ['href' => '#location', 'label' => 'Location'] : null,
+        $property->faqs->isNotEmpty() ? ['href' => '#faqs', 'label' => 'FAQs'] : null,
+    ]));
 @endphp
 @section('content')
-<section class="bg-charcoal/5">
-    <div class="container-site py-8">
-        <p class="text-sm text-gold">{{ ucfirst($property->category) }} · {{ $property->county }} · {{ ucfirst($property->title_type) }}</p>
-        <h1 class="mt-2 text-4xl">{{ $property->title }}</h1>
-        <p class="mt-2 text-muted">{{ $property->location }}</p>
-        <p class="mt-4 text-2xl font-medium text-forest">{{ $property->formattedPrice() }}</p>
-    </div>
-</section>
-<section class="section-padding pb-32">
-    <div class="container-site grid gap-12 lg:grid-cols-3">
-        <div class="lg:col-span-2 space-y-10">
-            <div class="grid gap-2 md:grid-cols-2">
-                @forelse($property->getMedia('gallery') as $media)
-                    <img src="{{ $media->getUrl() }}" alt="{{ $property->title }}" class="rounded-sm object-cover aspect-[4/3] w-full">
-                @empty
-                    <div class="col-span-2 flex aspect-video items-center justify-center rounded-sm bg-charcoal/5 text-muted">Gallery images coming soon</div>
-                @endforelse
+<section class="property-show-hero">
+    <div class="container-site property-show-hero-inner">
+        <nav class="property-show-breadcrumb" aria-label="Breadcrumb">
+            <a href="{{ route('properties.index') }}">Properties</a>
+            <span aria-hidden="true">/</span>
+            <span aria-current="page">{{ $property->title }}</span>
+        </nav>
+
+        <div class="property-show-hero-main">
+            <div class="property-show-hero-copy">
+                <div class="property-show-meta">
+                    <span class="property-show-chip">{{ ucfirst($property->category) }}</span>
+                    <span class="property-show-chip">{{ $property->county }}</span>
+                    <span class="property-show-chip">{{ ucfirst($property->title_type) }}</span>
+                    @if($property->plot_size)
+                        <span class="property-show-chip property-show-chip--muted">{{ $property->plot_size }}</span>
+                    @endif
+                </div>
+                <h1 class="property-show-title">{{ $property->title }}</h1>
+                <p class="property-show-location">{{ $property->location }}</p>
+                @if($heroSummary)
+                    <p class="property-show-lead">{{ $heroSummary }}</p>
+                @endif
             </div>
-            @if($property->tour_embed_url)
-            <div><h2 class="text-2xl">Virtual tour</h2>
-                <div class="mt-4 aspect-video overflow-hidden rounded-sm"><iframe src="{{ $property->tour_embed_url }}" class="h-full w-full" allowfullscreen></iframe></div>
-            </div>
-            @endif
-            <div><h2 class="text-2xl">Overview</h2><p class="mt-4 text-muted">{{ $property->description }}</p></div>
-            @if($property->amenities)
-            <div><h2 class="text-2xl">Amenities</h2><ul class="mt-4 grid gap-2 md:grid-cols-2">@foreach($property->amenities as $a)<li class="flex gap-2 text-sm"><span class="text-gold">✓</span>{{ $a }}</li>@endforeach</ul></div>
-            @endif
-            @if($property->title_process)
-            <div class="card border-forest/20"><h2 class="text-2xl">Clean title & process</h2><p class="mt-4 text-sm text-muted">{{ $property->title_process }}</p></div>
-            @endif
-            @if($property->plots->isNotEmpty())
-            <div><h2 class="text-2xl">Availability</h2>
-                <div class="mt-4 flex gap-4 text-sm"><span class="text-forest">{{ $counts['available'] }} available</span><span class="text-gold">{{ $counts['reserved'] }} reserved</span><span class="text-muted">{{ $counts['sold'] }} sold</span></div>
-                <div class="table-wrap mt-4">
-                    <table class="acremann-table">
-                        <thead><tr><th>Plot</th><th>Size</th><th>Price</th><th>Status</th></tr></thead>
-                        <tbody>
-                            @foreach($property->plots as $plot)
-                            <tr>
-                                <td>{{ $plot->plot_number }}</td>
-                                <td>{{ $plot->size }}</td>
-                                <td>{{ $plot->price ? 'KES '.number_format($plot->price, 0) : '—' }}</td>
-                                <td>
-                                    <span @class([
-                                        'table-badge',
-                                        'table-badge-available' => $plot->status === 'available',
-                                        'table-badge-reserved' => $plot->status === 'reserved',
-                                        'table-badge-sold' => $plot->status === 'sold',
-                                    ])>{{ $plot->status }}</span>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+
+            <div class="property-show-hero-aside">
+                <p class="property-show-price">{{ $property->formattedPrice() }}</p>
+                <x-property-availability :property="$property" class="mt-4" />
+                <div class="property-show-hero-ctas">
+                    <a href="{{ route('book-visit') }}" class="btn-primary property-show-cta">Book a site visit</a>
+                    <a
+                        href="{{ $settings->whatsappUrl($waMessage) }}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="btn-outline property-show-cta"
+                        data-track="whatsapp_click"
+                    >WhatsApp us</a>
                 </div>
             </div>
+        </div>
+
+        @if($jumpLinks !== [])
+            <nav class="property-show-jump" aria-label="On this page">
+                @foreach($jumpLinks as $link)
+                    <a href="{{ $link['href'] }}" class="property-show-jump-link">{{ $link['label'] }}</a>
+                @endforeach
+            </nav>
+        @endif
+    </div>
+</section>
+
+<section class="property-show-body section-padding pb-32">
+    <div class="container-site grid gap-12 lg:grid-cols-3">
+        <div class="property-show-content lg:col-span-2 space-y-12">
+            @if($property->galleryMedia()->isNotEmpty())
+                <x-property-gallery :property="$property" id="photos" />
             @endif
+
+            @if($property->tour_embed_url)
+                <x-property-show-section title="Virtual tour" eyebrow="Explore">
+                    <div class="property-show-embed">
+                        <iframe src="{{ $property->tour_embed_url }}" title="Virtual tour — {{ $property->title }}" class="h-full w-full" allowfullscreen loading="lazy"></iframe>
+                    </div>
+                </x-property-show-section>
+            @endif
+
+            @if(filled($property->description))
+                <x-property-show-section id="overview" title="Overview" eyebrow="About this project">
+                    <div class="property-show-prose">
+                        {!! $property->description !!}
+                    </div>
+                </x-property-show-section>
+            @endif
+
+            @if($property->amenities)
+                <x-property-show-section title="Amenities &amp; infrastructure" eyebrow="What you get">
+                    <ul class="property-show-amenities">
+                        @foreach($property->amenities as $amenity)
+                            <li class="property-show-amenity">
+                                <span class="property-show-amenity-icon" aria-hidden="true">✓</span>
+                                <span>{{ $amenity }}</span>
+                            </li>
+                        @endforeach
+                    </ul>
+                </x-property-show-section>
+            @endif
+
+            @if(filled($property->title_process))
+                <x-property-show-section title="Clean title &amp; process" eyebrow="Peace of mind">
+                    <div class="property-show-callout property-show-callout--trust">
+                        <div class="property-show-prose text-sm">
+                            {!! $property->title_process !!}
+                        </div>
+                    </div>
+                </x-property-show-section>
+            @endif
+
+            @if($property->plots->isNotEmpty())
+                <x-property-show-section id="plots" title="Plot availability" eyebrow="Inventory">
+                    <x-property-availability :property="$property" variant="compact" />
+                    <div class="table-wrap mt-6">
+                        <table class="acremann-table">
+                            <thead>
+                                <tr>
+                                    <th>Plot</th>
+                                    <th>Size</th>
+                                    <th>Price</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($property->plots as $plot)
+                                    <tr>
+                                        <td>{{ $plot->plot_number }}</td>
+                                        <td>{{ $plot->size ?: '—' }}</td>
+                                        <td>{{ $plot->price ? 'KES '.number_format($plot->price, 0) : '—' }}</td>
+                                        <td>
+                                            <span @class([
+                                                'table-badge',
+                                                'table-badge-available' => $plot->status === 'available',
+                                                'table-badge-reserved' => $plot->status === 'reserved',
+                                                'table-badge-sold' => $plot->status === 'sold',
+                                            ])>{{ ucfirst($plot->status) }}</span>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </x-property-show-section>
+            @endif
+
             @if($property->map_embed)
-            <div><h2 class="text-2xl">Location</h2><div class="mt-4 overflow-hidden rounded-sm">{!! $property->map_embed !!}</div>@if($property->distance_notes)<ul class="mt-4 space-y-1 text-sm text-muted">@foreach(explode("\n", $property->distance_notes) as $note)<li>{{ trim($note) }}</li>@endforeach</ul>@endif</div>
+                <x-property-show-section id="location" title="Location" eyebrow="Getting there">
+                    <div class="property-show-embed property-show-embed--map">
+                        {!! $property->map_embed !!}
+                    </div>
+                    @if($property->distance_notes)
+                        <ul class="property-show-distances">
+                            @foreach(explode("\n", $property->distance_notes) as $note)
+                                @if(filled(trim($note)))
+                                    <li>{{ trim($note) }}</li>
+                                @endif
+                            @endforeach
+                        </ul>
+                    @endif
+                </x-property-show-section>
             @endif
+
             @if($property->faqs->isNotEmpty())
-            <div><h2 class="text-2xl">Project FAQs</h2><div class="mt-4 space-y-2">@foreach($property->faqs as $faq)<details class="card"><summary class="cursor-pointer font-medium">{{ $faq->question }}</summary><p class="mt-2 text-sm text-muted">{{ $faq->answer }}</p></details>@endforeach</div></div>
+                <x-property-show-section id="faqs" title="Project FAQs" eyebrow="Questions">
+                    <div class="property-show-faqs">
+                        @foreach($property->faqs as $faq)
+                            <details class="property-show-faq">
+                                <summary class="property-show-faq-question">{{ $faq->question }}</summary>
+                                <div class="property-show-faq-answer">
+                                    <p>{{ $faq->answer }}</p>
+                                </div>
+                            </details>
+                        @endforeach
+                    </div>
+                </x-property-show-section>
             @endif
-            @if($property->investor_angle)
-            <div class="card bg-forest/5"><h2 class="text-2xl">Investor perspective</h2><p class="mt-4 text-muted">{{ $property->investor_angle }}</p></div>
+
+            @if(filled($property->investor_angle))
+                <x-property-show-section title="Investor perspective" eyebrow="Why invest here">
+                    <div class="property-show-callout property-show-callout--invest">
+                        <div class="property-show-prose">
+                            {!! $property->investor_angle !!}
+                        </div>
+                    </div>
+                </x-property-show-section>
             @endif
         </div>
-        <aside class="space-y-6">
-            <div class="card sticky top-24 hidden lg:block">
-                <h3 class="font-serif text-xl">Enquire about this property</h3>
-                <div class="mt-4"><x-lead-form source="property_enquiry" :property="$property" /></div>
+
+        <aside class="property-show-sidebar space-y-6">
+            <div class="property-show-sidebar-card property-show-sidebar-card--enquire sticky top-24 hidden lg:block">
+                <p class="property-show-sidebar-eyebrow">Interested?</p>
+                <h3 class="property-show-sidebar-title">Enquire about this property</h3>
+                <p class="property-show-sidebar-lead">Share your details and our team will follow up with pricing, availability, and site visit options.</p>
+                <div class="mt-5">
+                    <x-lead-form source="property_enquiry" :property="$property" />
+                </div>
             </div>
-            <form action="{{ route('properties.brochure', $property) }}" method="POST" class="form-card acremann-form">
+
+            <div class="property-show-sidebar-card">
+                <h3 class="property-show-sidebar-title">Quick actions</h3>
+                <div class="property-show-sidebar-actions">
+                    <a href="{{ route('book-visit') }}" class="btn-primary w-full justify-center">Book a site visit</a>
+                    <a
+                        href="{{ $settings->whatsappUrl($waMessage) }}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="btn-outline w-full justify-center"
+                        data-track="whatsapp_click"
+                    >Chat on WhatsApp</a>
+                    @if($settings->phone)
+                        <a href="tel:{{ $settings->phone }}" class="property-show-sidebar-link" data-track="call_click">{{ $settings->phone }}</a>
+                    @endif
+                </div>
+            </div>
+
+            <form action="{{ route('properties.brochure', $property) }}" method="POST" class="property-show-sidebar-card acremann-form">
                 @csrf
-                <h3 class="font-medium">Download brochure</h3>
+                <h3 class="property-show-sidebar-title">Download brochure</h3>
+                <p class="property-show-sidebar-lead">Get project details sent to your inbox.</p>
                 <div class="mt-4 space-y-4">
                     <x-form.input label="Name" name="name" :required="true" placeholder="Your name" />
                     <x-form.input label="Email" name="email" type="email" :required="true" placeholder="you@example.com" />
@@ -89,10 +229,29 @@
                     <button type="submit" class="btn btn-secondary w-full" data-track="brochure_download">Download brochure</button>
                 </div>
             </form>
+
+            <div class="property-show-sidebar-card property-show-sidebar-card--muted">
+                <h3 class="property-show-sidebar-title">Why Acremann</h3>
+                <ul class="property-show-trust-list">
+                    <li>Verified titles &amp; transparent process</li>
+                    <li>On-ground site visits in Kiambu &amp; beyond</li>
+                    <li>Diaspora-friendly remote purchase support</li>
+                </ul>
+                <a href="{{ route('contact') }}" class="property-show-sidebar-link mt-4 inline-block">General contact →</a>
+            </div>
         </aside>
     </div>
+
     @if($related->isNotEmpty())
-    <div class="container-site mt-16"><h2 class="text-2xl">Related properties</h2><div class="mt-6 grid gap-6 md:grid-cols-3">@foreach($related as $p)<x-property-card :property="$p" />@endforeach</div></div>
+        <div class="container-site property-show-related mt-16 pt-12">
+            <p class="property-show-eyebrow">More from Acremann</p>
+            <h2 class="property-show-section-title">Related properties</h2>
+            <div class="mt-8 grid gap-6 md:grid-cols-3">
+                @foreach($related as $p)
+                    <x-property-card :property="$p" />
+                @endforeach
+            </div>
+        </div>
     @endif
 </section>
 <x-sticky-lead-bar :settings="$settings" :property="$property" />

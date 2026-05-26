@@ -5,9 +5,11 @@ use App\Http\Controllers\ClientPortalController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LeadController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\TeamController;
 use App\Http\Controllers\SiteVisitBookingController;
 use Illuminate\Support\Facades\Route;
 use Spatie\Honeypot\ProtectAgainstSpam;
@@ -15,6 +17,8 @@ use Spatie\Honeypot\ProtectAgainstSpam;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/about', [PageController::class, 'about'])->name('about');
+Route::get('/leadership', [TeamController::class, 'leadership'])->name('leadership.index');
+Route::get('/leadership/{slug}', [TeamController::class, 'show'])->name('leadership.show');
 Route::get('/services', [ServiceController::class, 'index'])->name('services');
 Route::get('/services/{slug}', [ServiceController::class, 'show'])->name('services.show');
 Route::get('/invest', [PageController::class, 'invest'])->name('invest');
@@ -35,6 +39,9 @@ Route::get('/properties/{slug}', [PropertyController::class, 'show'])->name('pro
 
 Route::get('/insights', [PostController::class, 'index'])->name('posts.index');
 Route::get('/insights/{slug}', [PostController::class, 'show'])->name('posts.show');
+
+Route::get('/events', [EventController::class, 'index'])->name('events.index');
+Route::get('/events/{slug}', [EventController::class, 'show'])->name('events.show');
 
 Route::get('/client-portal', [ClientPortalController::class, 'index'])->name('client-portal');
 Route::get('/client-portal/statement/{lookup}', [ClientPortalController::class, 'downloadStatement'])

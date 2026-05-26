@@ -4,7 +4,7 @@
     <div class="container-site">
         <h1 class="text-4xl">Current properties</h1>
         <p class="mt-2 text-muted">Land for sale in Nairobi, Kiambu, Kikuyu and beyond — filter by county, category, and title type.</p>
-        <form method="GET" class="form-card acremann-form mt-8 grid gap-4 md:grid-cols-6">
+        <form method="GET" class="form-card acremann-form properties-filter-form mt-8 grid items-center gap-4 md:grid-cols-6">
             <input type="search" name="q" value="{{ $filters['q'] ?? '' }}" placeholder="Search properties…" class="form-control md:col-span-2">
             <select name="county" class="form-control">
                 <option value="">All counties</option>
@@ -22,7 +22,7 @@
                 <option value="freehold" @selected(($filters['title_type'] ?? '') === 'freehold')>Freehold</option>
                 <option value="leasehold" @selected(($filters['title_type'] ?? '') === 'leasehold')>Leasehold</option>
             </select>
-            <button type="submit" class="btn btn-primary md:self-end">Filter</button>
+            <button type="submit" class="btn btn-primary properties-filter-submit">Filter</button>
         </form>
         <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             @forelse($properties as $property)

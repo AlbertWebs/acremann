@@ -9,7 +9,7 @@ class PropertyController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Property::published()->orderBy('sort_order');
+        $query = Property::published()->with('plots')->orderBy('sort_order');
 
         if ($request->filled('county')) {
             $query->where('county', $request->county);
@@ -53,6 +53,7 @@ class PropertyController extends Controller
             'settings' => $this->settings(),
             'property' => $property->load(['plots', 'faqs']),
             'related' => Property::published()
+                ->with('plots')
                 ->where('id', '!=', $property->id)
                 ->where(function ($q) use ($property) {
                     $q->where('county', $property->county)

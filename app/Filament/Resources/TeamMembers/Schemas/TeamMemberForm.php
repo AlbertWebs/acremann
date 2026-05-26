@@ -14,7 +14,13 @@ class TeamMemberForm
     {
         return $schema
             ->components([
-                TextInput::make('name')->required(),
+                TextInput::make('name')
+                    ->required()
+                    ->live(onBlur: true),
+                TextInput::make('slug')
+                    ->required()
+                    ->maxLength(255)
+                    ->helperText('Public profile URL: /leadership/{slug} (leadership members only).'),
                 TextInput::make('role')->required(),
                 FormComponents::richEditor('bio'),
                 FileUpload::make('photo_path')

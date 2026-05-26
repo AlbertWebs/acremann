@@ -7,6 +7,7 @@ use App\Support\PropertyFormData;
 use App\Support\PropertyFormOptions;
 use Filament\Actions\Action;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -36,6 +37,9 @@ class PropertyForm
                         Tab::make('Overview')
                             ->icon(Heroicon::OutlinedBuildingOffice2)
                             ->schema(static::overviewTab()),
+                        Tab::make('Plots')
+                            ->icon(Heroicon::OutlinedSquares2x2)
+                            ->schema(static::plotsTab()),
                         Tab::make('Media')
                             ->icon(Heroicon::OutlinedPhoto)
                             ->schema(static::mediaTab()),
@@ -145,9 +149,54 @@ class PropertyForm
                         ->options(PropertyFormOptions::projectStatuses())
                         ->required()
                         ->default('selling')
-                        ->native(false),
+                        ->native(false)
+                        ->helperText('Set to “Sold out” to show a sold-out badge even before all plots are marked sold.'),
                 ])
                 ->columns(2)
+                ->columnSpanFull(),
+        ];
+    }
+
+    /**
+     * @return array<int, mixed>
+     */
+    protected static function plotsTab(): array
+    {
+        return [
+            Section::make('Plot inventory')
+                ->description('Add each plot and set its status. The public property page shows how many are sold and how many remain. When every plot is sold, visitors see “Sold out”.')
+                ->schema([
+                    Repeater::make('plots')
+                        ->relationship('plots')
+                        ->schema([
+                            TextInput::make('plot_number')
+                                ->label('Plot #')
+                                ->required()
+                                ->maxLength(50)
+                                ->placeholder('A-01'),
+                            Select::make('status')
+                                ->options(PropertyFormOptions::plotStatuses())
+                                ->required()
+                                ->default('available')
+                                ->native(false),
+                            TextInput::make('size')
+                                ->label('Size')
+                                ->placeholder('50 x 100 ft')
+                                ->maxLength(120),
+                            TextInput::make('price')
+                                ->numeric()
+                                ->prefix('KES')
+                                ->placeholder('850000'),
+                        ])
+                        ->columns(4)
+                        ->addActionLabel('Add plot')
+                        ->reorderable()
+                        ->collapsible()
+                        ->itemLabel(fn (array $state): ?string => filled($state['plot_number'] ?? null)
+                            ? ($state['plot_number'].' · '.ucfirst((string) ($state['status'] ?? 'available')))
+                            : null)
+                        ->columnSpanFull(),
+                ])
                 ->columnSpanFull(),
         ];
     }
@@ -171,7 +220,7 @@ class PropertyForm
                         ->directory('properties/featured')
                         ->disk('public')
                         ->maxSize(5120)
-                        ->imagePreviewHeight('11rem')
+                        ->imagePreviewHeight('18rem')
                         ->openable()
                         ->downloadable()
                         ->live()
@@ -187,7 +236,8 @@ class PropertyForm
                         ->disk('public')
                         ->maxFiles(24)
                         ->maxSize(5120)
-                        ->imagePreviewHeight('7rem')
+                        ->imagePreviewHeight('14rem')
+                        ->itemPanelAspectRatio('4/3')
                         ->panelLayout('grid')
                         ->openable()
                         ->downloadable()

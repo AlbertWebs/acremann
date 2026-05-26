@@ -15,7 +15,7 @@ class PageController extends Controller
     {
         return view('pages.about', [
             'settings' => $this->settings(),
-            'leadership' => TeamMember::published()->where('is_leadership', true)->get(),
+            'leadership' => TeamMember::published()->leadership()->get(),
             'team' => TeamMember::published()->where('is_leadership', false)->get(),
         ]);
     }
@@ -27,7 +27,7 @@ class PageController extends Controller
         return view('pages.invest', [
             'settings' => $this->settings(),
             'page' => $page,
-            'featuredProperties' => Property::published()->featured()->orderBy('sort_order')->take(3)->get(),
+            'featuredProperties' => Property::published()->featured()->with('plots')->orderBy('sort_order')->take(3)->get(),
             'testimonials' => Testimonial::published()->where('is_featured', true)->orderBy('sort_order')->take(3)->get(),
         ]);
     }

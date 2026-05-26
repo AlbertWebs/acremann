@@ -4,11 +4,13 @@
     $footerCompany = [
         ['route' => 'home', 'label' => 'Home'],
         ['route' => 'about', 'label' => 'About'],
+        ['route' => 'leadership.index', 'label' => 'Leadership', 'active' => 'leadership.*'],
         ['route' => 'services', 'label' => 'Services'],
         ['route' => 'properties.index', 'label' => 'Properties', 'active' => 'properties.*'],
         ['route' => 'invest', 'label' => 'Invest'],
         ['route' => 'sustainability', 'label' => 'Sustainability'],
         ['route' => 'posts.index', 'label' => 'Insights', 'active' => 'posts.*'],
+        ['route' => 'events.index', 'label' => 'Events', 'active' => 'events.*'],
     ];
 
     $footerAdvisory = [

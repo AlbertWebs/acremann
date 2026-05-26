@@ -37,6 +37,32 @@ class PublicStorage
     }
 
     /**
+     * Full URL for the current request host (e.g. http://localhost:8000/storage/...).
+     */
+    public static function absoluteUrl(?string $path): ?string
+    {
+        if (blank($path)) {
+            return null;
+        }
+
+        if (preg_match('#^https?://#i', $path)) {
+            return $path;
+        }
+
+        $relative = str_starts_with($path, '/') ? $path : static::url($path);
+
+        if ($relative === null) {
+            return null;
+        }
+
+        if (! app()->runningInConsole() && request()->getHost()) {
+            return request()->getSchemeAndHttpHost().$relative;
+        }
+
+        return url($relative);
+    }
+
+    /**
      * @param  list<string>|array<int, mixed>|null  $paths
      * @return list<string>
      */

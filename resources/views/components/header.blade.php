@@ -2,12 +2,19 @@
 
 @php
     $navLinks = [
-        ['route' => 'about', 'label' => 'About'],
+        ['route' => 'about', 'label' => 'About', 'active' => ['about', 'leadership.*']],
         ['route' => 'services', 'label' => 'Services'],
         ['route' => 'properties.index', 'label' => 'Properties', 'active' => 'properties.*'],
         ['route' => 'invest', 'label' => 'Invest'],
         ['route' => 'sustainability', 'label' => 'Sustainability'],
-        ['route' => 'posts.index', 'label' => 'Insights', 'active' => 'posts.*'],
+    ];
+
+    $insightsNav = [
+        'label' => 'Insights',
+        'items' => [
+            ['route' => 'posts.index', 'label' => 'Insights', 'active' => 'posts.*'],
+            ['route' => 'events.index', 'label' => 'Events', 'active' => 'events.*'],
+        ],
     ];
 
     $isNavActive = function (array $link): bool {
@@ -15,6 +22,10 @@
 
         return request()->routeIs($pattern);
     };
+
+    $isInsightsNavActive = collect($insightsNav['items'])->contains(
+        fn (array $item): bool => $isNavActive($item)
+    );
 @endphp
 
 {{-- Mobile menu backdrop --}}
@@ -95,6 +106,54 @@
                             ])
                         >{{ $link['label'] }}</a>
                     @endforeach
+
+                    <div
+                        class="site-header-nav-dropdown"
+                        role="listitem"
+                        x-data="{ open: false }"
+                        @click.outside="open = false"
+                        @keydown.escape.window="open = false"
+                    >
+                        <button
+                            type="button"
+                            @click="open = !open"
+                            :aria-expanded="open"
+                            aria-haspopup="true"
+                            @class([
+                                'site-header-nav-link site-header-nav-dropdown-trigger',
+                                'site-header-nav-link-active' => $isInsightsNavActive,
+                            ])
+                        >
+                            <span>{{ $insightsNav['label'] }}</span>
+                            <svg class="site-header-nav-dropdown-chevron" :class="{ 'site-header-nav-dropdown-chevron-open': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div
+                            x-show="open"
+                            x-cloak
+                            x-transition:enter="transition ease-out duration-150"
+                            x-transition:enter-start="opacity-0 translate-y-1"
+                            x-transition:enter-end="opacity-100 translate-y-0"
+                            x-transition:leave="transition ease-in duration-100"
+                            x-transition:leave-start="opacity-100 translate-y-0"
+                            x-transition:leave-end="opacity-0 translate-y-1"
+                            class="site-header-nav-dropdown-panel"
+                            role="menu"
+                        >
+                            @foreach($insightsNav['items'] as $item)
+                                <a
+                                    href="{{ route($item['route']) }}"
+                                    role="menuitem"
+                                    @click="open = false"
+                                    @class([
+                                        'site-header-nav-dropdown-link',
+                                        'site-header-nav-dropdown-link-active' => $isNavActive($item),
+                                    ])
+                                >{{ $item['label'] }}</a>
+                            @endforeach
+                        </div>
+                    </div>
                 </div>
             </nav>
 
@@ -180,6 +239,24 @@
                         ])
                     >
                         <span>{{ $link['label'] }}</span>
+                        <svg class="site-header-mobile-link-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                @endforeach
+            </div>
+            <p class="site-header-mobile-label">Insights &amp; events</p>
+            <div class="site-header-mobile-primary">
+                @foreach($insightsNav['items'] as $item)
+                    <a
+                        href="{{ route($item['route']) }}"
+                        @click="mobileMenu = false"
+                        @class([
+                            'site-header-mobile-link',
+                            'site-header-mobile-link-active' => $isNavActive($item),
+                        ])
+                    >
+                        <span>{{ $item['label'] }}</span>
                         <svg class="site-header-mobile-link-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                         </svg>

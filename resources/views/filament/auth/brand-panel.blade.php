@@ -6,11 +6,11 @@
     <div class="acremann-auth-brand-inner">
         <a href="{{ config('acremann.url') }}" class="acremann-auth-brand-home" target="_blank" rel="noopener noreferrer">
             @if ($settings->whiteLogoUrl())
-                <img
-                    src="{{ $settings->whiteLogoUrl() }}"
-                    alt="{{ $settings->company_name }}"
+                <x-site-logo
+                    :settings="$settings"
+                    variant="white"
                     class="acremann-auth-brand-logo"
-                >
+                />
             @else
                 <span class="acremann-auth-brand-name">{{ $settings->company_name }}</span>
             @endif

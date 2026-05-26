@@ -31,7 +31,7 @@ class PlotAvailabilityChart extends ChartWidget
             'datasets' => [
                 [
                     'data' => $counts->values()->all(),
-                    'backgroundColor' => ['#2D4A3E', '#B8956B', '#9CA3AF'],
+                    'backgroundColor' => ['#2D4A3E', '#FBB13A', '#9CA3AF'],
                 ],
             ],
             'labels' => $counts->keys()->map(fn ($s) => ucfirst($s))->all(),

@@ -2,7 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Event;
 use App\Models\Post;
+use App\Models\TeamMember;
 use App\Models\Property;
 use App\Models\Service;
 use Illuminate\Console\Command;
@@ -19,7 +21,7 @@ class GenerateSitemap extends Command
     {
         $sitemap = Sitemap::create();
 
-        foreach (['/', '/about', '/services', '/properties', '/invest', '/sustainability', '/certifications', '/insights', '/faqs', '/contact', '/book-visit', '/referrals', '/privacy', '/terms', '/client-portal'] as $path) {
+        foreach (['/', '/about', '/leadership', '/services', '/properties', '/invest', '/sustainability', '/certifications', '/insights', '/events', '/faqs', '/contact', '/book-visit', '/referrals', '/privacy', '/terms', '/client-portal'] as $path) {
             $sitemap->add(Url::create(url($path))->setChangeFrequency(Url::CHANGE_FREQUENCY_WEEKLY));
         }
 
@@ -29,6 +31,14 @@ class GenerateSitemap extends Command
 
         Post::published()->each(fn ($p) => $sitemap->add(
             Url::create(route('posts.show', $p->slug))->setChangeFrequency(Url::CHANGE_FREQUENCY_MONTHLY)
+        ));
+
+        Event::published()->each(fn ($e) => $sitemap->add(
+            Url::create(route('events.show', $e->slug))->setChangeFrequency(Url::CHANGE_FREQUENCY_MONTHLY)
+        ));
+
+        TeamMember::published()->leadership()->each(fn ($m) => $sitemap->add(
+            Url::create(route('leadership.show', $m))->setChangeFrequency(Url::CHANGE_FREQUENCY_MONTHLY)
         ));
 
         Service::published()->each(fn ($s) => $sitemap->add(

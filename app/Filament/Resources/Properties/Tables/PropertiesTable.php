@@ -21,6 +21,11 @@ class PropertiesTable
                     ->searchable(),
                 TextColumn::make('status')
                     ->searchable(),
+                TextColumn::make('plot_availability')
+                    ->label('Plots')
+                    ->getStateUsing(fn ($record) => $record->availabilityDisplayLabel())
+                    ->badge()
+                    ->color(fn ($record) => $record->isSoldOut() ? 'danger' : 'success'),
                 TextColumn::make('project_status')
                     ->searchable(),
                 TextColumn::make('price_from')

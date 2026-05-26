@@ -57,11 +57,11 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::hex('#2D4A3E'),   /* Forest — main actions, edit */
                 'success' => Color::hex('#2D6A4F'),   /* Confirmed / available */
-                'warning' => Color::hex('#B8956B'),   /* Gold — reserved / caution */
+                'warning' => Color::hex('#FBB13A'),   /* Accent — reserved / caution */
                 'danger' => Color::hex('#DC2626'),    /* Delete / sold / errors */
                 'info' => Color::hex('#4A6B8A'),      /* View / info links */
                 'gray' => Color::hex('#6B6B66'),      /* Muted / draft */
-                'gold' => Color::hex('#B8956B'),      /* Accent highlights */
+                'gold' => Color::hex('#FBB13A'),      /* Accent highlights */
             ])
             ->brandName('Acremann CMS')
             ->brandLogo(fn (): ?string => SiteSetting::current()->themeLogoUrl())

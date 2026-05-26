@@ -12,6 +12,7 @@
         <h3 class="mt-1 font-serif text-xl">{{ $property->title }}</h3>
         <p class="mt-1 text-sm text-muted">{{ $property->location }}</p>
         <p class="mt-3 font-medium text-forest">{{ $property->formattedPrice() }}</p>
+        <x-property-availability :property="$property" variant="compact" class="mt-3" />
     </div>
 </a>
 

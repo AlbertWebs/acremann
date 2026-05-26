@@ -32,7 +32,7 @@
 
 .fi-sidebar .fi-sidebar-item-btn > .fi-icon,
 .fi-sidebar .fi-sidebar-group-btn > .fi-icon {
-    color: #b8956b !important;
+    color: #fbb13a !important;
 }
 
 .fi-sidebar .fi-sidebar-item.fi-active > .fi-sidebar-item-btn,
@@ -112,7 +112,7 @@
     gap: 0.375rem;
     font-size: 0.75rem;
     font-weight: 500;
-    color: #b8956b;
+    color: #fbb13a;
     text-decoration: none;
     transition: color 0.15s;
 }
@@ -130,7 +130,7 @@
     margin: 0.25rem auto 0;
     border-radius: 0.375rem;
     border: 1px solid rgba(184, 149, 107, 0.4);
-    color: #b8956b;
+    color: #fbb13a;
     transition: background-color 0.15s, color 0.15s;
 }
 
@@ -212,7 +212,7 @@
 }
 
 .acremann-sidebar-logout-btn:focus-visible {
-    outline: 2px solid #b8956b;
+    outline: 2px solid #fbb13a;
     outline-offset: 2px;
 }
 
@@ -584,7 +584,7 @@ input[type='radio'].fi-radio-input:checked {
 /*
  * #2D4A3E  Forest  — primary / edit
  * #2D6A4F  Success — positive status
- * #B8956B  Gold    — warning / accent
+ * #FBB13A  Accent  — secondary highlight (on forest)
  * #DC2626  Danger  — delete
  * #4A6B8A  Info    — view / secondary
  * #6B6B66  Gray    — neutral
@@ -650,8 +650,8 @@ input[type='radio'].fi-radio-input:checked {
 .fi-ta-actions .fi-icon-btn.fi-color-gold:hover,
 .fi-ta-actions .fi-icon-btn.fi-color-gold:focus-visible {
     color: #1a1a18 !important;
-    background-color: #b8956b !important;
-    border-color: #b8956b !important;
+    background-color: #fbb13a !important;
+    border-color: #fbb13a !important;
     box-shadow: 0 2px 8px rgba(184, 149, 107, 0.35);
 }
 
@@ -1109,6 +1109,9 @@ input[type='radio'].fi-radio-input:checked {
     max-width: 14rem;
     object-fit: contain;
     object-position: left;
+    /* White-logo slot on dark panel — screen blend lifts green-on-black PNGs to cream/white */
+    mix-blend-mode: screen;
+    filter: brightness(3.25) contrast(1.05) saturate(0.2);
 }
 
 .acremann-auth-brand-name {
@@ -1147,7 +1150,7 @@ input[type='radio'].fi-radio-input:checked {
     width: 0.375rem;
     flex-shrink: 0;
     border-radius: 9999px;
-    background-color: #b8956b;
+    background-color: #fbb13a;
 }
 
 .acremann-auth-brand-link {
@@ -1212,7 +1215,7 @@ input[type='radio'].fi-radio-input:checked {
     content: '';
     display: block;
     height: 4px;
-    background: linear-gradient(90deg, #2d4a3e 0%, #b8956b 100%);
+    background: linear-gradient(90deg, #2d4a3e 0%, #fbb13a 100%);
 }
 
 .acremann-auth-card-top {
@@ -1416,6 +1419,7 @@ input[type='radio'].fi-radio-input:checked {
 
     .acremann-auth-brand-logo {
         height: 2rem;
+        max-width: 11rem;
     }
 
     .acremann-auth-main {
@@ -1614,7 +1618,7 @@ input[type='radio'].fi-radio-input:checked {
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #b8954a;
+    color: #fbb13a;
 }
 
 .acremann-property-media-preview-title {
@@ -1652,6 +1656,64 @@ input[type='radio'].fi-radio-input:checked {
     border-radius: 0.25rem;
     object-fit: cover;
     background-color: rgba(26, 26, 24, 0.06);
+}
+
+/* Property & event edit — upload thumbnails fill their frames */
+.acremann-property-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'],
+.acremann-event-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] {
+    --filepond-item-preview-height: 14rem;
+}
+
+.acremann-property-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--item,
+.acremann-event-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--item {
+    width: calc(50% - 0.375rem);
+    min-height: 14rem;
+    margin: 0;
+}
+
+.acremann-property-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--file,
+.acremann-event-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--file {
+    min-height: 14rem;
+    height: 100%;
+}
+
+.acremann-property-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--item-panel,
+.acremann-property-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--image-preview-wrapper,
+.acremann-event-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--item-panel,
+.acremann-event-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--image-preview-wrapper {
+    min-height: 14rem;
+    height: 100% !important;
+}
+
+.acremann-property-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--image-preview,
+.acremann-event-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--image-preview {
+    transform: none !important;
+}
+
+.acremann-property-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--image-preview-overlay,
+.acremann-event-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--image-preview-overlay {
+    background: #3a3a38;
+}
+
+.acremann-property-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--image-preview img,
+.acremann-property-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--image-preview canvas,
+.acremann-event-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--image-preview img,
+.acremann-event-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--image-preview canvas {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+}
+
+.acremann-property-media-section .fi-fo-file-upload .filepond--root:not([data-style-panel-layout='grid']) .filepond--image-preview-wrapper,
+.acremann-property-media-section .fi-fo-file-upload .filepond--root:not([data-style-panel-layout='grid']) .filepond--item-panel {
+    min-height: 18rem;
+}
+
+@media (min-width: 1024px) {
+    .acremann-property-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--item,
+    .acremann-event-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--item {
+        width: calc(33.333% - 0.5rem);
+    }
 }
 
 .acremann-property-form .fi-sc-tabs > .fi-tabs {

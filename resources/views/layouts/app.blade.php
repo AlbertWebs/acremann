@@ -3,7 +3,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <x-seo-meta :title="$metaTitle ?? null" :description="$metaDescription ?? null" />
+    <x-seo-meta
+        :title="$metaTitle ?? null"
+        :description="$metaDescription ?? null"
+        :image="$metaImage ?? null"
+        :type="$metaType ?? 'website'"
+    />
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=cormorant-garamond:400,500,600|dm-sans:400,500,600,700" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -49,7 +54,7 @@
     :class="{ 'overflow-hidden': mobileMenu }"
 >
     <x-header :settings="$settings ?? \App\Models\SiteSetting::current()" />
-    <main class="flex-1">@yield('content')</main>
+    <main class="relative z-0 flex-1">@yield('content')</main>
     <x-footer :settings="$settings ?? \App\Models\SiteSetting::current()" />
     <x-chatbot
         :settings="$settings ?? \App\Models\SiteSetting::current()"

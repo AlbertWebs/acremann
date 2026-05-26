@@ -5,6 +5,16 @@ namespace App\Support;
 class PropertyFormOptions
 {
     /** @return array<string, string> */
+    public static function plotStatuses(): array
+    {
+        return [
+            'available' => 'Available',
+            'reserved' => 'Reserved',
+            'sold' => 'Sold',
+        ];
+    }
+
+    /** @return array<string, string> */
     public static function listingStatuses(): array
     {
         return [

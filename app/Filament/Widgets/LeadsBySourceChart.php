@@ -30,7 +30,7 @@ class LeadsBySourceChart extends ChartWidget
 
         $colors = [
             '#2D4A3E',
-            '#B8956B',
+            '#FBB13A',
             '#4A6B5D',
             '#8B7355',
             '#1A1A18',
