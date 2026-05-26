@@ -1387,11 +1387,19 @@
     }
 
     .property-show-body {
-        @apply bg-white;
+        @apply relative z-0 bg-white;
+    }
+
+    .property-show-layout {
+        @apply items-start;
     }
 
     .property-show-content {
-        @apply min-w-0;
+        @apply relative z-0 min-w-0 isolate;
+    }
+
+    .property-show-sidebar {
+        @apply relative z-10 flex flex-col gap-6 lg:sticky lg:top-28 lg:max-h-[calc(100vh-7rem)] lg:self-start lg:overflow-y-auto lg:overscroll-contain;
     }
 
     .property-show-eyebrow {
@@ -1459,7 +1467,7 @@
     }
 
     .property-show-faq[open] {
-        @apply border-forest/25 shadow-sm;
+        @apply relative z-0 border-forest/25 shadow-sm;
     }
 
     .property-show-faq-question {
@@ -1479,7 +1487,7 @@
     }
 
     .property-show-sidebar-card {
-        @apply rounded-sm border border-charcoal/10 bg-white p-5 shadow-sm md:p-6;
+        @apply relative rounded-sm border border-charcoal/10 bg-white p-5 shadow-sm md:p-6;
     }
 
     .property-show-sidebar-card--enquire {
@@ -1639,7 +1647,7 @@
     }
 
     .property-gallery-item {
-        @apply relative overflow-hidden rounded-sm border border-charcoal/10 bg-charcoal/5 text-left transition hover:border-forest/25 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-forest/30;
+        @apply relative z-0 overflow-hidden rounded-sm border border-charcoal/10 bg-charcoal/5 text-left transition hover:border-forest/25 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-forest/30;
     }
 
     .property-gallery-overlay {
@@ -1678,7 +1686,12 @@
     }
 
     .property-gallery-image {
-        @apply aspect-[4/3] w-full object-cover transition duration-300 hover:scale-[1.02];
+        @apply aspect-[4/3] w-full object-cover transition duration-300;
+    }
+
+    .property-gallery-item:hover .property-gallery-image,
+    .property-gallery-item:focus-visible .property-gallery-image {
+        @apply scale-[1.02];
     }
 
     .property-gallery-item--featured .property-gallery-image {
@@ -1686,7 +1699,7 @@
     }
 
     .property-lightbox {
-        @apply fixed inset-0 z-[80] flex items-center justify-center p-4;
+        @apply fixed inset-0 z-[110] flex items-center justify-center p-4;
     }
 
     .property-lightbox-backdrop {

@@ -6,8 +6,10 @@ use App\Filament\Resources\Properties\PropertyResource;
 use App\Models\Property;
 use BackedEnum;
 use Filament\Actions\CreateAction;
+use App\Filament\Resources\Properties\Tables\PropertiesTable;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Support\Icons\Heroicon;
+use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use UnitEnum;
 
@@ -39,6 +41,11 @@ class ListFeaturedProperties extends ListRecords
         return [
             CreateAction::make(),
         ];
+    }
+
+    public function table(Table $table): Table
+    {
+        return PropertiesTable::configureFeatured($table);
     }
 
     protected function getTableQuery(): ?Builder

@@ -53,44 +53,46 @@
 
         <p class="property-gallery-tip">Tip: click any image to view full size. Use arrow keys to browse.</p>
 
-        <div
-            x-show="lightbox !== null"
-            x-cloak
-            x-transition.opacity
-            @keydown.escape.window="lightbox = null"
-            @keydown.arrow-left.window="lightbox = lightbox === null ? null : (lightbox === 0 ? {{ $gallery->count() - 1 }} : lightbox - 1)"
-            @keydown.arrow-right.window="lightbox = lightbox === null ? null : (lightbox === {{ $gallery->count() - 1 }} ? 0 : lightbox + 1)"
-            class="property-lightbox"
-            role="dialog"
-            aria-modal="true"
-            :aria-label="'Photo ' + (lightbox + 1) + ' of {{ $gallery->count() }}'"
-        >
-            <button type="button" class="property-lightbox-backdrop" @click="lightbox = null" aria-label="Close gallery"></button>
-            <div class="property-lightbox-inner">
-                <button type="button" class="property-lightbox-close" @click="lightbox = null" aria-label="Close">&times;</button>
-                <p class="property-lightbox-counter" x-text="(lightbox + 1) + ' / {{ $gallery->count() }}'"></p>
-                <button
-                    type="button"
-                    class="property-lightbox-nav property-lightbox-prev"
-                    @click="lightbox = lightbox === 0 ? {{ $gallery->count() - 1 }} : lightbox - 1"
-                    aria-label="Previous photo"
-                >‹</button>
-                @foreach($gallery as $index => $media)
-                    <img
-                        x-show="lightbox === {{ $index }}"
-                        x-transition.opacity
-                        src="{{ $property->mediaUrl($media, null) }}"
-                        alt="{{ $property->title }} — photo {{ $index + 1 }}"
-                        class="property-lightbox-image"
-                    >
-                @endforeach
-                <button
-                    type="button"
-                    class="property-lightbox-nav property-lightbox-next"
-                    @click="lightbox = lightbox === {{ $gallery->count() - 1 }} ? 0 : lightbox + 1"
-                    aria-label="Next photo"
-                >›</button>
+        <template x-teleport="body">
+            <div
+                x-show="lightbox !== null"
+                x-cloak
+                x-transition.opacity
+                @keydown.escape.window="lightbox = null"
+                @keydown.arrow-left.window="lightbox = lightbox === null ? null : (lightbox === 0 ? {{ $gallery->count() - 1 }} : lightbox - 1)"
+                @keydown.arrow-right.window="lightbox = lightbox === null ? null : (lightbox === {{ $gallery->count() - 1 }} ? 0 : lightbox + 1)"
+                class="property-lightbox"
+                role="dialog"
+                aria-modal="true"
+                :aria-label="'Photo ' + (lightbox + 1) + ' of {{ $gallery->count() }}'"
+            >
+                <button type="button" class="property-lightbox-backdrop" @click="lightbox = null" aria-label="Close gallery"></button>
+                <div class="property-lightbox-inner">
+                    <button type="button" class="property-lightbox-close" @click="lightbox = null" aria-label="Close">&times;</button>
+                    <p class="property-lightbox-counter" x-text="(lightbox + 1) + ' / {{ $gallery->count() }}'"></p>
+                    <button
+                        type="button"
+                        class="property-lightbox-nav property-lightbox-prev"
+                        @click="lightbox = lightbox === 0 ? {{ $gallery->count() - 1 }} : lightbox - 1"
+                        aria-label="Previous photo"
+                    >‹</button>
+                    @foreach($gallery as $index => $media)
+                        <img
+                            x-show="lightbox === {{ $index }}"
+                            x-transition.opacity
+                            src="{{ $property->mediaUrl($media, null) }}"
+                            alt="{{ $property->title }} — photo {{ $index + 1 }}"
+                            class="property-lightbox-image"
+                        >
+                    @endforeach
+                    <button
+                        type="button"
+                        class="property-lightbox-nav property-lightbox-next"
+                        @click="lightbox = lightbox === {{ $gallery->count() - 1 }} ? 0 : lightbox + 1"
+                        aria-label="Next photo"
+                    >›</button>
+                </div>
             </div>
-        </div>
+        </template>
     @endif
 </div>

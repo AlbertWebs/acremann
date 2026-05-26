@@ -67,8 +67,8 @@
 </section>
 
 <section class="property-show-body section-padding pb-32">
-    <div class="container-site grid gap-12 lg:grid-cols-3">
-        <div class="property-show-content lg:col-span-2 space-y-12">
+    <div class="container-site property-show-layout grid gap-12 lg:grid-cols-3">
+        <div class="property-show-content space-y-12 lg:col-span-2">
             @if($property->galleryMedia()->isNotEmpty())
                 <x-property-gallery :property="$property" id="photos" />
             @endif
@@ -190,8 +190,8 @@
             @endif
         </div>
 
-        <aside class="property-show-sidebar space-y-6">
-            <div class="property-show-sidebar-card property-show-sidebar-card--enquire sticky top-24 hidden lg:block">
+        <aside class="property-show-sidebar lg:col-span-1">
+            <div class="property-show-sidebar-card property-show-sidebar-card--enquire hidden lg:block">
                 <p class="property-show-sidebar-eyebrow">Interested?</p>
                 <h3 class="property-show-sidebar-title">Enquire about this property</h3>
                 <p class="property-show-sidebar-lead">Share your details and our team will follow up with pricing, availability, and site visit options.</p>

@@ -112,6 +112,11 @@ class AdminPanelProvider extends PanelProvider
                     ->icon(Heroicon::OutlinedCalendarDays)
                     ->url(fn (): string => SiteVisitBookingResource::getUrl('index'))
                     ->sort(-13),
+                Action::make('brochureDownloads')
+                    ->label('Brochure downloads')
+                    ->icon(Heroicon::OutlinedDocumentArrowDown)
+                    ->url(fn (): string => LeadResource::getUrl('brochure-downloads'))
+                    ->sort(-12),
                 Action::make('investPage')
                     ->label('Invest page')
                     ->icon(Heroicon::OutlinedChartBarSquare)

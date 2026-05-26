@@ -98,6 +98,21 @@ class Property extends Model implements HasMedia
         return PublicStorage::absoluteUrl($relative);
     }
 
+    public function adminThumbnailPath(): ?string
+    {
+        $media = $this->getFirstMedia('hero') ?? $this->getFirstMedia('gallery');
+
+        if (! $media) {
+            return null;
+        }
+
+        $relative = $media->hasGeneratedConversion('preview')
+            ? $media->getUrl('preview')
+            : $media->getUrl();
+
+        return PublicStorage::normalizePath($relative);
+    }
+
     public function scopePublished($query)
     {
         return $query->where('is_published', true);
