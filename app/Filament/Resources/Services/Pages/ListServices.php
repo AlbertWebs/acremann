@@ -31,7 +31,7 @@ class ListServices extends ListRecords
                 ->label('View /services')
                 ->icon(Heroicon::OutlinedArrowTopRightOnSquare)
                 ->color('gray')
-                ->url(route('services.index'), shouldOpenInNewTab: true),
+                ->url(route('services'), shouldOpenInNewTab: true),
             CreateAction::make(),
         ];
     }
