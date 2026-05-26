@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Acremann Properties — We're running routine maintenance and will be back shortly. Thank you for your patience." />
+  <meta name="author" content="Designekta Studios" />
+  <meta name="theme-color" content="#124734" />
+  <meta name="keywords" content="Acremann Properties, real estate, property, maintenance, coming soon, acremannproperties.com" />
+  <meta name="robots" content="index, follow" />
+  <meta name="language" content="English" />
+  <meta name="revisit-after" content="7 days" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <link rel="canonical" href="https://acremannproperties.com/" />
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://acremannproperties.com/" />
+  <meta property="og:title" content="Acremann Properties — Coming Soon" />
+  <meta property="og:description" content="We're running routine maintenance and will be back shortly. Thank you for your patience." />
+  <meta property="og:image" content="https://acremannproperties.com/Acremann-Logotype_Color.png" />
+  <meta property="og:image:alt" content="Acremann Properties" />
+  <meta property="og:site_name" content="Acremann Properties" />
+  <meta property="og:locale" content="en_US" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Acremann Properties — Coming Soon" />
+  <meta name="twitter:description" content="We're running routine maintenance and will be back shortly. Thank you for your patience." />
+  <meta name="twitter:image" content="https://acremannproperties.com/Acremann-Logotype_Color.png" />
+  <meta name="twitter:image:alt" content="Acremann Properties" />
+  <title>Acremann Properties — Coming Soon</title>
+  <link rel="icon" type="image/png" href="Acremann-Logotype_Color.png" />
+  <link rel="preload" href="RMConnect-Regular.otf" as="font" type="font/otf" crossorigin />
+  <style>
+    @font-face {
+      font-family: 'RMConnect';
+      src: url('RMConnect-Regular.otf') format('opentype');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    ::selection {
+      background: rgba(251, 176, 59, 0.35);
+      color: #FFFFFF;
+    }
+    .skip-link {
+      position: absolute;
+      top: -3rem;
+      left: 1rem;
+      z-index: 100;
+      padding: 0.6rem 1rem;
+      background: #fbb03b;
+      color: #124734;
+      font-family: inherit;
+      font-size: 0.875rem;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: top 0.2s ease;
+    }
+    .skip-link:focus {
+      top: 1rem;
+      outline: 2px solid #fff;
+      outline-offset: 2px;
+    }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'RMConnect', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: #124734;
+      color: #FFFFFF;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.5rem;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    /* Background video */
+    .video-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      will-change: transform;
+      transform: translateZ(0);
+      backface-visibility: hidden;
+    }
+    .video-bg.is-loading { opacity: 0; }
+    .video-bg.is-ready { opacity: 1; transition: opacity 0.8s ease-out; }
+    .video-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background:
+        linear-gradient(180deg, rgba(18, 71, 52, 0.92) 0%, rgba(18, 71, 52, 0.88) 50%, rgba(18, 71, 52, 0.94) 100%);
+      pointer-events: none;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .video-bg.is-ready { transition: opacity 1.2s ease-out; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .video-bg.is-loading { opacity: 1; }
+    }
+
+    /* Layered background for depth */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 120% 80% at 50% -20%, rgba(251, 176, 59, 0.06) 0%, transparent 50%),
+        radial-gradient(ellipse 100% 60% at 80% 100%, rgba(0, 0, 0, 0.15) 0%, transparent 45%),
+        radial-gradient(ellipse 80% 50% at 20% 100%, rgba(0, 0, 0, 0.08) 0%, transparent 40%);
+      pointer-events: none;
+      z-index: 1;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Ambient orbs */
+    .ambient {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+    .ambient span {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.12;
+    }
+    .ambient span:nth-child(1) {
+      width: 320px; height: 320px;
+      background: #fbb03b;
+      top: -10%; right: -5%;
+      animation: float1 18s ease-in-out infinite;
+    }
+    .ambient span:nth-child(2) {
+      width: 240px; height: 240px;
+      background: rgba(255,255,255,0.15);
+      bottom: -5%; left: -8%;
+      animation: float2 22s ease-in-out infinite;
+    }
+    .ambient span:nth-child(3) {
+      width: 160px; height: 160px;
+      background: #fbb03b;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      animation: float3 14s ease-in-out infinite;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .ambient span { animation: none; }
+    }
+    @keyframes float1 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(-20px, 30px) scale(1.05); }
+      66% { transform: translate(15px, -20px) scale(0.98); }
+    }
+    @keyframes float2 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(25px, -25px) scale(1.08); }
+    }
+    @keyframes float3 {
+      0%, 100% { opacity: 0.06; transform: translate(-50%, -50%) scale(1); }
+      50% { opacity: 0.12; transform: translate(-50%, -50%) scale(1.2); }
+    }
+
+    .page {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 560px;
+      width: 100%;
+      padding: 3.25rem 2.25rem;
+      background: rgba(18, 71, 52, 0.5);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 28px;
+      box-shadow:
+        0 4px 24px rgba(0, 0, 0, 0.12),
+        0 0 0 1px rgba(0, 0, 0, 0.04) inset,
+        0 1px 0 rgba(255, 255, 255, 0.05) inset;
+      overflow: hidden;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+    @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+      .page:hover {
+        transform: scale(1.008);
+        box-shadow:
+          0 8px 32px rgba(0, 0, 0, 0.18),
+          0 0 0 1px rgba(0, 0, 0, 0.05) inset,
+          0 1px 0 rgba(255, 255, 255, 0.06) inset;
+      }
+    }
+    .page::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+      pointer-events: none;
+    }
+    .page::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 12px; right: 12px;
+      height: 120px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+      pointer-events: none;
+      border-radius: 28px 28px 0 0;
+    }
+    .corner {
+      position: absolute;
+      width: 20px; height: 20px;
+      border-color: rgba(251, 176, 59, 0.4);
+      border-style: solid;
+      border-width: 0;
+      pointer-events: none;
+    }
+    .corner-tl { top: 16px; left: 16px; border-top-width: 1px; border-left-width: 1px; border-radius: 4px 0 0 0; }
+    .corner-tr { top: 16px; right: 16px; border-top-width: 1px; border-right-width: 1px; border-radius: 0 4px 0 0; }
+    .corner-bl { bottom: 16px; left: 16px; border-bottom-width: 1px; border-left-width: 1px; border-radius: 0 0 0 4px; }
+    .corner-br { bottom: 16px; right: 16px; border-bottom-width: 1px; border-right-width: 1px; border-radius: 0 0 4px 0; }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .badge-wrap { animation: fadeUp 0.7s ease-out 0.08s both; }
+      .page h1 { animation: fadeUp 0.7s ease-out 0.16s both; }
+      .sub { animation: fadeUp 0.7s ease-out 0.24s both; }
+      .divider { animation: fadeUp 0.6s ease-out 0.32s both; }
+      .progress-wrap { animation: fadeUp 0.6s ease-out 0.38s both; }
+      .social a { animation: fadeUp 0.5s ease-out both; }
+      .social a:nth-child(1) { animation-delay: 0.44s; }
+      .social a:nth-child(2) { animation-delay: 0.5s; }
+      .social a:nth-child(3) { animation-delay: 0.56s; }
+      .contact { animation: fadeUp 0.5s ease-out 0.6s both; }
+      .footer-line { animation: fadeUp 0.5s ease-out 0.66s both; }
+      .domain { animation: fadeUp 0.6s ease-out 0.7s both; }
+      .credit { animation: fadeUp 0.5s ease-out 0.76s both; }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .logo {
+      width: 100%;
+      max-width: 260px;
+      height: auto;
+      margin: 0 auto 2.5rem;
+      display: block;
+      opacity: 0.98;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .logo { transform-origin: center center; }
+      @keyframes logoReveal {
+        from { opacity: 0; transform: translateY(12px) scale(0.98); }
+        to { opacity: 0.98; transform: translateY(0) scale(1); }
+      }
+      .logo { animation: logoReveal 0.9s cubic-bezier(0.22, 1, 0.36, 1) both; }
+    }
+
+    .badge-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 1.125rem;
+    }
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #fbb03b;
+      flex-shrink: 0;
+      animation: badgePulse 2s ease-in-out infinite;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .badge-dot { animation: none; opacity: 0.9; }
+    }
+    @keyframes badgePulse {
+      0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 rgba(251, 176, 59, 0.4); }
+      50% { opacity: 0.85; transform: scale(1.1); box-shadow: 0 0 8px 2px rgba(251, 176, 59, 0.2); }
+    }
+    .badge {
+      display: inline-block;
+      font-size: 0.6875rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: #DAD9D7;
+      padding: 0.35rem 0.85rem;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 100px;
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .page h1 {
+      font-size: clamp(1.5rem, 4vw, 1.875rem);
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      line-height: 1.35;
+      margin: 0 0 0.75rem;
+      color: #FFFFFF;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+    }
+
+    .sub {
+      font-size: 0.9375rem;
+      color: #DAD9D7;
+      letter-spacing: 0.01em;
+      line-height: 1.55;
+      margin: 0 0 2.25rem;
+      max-width: 32ch;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .divider {
+      width: 32px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #fbb03b, transparent);
+      margin: 0 auto 1.75rem;
+      border-radius: 1px;
+      box-shadow: 0 0 12px rgba(251, 176, 59, 0.25);
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .divider { animation: dividerGlow 3s ease-in-out infinite; }
+    }
+    @keyframes dividerGlow {
+      0%, 100% { opacity: 1; box-shadow: 0 0 12px rgba(251, 176, 59, 0.25); }
+      50% { opacity: 0.9; box-shadow: 0 0 16px rgba(251, 176, 59, 0.35); }
+    }
+
+    .progress-wrap {
+      margin-bottom: 2.25rem;
+    }
+    .progress-bar {
+      width: 100%;
+      max-width: 160px;
+      height: 2px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 28%;
+      border-radius: 2px;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(90deg, #fbb03b, #fcd88a 50%, #fbb03b);
+      background-size: 200% 100%;
+      animation: progress 2s ease-in-out infinite, progressShimmer 3s ease-in-out infinite;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .progress-fill { animation: none; background: #fbb03b; }
+    }
+    @keyframes progress {
+      0%, 100% { transform: translateX(-100%); }
+      50% { transform: translateX(320%); }
+    }
+    @keyframes progressShimmer {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .social {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .social a {
+      color: #DAD9D7;
+      transition: color 0.25s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      outline: none;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.03);
+    }
+    .social a:hover {
+      color: #124734;
+      background: #fbb03b;
+      border-color: transparent;
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 8px 20px rgba(251, 176, 59, 0.25);
+    }
+    .social a:active {
+      transform: translateY(-1px) scale(1.02);
+    }
+    .social a:focus-visible {
+      color: #124734;
+      background: rgba(251, 176, 59, 0.9);
+      border-color: transparent;
+      box-shadow: 0 0 0 3px rgba(251, 176, 59, 0.4);
+    }
+
+    .social svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    .footer-line {
+      width: 40px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(251, 176, 59, 0.5), transparent);
+      margin: 0 auto 1.25rem;
+      border-radius: 1px;
+    }
+    .domain {
+      font-size: 0.8125rem;
+      color: rgba(255, 255, 255, 0.5);
+      letter-spacing: 0.04em;
+    }
+    .domain a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.2s ease;
+      outline: none;
+    }
+    .domain a:hover { color: #DAD9D7; }
+    .domain a:focus-visible { color: #fbb03b; text-decoration: underline; }
+
+    .contact {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 1.25rem 1.75rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.875rem;
+      letter-spacing: 0.02em;
+    }
+    .contact a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      transition: color 0.2s ease;
+      outline: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .contact a:hover { color: #fbb03b; }
+    .contact a:focus-visible { color: #fbb03b; text-decoration: underline; }
+    .contact span { color: rgba(255, 255, 255, 0.4); font-size: 0.75rem; margin-right: 0.25rem; }
+
+    .credit {
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      font-size: 0.6875rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.35);
+    }
+    .credit a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .credit a:hover { color: rgba(255, 255, 255, 0.55); }
+
+    @media (max-width: 480px) {
+      body { padding: 1.25rem 1rem; }
+      .page {
+        padding: 2.5rem 1.5rem;
+        border-radius: 20px;
+      }
+      .page::after { border-radius: 20px 20px 0 0; }
+      .corner-tl { top: 12px; left: 12px; }
+      .corner-tr { top: 12px; right: 12px; }
+      .corner-bl { bottom: 12px; left: 12px; }
+      .corner-br { bottom: 12px; right: 12px; }
+      .logo { max-width: 220px; margin-bottom: 2rem; }
+      .badge { padding: 0.3rem 0.7rem; font-size: 0.625rem; letter-spacing: 0.22em; }
+      .social a { width: 40px; height: 40px; }
+      .social svg { width: 18px; height: 18px; }
+      .contact { flex-direction: column; gap: 0.75rem; font-size: 0.8125rem; margin-bottom: 1.25rem; }
+      .credit { margin-top: 1.25rem; font-size: 0.625rem; }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to content</a>
+  <video class="video-bg is-loading" autoplay muted loop playsinline preload="none" aria-hidden="true"
+    poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3Crect fill='%23124734' width='1' height='1'/%3E%3C/svg%3E"
+    data-video-src="vids.mp4">
+  </video>
+  <div class="video-overlay" aria-hidden="true"></div>
+  <div class="ambient" aria-hidden="true"><span></span><span></span><span></span></div>
+  <main class="page" id="main-content">
+    <span class="corner corner-tl" aria-hidden="true"></span>
+    <span class="corner corner-tr" aria-hidden="true"></span>
+    <span class="corner corner-bl" aria-hidden="true"></span>
+    <span class="corner corner-br" aria-hidden="true"></span>
+    <img class="logo" src="Acremann-Logotype_White.png" alt="Acremann Properties" width="260" height="auto" />
+    <div class="badge-wrap">
+      <span class="badge-dot" aria-hidden="true"></span>
+      <p class="badge">Routine maintenance</p>
+    </div>
+    <h1>We'll be back shortly</h1>
+    <p class="sub">We're running some routine maintenance to serve you better. Thank you for your patience.</p>
+    <div class="divider" aria-hidden="true"></div>
+    <div class="progress-wrap" aria-hidden="true">
+      <div class="progress-bar" role="presentation">
+        <div class="progress-fill"></div>
+      </div>
+    </div>
+    <nav class="social" aria-label="Social links">
+      <a href="https://www.instagram.com/acremannproperties?igsh=MWI5Y250YWhmdWp1cg%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+      <a href="https://www.tiktok.com/@acremann.properti?_r=1&_t=ZS-94QmJsPJWdU" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg></a>
+      <a href="https://www.facebook.com/share/p/1D8ugBFz8V/" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+    </nav>
+    <div class="contact">
+      <a href="mailto:info@acremannproperties.com"><span aria-hidden="true">Email</span> info@acremannproperties.com</a>
+      <a href="tel:+44115874901"><span aria-hidden="true">Call / WhatsApp</span> 0115 874 901</a>
+    </div>
+    <div class="footer-line" aria-hidden="true"></div>
+    <p class="domain"><a href="https://acremannproperties.com">acremannproperties.com</a></p>
+    <!-- <p class="credit">Designed by <a href="https://designekta.com" target="_blank" rel="noopener noreferrer">Designekta Studios</a></p> -->
+  </main>
+  <script>
+    (function() {
+      var video = document.querySelector('.video-bg');
+      if (!video || !video.dataset.videoSrc) return;
+      function loadVideo() {
+        var src = video.dataset.videoSrc;
+        var source = document.createElement('source');
+        source.src = src;
+        source.type = 'video/mp4';
+        video.appendChild(source);
+        video.load();
+        function playWhenReady() {
+          if (video.classList.contains('is-ready')) return;
+          video.classList.remove('is-loading');
+          video.classList.add('is-ready');
+          video.play().catch(function() {});
+        }
+        video.addEventListener('canplay', playWhenReady, { once: true });
+        video.addEventListener('canplaythrough', playWhenReady, { once: true });
+      }
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(loadVideo, { timeout: 800 });
+      } else {
+        setTimeout(loadVideo, 400);
+      }
+    })();
+  </script>
+</body>
+</html>
