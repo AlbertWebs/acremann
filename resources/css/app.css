@@ -3668,4 +3668,90 @@
     .leadership-legacy-btn-primary {
         @apply border-2 border-gold bg-transparent text-cream shadow-none hover:border-gold hover:bg-gold/15 hover:text-cream focus:ring-gold/40 focus:ring-offset-forest;
     }
+
+    /* Site preloader */
+    .site-preloader {
+        @apply fixed inset-0 z-[200] flex items-center justify-center bg-forest text-cream;
+        background-image:
+            radial-gradient(ellipse 65% 50% at 0% 0%, rgba(184, 149, 107, 0.16), transparent 55%),
+            radial-gradient(ellipse 55% 45% at 100% 100%, rgba(255, 255, 255, 0.07), transparent 50%);
+    }
+
+    .site-preloader-inner {
+        @apply flex w-full max-w-xs flex-col items-center px-6 text-center;
+    }
+
+    .site-preloader-logo {
+        @apply h-auto max-h-12 w-auto max-w-[11rem] object-contain;
+    }
+
+    .site-preloader-name {
+        @apply font-serif text-2xl text-cream;
+    }
+
+    .site-preloader-bar {
+        @apply mt-8 h-0.5 w-full overflow-hidden rounded-full bg-cream/20;
+    }
+
+    .site-preloader-bar-fill {
+        @apply block h-full w-2/5 rounded-full bg-gold;
+        animation: site-preloader-progress 1.4s ease-in-out infinite;
+    }
+
+    .site-preloader--exit {
+        @apply pointer-events-none opacity-0 transition-opacity duration-[400ms] ease-out;
+    }
+
+    body.preloader-active {
+        @apply overflow-hidden;
+    }
+
+    @keyframes site-preloader-progress {
+        0% {
+            transform: translateX(-120%);
+        }
+
+        100% {
+            transform: translateX(320%);
+        }
+    }
+
+    /* Scroll reveal animations */
+    [data-reveal] {
+        opacity: 0;
+        transition:
+            opacity 600ms cubic-bezier(0.22, 1, 0.36, 1),
+            transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+        transition-delay: var(--reveal-delay, 0ms);
+        will-change: opacity, transform;
+    }
+
+    [data-reveal='fade-up'] {
+        transform: translateY(1.25rem);
+    }
+
+    [data-reveal='fade'] {
+        transform: none;
+    }
+
+    [data-reveal].is-revealed {
+        opacity: 1;
+        transform: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .site-preloader-bar-fill {
+            animation: none;
+        }
+
+        .site-preloader--exit {
+            transition: none;
+        }
+
+        [data-reveal] {
+            opacity: 1;
+            transform: none;
+            transition: none;
+        }
+    }
 }

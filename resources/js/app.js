@@ -1,6 +1,7 @@
 import './bootstrap';
 import Alpine from 'alpinejs';
 import './rich-editor';
+import { initMotion } from './motion';
 
 document.addEventListener('alpine:init', () => {
     Alpine.data('clientPortalLookup', (config) => ({
@@ -170,3 +171,4 @@ document.addEventListener('alpine:init', () => {
 
 window.Alpine = Alpine;
 Alpine.start();
+initMotion();

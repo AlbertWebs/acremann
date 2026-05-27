@@ -27,7 +27,7 @@
     @stack('head')
 </head>
 <body
-    class="min-h-screen flex flex-col"
+    class="min-h-screen flex flex-col preloader-active"
     x-data="{ mobileMenu: false, utilityCollapsed: false, headerScrolled: false, showScrollTop: false }"
     x-init="
         let scrollTicking = false;
@@ -53,6 +53,7 @@
     "
     :class="{ 'overflow-hidden': mobileMenu }"
 >
+    <x-site-preloader :settings="$settings ?? \App\Models\SiteSetting::current()" />
     <x-header :settings="$settings ?? \App\Models\SiteSetting::current()" />
     <main class="relative z-0 flex-1">@yield('content')</main>
     <x-footer :settings="$settings ?? \App\Models\SiteSetting::current()" />
