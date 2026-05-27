@@ -41,4 +41,21 @@ class Post extends Model
     {
         return PublicStorage::url($this->featured_image);
     }
+
+    public function readingTimeMinutes(): int
+    {
+        $words = str_word_count(strip_tags((string) $this->body));
+
+        return max(1, (int) ceil($words / 200));
+    }
+
+    public function seoTitle(): string
+    {
+        return $this->meta_title ?: $this->title;
+    }
+
+    public function seoDescription(): ?string
+    {
+        return $this->meta_description ?: $this->excerpt;
+    }
 }

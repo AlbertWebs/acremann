@@ -2942,6 +2942,268 @@
         @apply text-sm font-medium leading-snug text-charcoal;
     }
 
+    /* Insight / blog article */
+    .insight-show-hero {
+        @apply relative z-0 overflow-hidden bg-forest text-cream pt-24 md:pt-28;
+        background-image:
+            radial-gradient(ellipse 65% 50% at 0% 0%, rgba(184, 149, 107, 0.16), transparent 55%),
+            radial-gradient(ellipse 55% 45% at 100% 100%, rgba(255, 255, 255, 0.07), transparent 50%);
+    }
+
+    .insight-show-hero--has-image {
+        @apply min-h-[20rem] md:min-h-[24rem] lg:min-h-[26rem];
+        background-image: none;
+    }
+
+    .insight-show-hero-media {
+        @apply pointer-events-none absolute inset-0;
+    }
+
+    .insight-show-hero-image {
+        @apply h-full w-full object-cover object-center;
+    }
+
+    .insight-show-hero-overlay {
+        @apply absolute inset-0;
+        background:
+            linear-gradient(
+                100deg,
+                rgba(45, 74, 62, 0.96) 0%,
+                rgba(45, 74, 62, 0.88) 30%,
+                rgba(45, 74, 62, 0.55) 60%,
+                rgba(45, 74, 62, 0.25) 100%
+            );
+    }
+
+    .insight-show-hero-inner {
+        @apply relative z-10 flex min-h-[11rem] flex-col justify-end pb-2 md:min-h-[13rem];
+    }
+
+    .insight-show-breadcrumb {
+        @apply mb-6 flex flex-wrap items-center gap-2 text-sm text-cream/70;
+    }
+
+    .insight-show-breadcrumb a {
+        @apply transition hover:text-cream;
+    }
+
+    .insight-show-eyebrow {
+        @apply text-sm font-semibold uppercase tracking-widest text-gold;
+    }
+
+    .insight-show-header {
+        @apply max-w-3xl;
+    }
+
+    .insight-show-title {
+        @apply mt-3 font-serif text-3xl leading-tight md:text-4xl lg:text-[2.75rem];
+    }
+
+    .insight-show-lead {
+        @apply mt-4 max-w-2xl text-base leading-relaxed text-cream/85 md:text-lg;
+    }
+
+    .insight-show-meta-list {
+        @apply mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-cream/75;
+    }
+
+    .insight-show-meta-list li:not(:last-child) {
+        @apply relative pr-4;
+    }
+
+    .insight-show-meta-list li:not(:last-child)::after {
+        content: '·';
+        @apply absolute right-0 text-cream/40;
+    }
+
+    .insight-show-content {
+        @apply border-t border-charcoal/10 bg-cream/40;
+    }
+
+    .insight-show-layout {
+        @apply grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_19rem] lg:gap-12 xl:grid-cols-[minmax(0,1fr)_22.5rem];
+    }
+
+    .insight-show-main {
+        @apply min-w-0;
+    }
+
+    .insight-show-article {
+        @apply rounded-sm border border-charcoal/10 bg-white p-6 shadow-sm md:p-10 lg:p-12;
+    }
+
+    .insight-show-article-footer {
+        @apply mt-8 border-t border-charcoal/10 pt-6;
+    }
+
+    .insight-show-back-link {
+        @apply text-sm font-semibold text-forest underline-offset-4 transition hover:text-gold hover:underline;
+    }
+
+    .insight-show-sidebar {
+        @apply space-y-5 lg:sticky lg:top-28 lg:max-h-[calc(100vh-8rem)] lg:self-start lg:overflow-y-auto lg:overscroll-contain lg:pr-1;
+    }
+
+    .insight-show-sidebar-card {
+        @apply rounded-sm border border-charcoal/10 bg-white p-5 shadow-sm;
+    }
+
+    .insight-show-sidebar-card--cta {
+        @apply border-forest/15 bg-gradient-to-br from-forest/[0.06] to-cream/50;
+    }
+
+    .insight-show-sidebar-eyebrow {
+        @apply text-xs font-semibold uppercase tracking-widest text-gold;
+    }
+
+    .insight-show-sidebar-title {
+        @apply mt-2 font-serif text-lg text-charcoal;
+    }
+
+    .insight-show-sidebar-lead {
+        @apply mt-2 text-sm leading-relaxed text-muted;
+    }
+
+    .insight-show-sidebar-actions {
+        @apply mt-5 flex flex-col gap-3;
+    }
+
+    .insight-show-sidebar-links {
+        @apply mt-3 space-y-2 text-sm;
+    }
+
+    .insight-show-sidebar-links a {
+        @apply font-medium text-forest underline-offset-4 transition hover:text-gold hover:underline;
+    }
+
+    .insight-show-sidebar-posts {
+        @apply mt-4 space-y-3;
+    }
+
+    .insight-show-sidebar-post {
+        @apply flex gap-3 rounded-sm transition hover:opacity-90;
+    }
+
+    .insight-show-sidebar-post-image {
+        @apply h-14 w-14 shrink-0 rounded-sm object-cover bg-charcoal/5;
+    }
+
+    .insight-show-sidebar-post-body {
+        @apply flex min-w-0 flex-col justify-center gap-0.5;
+    }
+
+    .insight-show-sidebar-post-date {
+        @apply text-[0.6875rem] font-semibold uppercase tracking-wide text-gold;
+    }
+
+    .insight-show-sidebar-post-title {
+        @apply text-sm font-medium leading-snug text-charcoal;
+    }
+
+    .insight-show-sidebar-footer-link {
+        @apply mt-4 inline-block text-sm font-semibold text-forest underline-offset-4 hover:text-gold hover:underline;
+    }
+
+    .insight-show-cta {
+        @apply border-t border-charcoal/10 bg-forest text-cream;
+    }
+
+    .insight-show-cta-inner {
+        @apply flex flex-col gap-6 rounded-sm border border-cream/10 bg-white/5 p-8 md:flex-row md:items-center md:justify-between md:p-10;
+    }
+
+    .insight-show-cta-eyebrow {
+        @apply text-xs font-semibold uppercase tracking-widest text-gold;
+    }
+
+    .insight-show-cta-title {
+        @apply mt-2 font-serif text-2xl md:text-3xl;
+    }
+
+    .insight-show-cta-lead {
+        @apply mt-3 max-w-xl text-sm leading-relaxed text-cream/85 md:text-base;
+    }
+
+    .insight-show-cta-actions {
+        @apply flex shrink-0 flex-col gap-3 sm:flex-row;
+    }
+
+    .insight-show-prose {
+        @apply max-w-none text-base leading-relaxed text-muted;
+    }
+
+    .insight-show-prose :where(p) {
+        @apply m-0;
+    }
+
+    .insight-show-prose :where(p + p) {
+        @apply mt-5;
+    }
+
+    .insight-show-prose :where(h1) {
+        @apply mt-12 mb-4 font-serif text-2xl leading-snug text-forest first:mt-0 md:text-3xl;
+    }
+
+    .insight-show-prose :where(h2) {
+        @apply mt-10 mb-3 font-serif text-xl leading-snug text-forest md:text-2xl;
+    }
+
+    .insight-show-prose :where(h3) {
+        @apply mt-8 mb-2 text-lg font-semibold leading-snug text-charcoal;
+    }
+
+    .insight-show-prose :where(h4) {
+        @apply mt-6 mb-2 text-base font-semibold text-charcoal;
+    }
+
+    .insight-show-prose :where(hr) {
+        @apply my-10 border-0 border-t border-charcoal/15;
+    }
+
+    .insight-show-prose :where(ul) {
+        @apply my-5 list-disc space-y-2 pl-6 marker:text-forest;
+    }
+
+    .insight-show-prose :where(ol) {
+        @apply my-5 list-decimal space-y-2 pl-6 marker:font-semibold marker:text-forest;
+    }
+
+    .insight-show-prose :where(ul ul, ul ol, ol ul, ol ol) {
+        @apply my-2;
+    }
+
+    .insight-show-prose :where(li) {
+        @apply pl-1 leading-relaxed;
+    }
+
+    .insight-show-prose :where(li > p) {
+        @apply mt-0;
+    }
+
+    .insight-show-prose :where(li > p + p) {
+        @apply mt-3;
+    }
+
+    .insight-show-prose :where(li + li) {
+        @apply mt-2;
+    }
+
+    .insight-show-prose :where(ul > li::marker, ol > li::marker) {
+        @apply text-forest;
+    }
+
+    .insight-show-prose :where(a) {
+        @apply font-medium text-forest underline-offset-4 hover:text-gold hover:underline;
+    }
+
+    .insight-show-prose :where(strong) {
+        @apply font-semibold text-charcoal;
+    }
+
+    .insight-show-prose :where(blockquote) {
+        @apply my-6 border-l-4 border-gold/80 py-1 pl-5 italic text-charcoal;
+    }
+
     .events-show-prose {
         @apply max-w-none text-base leading-relaxed text-charcoal;
     }
