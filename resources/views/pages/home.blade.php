@@ -32,26 +32,7 @@
                 @endforeach
             </div>
         @elseif($settings->heroShowsGallery())
-            @php
-                $heroImageUrls = $settings->homepageHeroImageUrls();
-            @endphp
-            @if(count($heroImageUrls) === 1)
-                <div class="overflow-hidden rounded-sm bg-charcoal/5 aspect-[4/3] lg:aspect-auto lg:min-h-[22rem]">
-                    <img src="{{ $heroImageUrls[0] }}" alt="" class="h-full w-full object-cover">
-                </div>
-            @else
-                <div class="grid grid-cols-2 gap-3">
-                    @foreach($heroImageUrls as $i => $url)
-                        <div @class([
-                            'overflow-hidden rounded-sm bg-charcoal/5',
-                            'col-span-2 aspect-[2/1]' => $i === 0,
-                            'aspect-square' => $i > 0,
-                        ])>
-                            <img src="{{ $url }}" alt="" class="h-full w-full object-cover">
-                        </div>
-                    @endforeach
-                </div>
-            @endif
+            <x-home-hero-gallery :settings="$settings" />
         @endif
     </div>
 </section>

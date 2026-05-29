@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Support\PublicStorage;
+use App\Support\VideoEmbed;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
@@ -11,12 +12,13 @@ class SiteSetting extends Model
     public const HOMEPAGE_HERO_GRID_LIMIT = 3;
 
     protected $fillable = [
-        'company_name', 'tagline', 'logo_path', 'logo_white_path', 'favicon_path',
+        'company_name', 'tagline', 'logo_path', 'logo_white_path', 'logo_footer_path', 'favicon_path',
         'hero_eyebrow', 'hero_headline', 'hero_description',
         'hero_cta_primary_label', 'hero_cta_primary_url',
         'hero_cta_secondary_label', 'hero_cta_secondary_url',
         'hero_show_whatsapp_cta', 'hero_whatsapp_label',
         'hero_media_mode', 'hero_image_path', 'hero_images',
+        'hero_video_enabled', 'hero_video_provider', 'hero_video_url', 'hero_video_path',
         'assistant_heading', 'assistant_subheading', 'assistant_title_body',
         'assistant_title_link_label', 'assistant_title_link_url', 'assistant_whatsapp_label',
         'assistant_consent_text', 'assistant_success_message',
@@ -34,6 +36,7 @@ class SiteSetting extends Model
     {
         return [
             'hero_show_whatsapp_cta' => 'boolean',
+            'hero_video_enabled' => 'boolean',
             'hero_images' => 'array',
             'assistant_buyer_types' => 'array',
             'assistant_budget_ranges' => 'array',
@@ -83,6 +86,11 @@ class SiteSetting extends Model
     public function whiteLogoUrl(): ?string
     {
         return $this->assetUrl($this->logo_white_path);
+    }
+
+    public function footerLogoUrl(): ?string
+    {
+        return $this->assetUrl($this->logo_footer_path) ?? $this->themeLogoUrl();
     }
 
     /**
@@ -145,6 +153,48 @@ class SiteSetting extends Model
     public function homepageHeroImageUrls(): array
     {
         return array_slice($this->heroImageUrls(), 0, self::HOMEPAGE_HERO_GRID_LIMIT);
+    }
+
+    /**
+     * Images for the two smaller hero grid cells when the large slot uses video.
+     *
+     * @return list<string>
+     */
+    public function homepageHeroSecondaryImageUrls(): array
+    {
+        return array_slice($this->heroImageUrls(), 0, 2);
+    }
+
+    public function heroVideoEnabled(): bool
+    {
+        return (bool) $this->hero_video_enabled && $this->heroVideoPayload() !== null;
+    }
+
+    /**
+     * @return array{type: 'iframe', provider: string, embed_url: string}|array{type: 'file', src: string}|null
+     */
+    public function heroVideoPayload(): ?array
+    {
+        if (! $this->hero_video_enabled) {
+            return null;
+        }
+
+        if ($this->hero_video_provider === 'upload') {
+            $src = $this->assetUrl($this->hero_video_path);
+
+            return $src ? ['type' => 'file', 'src' => $src] : null;
+        }
+
+        if (in_array($this->hero_video_provider, ['youtube', 'vimeo'], true)) {
+            return VideoEmbed::fromUrl($this->hero_video_url);
+        }
+
+        return null;
+    }
+
+    public function heroShowsPrimaryVideo(): bool
+    {
+        return $this->heroShowsGallery() && $this->heroVideoEnabled();
     }
 
     public function heroEyebrow(): string
@@ -237,7 +287,7 @@ class SiteSetting extends Model
     {
         return $this->plainTextFromRich(
             $this->sustainability_intro,
-            'Responsible land use, green open spaces, solar-ready planning, and long-term community value guide every Acremann development. Beyond marketing claims, we plan tree planting, drainage improvements, and protected open space from the earliest master-plan stage — so infrastructure, access, and environmental choices support families and investors for decades. Whether you are buying to build, hold, or pass land to the next generation, our sustainability markers are documented on every project we represent across Nairobi, Kiambu, Kikuyu and Nachu.',
+            'Responsible land use, green open spaces, and solar-ready planning guide every Acremann development. We plan tree planting, drainage, and protected open space from the start, with clear sustainability markers on every project across Nairobi, Kiambu, Kikuyu and Nachu.',
         );
     }
 

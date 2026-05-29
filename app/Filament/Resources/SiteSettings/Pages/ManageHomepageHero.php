@@ -2,12 +2,14 @@
 
 namespace App\Filament\Resources\SiteSettings\Pages;
 
-use App\Filament\Schemas\HomepageHeroForm;
 use App\Filament\Resources\SiteSettings\SiteSettingResource;
+use App\Filament\Schemas\HomepageHeroForm;
 use App\Models\SiteSetting;
 use App\Support\PublicStorage;
 use BackedEnum;
+use Filament\Actions\Action;
 use Filament\Resources\Pages\EditRecord;
+use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 
 class ManageHomepageHero extends EditRecord
@@ -75,14 +77,19 @@ class ManageHomepageHero extends EditRecord
         return $data;
     }
 
-    public function form(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
+    public function form(Schema $schema): Schema
     {
         return HomepageHeroForm::configure($schema);
     }
 
     protected function getHeaderActions(): array
     {
-        return [];
+        return [
+            Action::make('heroVideo')
+                ->label('Hero video')
+                ->icon(Heroicon::OutlinedVideoCamera)
+                ->url(ManageHomepageHeroVideo::getUrl(['record' => SiteSetting::current()])),
+        ];
     }
 
     protected function getRedirectUrl(): ?string

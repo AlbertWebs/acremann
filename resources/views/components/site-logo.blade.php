@@ -1,9 +1,11 @@
 @props(['settings', 'variant' => 'theme', 'class' => ''])
 
 @php
-    $url = $variant === 'white'
-        ? $settings->whiteLogoUrl()
-        : $settings->themeLogoUrl();
+    $url = match ($variant) {
+        'white' => $settings->whiteLogoUrl(),
+        'footer' => $settings->footerLogoUrl(),
+        default => $settings->themeLogoUrl(),
+    };
 @endphp
 
 @if($url)

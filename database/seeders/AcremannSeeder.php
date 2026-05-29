@@ -46,7 +46,7 @@ class AcremannSeeder extends Seeder
             'podcast_url' => 'https://podcasts.google.com',
             'csr_statement' => 'We invest in community tree planting, drainage improvements, and ethical land stewardship across every project.',
             'referral_program' => 'Refer a friend to Acremann and earn rewards when they complete a purchase. Our loyalty program recognises clients who grow with us.',
-            'sustainability_intro' => 'Responsible land use, green open spaces, solar-ready planning, and long-term community value guide every Acremann development. Beyond marketing claims, we plan tree planting, drainage improvements, and protected open space from the earliest master-plan stage — so infrastructure, access, and environmental choices support families and investors for decades. Whether you are buying to build, hold, or pass land to the next generation, our sustainability markers are documented on every project we represent across Nairobi, Kiambu, Kikuyu and Nachu.',
+            'sustainability_intro' => 'Responsible land use, green open spaces, and solar-ready planning guide every Acremann development. We plan tree planting, drainage, and protected open space from the start, with clear sustainability markers on every project across Nairobi, Kiambu, Kikuyu and Nachu.',
             'investment_intro' => 'Whether you are an end-user, investor, or diaspora buyer, Acremann provides transparent advisory from site visit to title handover.',
             'services_page_eyebrow' => 'What we offer',
             'services_page_headline' => 'Professional property services',

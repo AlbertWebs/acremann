@@ -32,6 +32,12 @@
         }
     }
 
+    @media (prefers-reduced-motion: no-preference) {
+        html {
+            scroll-behavior: smooth;
+        }
+    }
+
     body {
         @apply bg-cream text-charcoal font-sans antialiased;
     }
@@ -125,59 +131,61 @@
         @apply flex min-w-0 flex-col gap-0.5 transition hover:opacity-90;
     }
 
-    .site-header-brand-logo,
-    .site-footer-brand-logo {
+    .site-header-brand-logo {
         @apply h-9 w-auto max-w-[11rem] object-contain object-left md:h-10;
     }
 
     .site-footer-brand-logo {
-        @apply md:h-11;
+        @apply h-12 w-auto max-w-[14rem] object-contain object-left md:h-14 md:max-w-[18rem];
     }
 
     .site-footer {
-        @apply relative border-t border-charcoal/10 bg-gradient-to-b from-white via-white to-cream/50;
+        @apply border-t border-charcoal/8 bg-gradient-to-b from-cream/50 via-white to-cream/30;
     }
 
-    .site-footer-accent {
-        @apply absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-forest via-gold/80 to-forest;
+    .site-footer-header {
+        @apply flex flex-col gap-6 md:flex-row md:items-end md:justify-between md:gap-10;
+    }
+
+    .site-footer-intro {
+        @apply max-w-2xl;
+    }
+
+    .site-footer-title {
+        @apply text-forest;
     }
 
     .site-footer-grid {
-        @apply grid gap-10 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-12 xl:gap-8;
+        @apply mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8 xl:grid-cols-12 md:mt-12;
     }
 
     .site-footer-brand {
         @apply sm:col-span-2 lg:col-span-2 xl:col-span-4;
     }
 
-    @media (min-width: 1280px) {
-        .site-footer-brand {
-            @apply rounded-sm border border-charcoal/8 bg-cream/30 p-6;
-        }
+    .site-footer-brand-card,
+    .site-footer-col-card {
+        @apply relative h-full overflow-hidden rounded-sm border border-charcoal/10 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-forest/15 hover:shadow-md md:p-7;
+    }
+
+    .site-footer-col-card--forest {
+        @apply border-t-4 border-t-forest;
+    }
+
+    .site-footer-col-card--gold {
+        @apply border-t-4 border-t-gold;
+    }
+
+    .site-footer-cta-mobile {
+        @apply flex-col gap-3 sm:items-center;
     }
 
     .site-footer-brand-lockup {
-        @apply inline-flex flex-col gap-3 transition hover:opacity-90;
+        @apply inline-block transition hover:opacity-90;
     }
 
     .site-footer-brand-lockup .site-footer-brand-logo {
-        @apply order-first;
-    }
-
-    .site-footer-brand-name {
-        @apply font-serif text-2xl leading-tight text-forest;
-    }
-
-    .site-footer-tagline {
-        @apply mt-3 max-w-md text-sm leading-relaxed text-muted;
-    }
-
-    .site-footer-cta {
-        @apply mt-5 flex flex-wrap gap-2.5;
-    }
-
-    .site-footer-cta-btn {
-        @apply text-sm !px-4 !py-2;
+        @apply block;
     }
 
     /* In DOM for crawlers; not shown to visitors */
@@ -189,33 +197,12 @@
         @apply xl:col-span-2;
     }
 
-    @media (min-width: 1280px) {
-        .site-footer-col {
-            @apply border-s border-charcoal/8 ps-6;
-        }
-
-        .site-footer-brand {
-            @apply border-s-0;
-        }
-    }
-
     .site-footer-newsletter {
         @apply sm:col-span-2 lg:col-span-2 xl:col-span-4;
     }
 
-    @media (min-width: 1280px) {
-        .site-footer-newsletter {
-            @apply border-s-0 ps-0;
-        }
-    }
-
     .site-footer-heading {
-        @apply flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-forest;
-    }
-
-    .site-footer-heading::before {
-        content: '';
-        @apply h-px w-6 shrink-0 bg-gold/70;
+        @apply text-xs font-semibold uppercase tracking-widest text-gold;
     }
 
     .site-footer-links {
@@ -239,7 +226,7 @@
     }
 
     .site-footer-contact {
-        @apply mt-6 space-y-3 border-t border-charcoal/8 pt-6;
+        @apply mt-6 space-y-4 border-t border-charcoal/8 pt-6;
     }
 
     .site-footer-contact-item {
@@ -247,7 +234,7 @@
     }
 
     .site-footer-contact-icon {
-        @apply mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-forest/8 text-forest;
+        @apply mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-forest/15 bg-forest/5 text-forest;
     }
 
     .site-footer-address {
@@ -255,7 +242,7 @@
     }
 
     .site-footer-social-bar {
-        @apply border-t border-charcoal/10 bg-white/50 py-8;
+        @apply border-t border-charcoal/8 bg-cream/25 py-8;
     }
 
     .site-footer-social-bar-inner {
@@ -263,7 +250,7 @@
     }
 
     .site-footer-social-label {
-        @apply mb-4 text-xs font-semibold uppercase tracking-widest text-forest;
+        @apply mb-4 text-xs font-semibold uppercase tracking-widest text-gold;
     }
 
     .site-footer-social {
@@ -291,14 +278,7 @@
     }
 
     .site-footer-newsletter-card {
-        @apply rounded-sm border border-charcoal/10 bg-white p-5 shadow-sm md:p-6;
-        box-shadow:
-            0 1px 2px rgba(26, 26, 24, 0.04),
-            0 8px 24px rgba(26, 26, 24, 0.06);
-    }
-
-    .site-footer-newsletter-card .site-footer-heading::before {
-        @apply w-8 bg-forest/40;
+        @apply p-6 md:p-7;
     }
 
     .site-footer-newsletter-lead {
@@ -318,7 +298,7 @@
     }
 
     .site-footer-bar {
-        @apply border-t border-charcoal/10 bg-charcoal/[0.02] py-5 md:py-6;
+        @apply border-t border-charcoal/8 bg-white/70 py-5 backdrop-blur-sm md:py-6;
     }
 
     .site-footer-bar-inner {
@@ -838,6 +818,25 @@
         @apply mt-3 flex-1 text-sm leading-relaxed text-cream/80 md:text-[0.9375rem];
     }
 
+    /* Homepage hero video */
+    .home-hero-video {
+        @apply relative isolate;
+    }
+
+    .home-hero-video-media {
+        @apply absolute inset-0 h-full w-full border-0 object-cover;
+    }
+
+    .home-hero-video iframe.home-hero-video-media {
+        @apply scale-[1.35];
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .home-hero-video video.home-hero-video-media {
+            display: none;
+        }
+    }
+
     /* Homepage insights */
     .home-insights-section {
         @apply border-t border-charcoal/8 bg-white;
@@ -911,61 +910,109 @@
         @apply mt-10 flex justify-center md:hidden;
     }
 
-    /* Testimonials carousel (home) */
-    .testimonials-carousel-section {
-        @apply bg-white;
+    /* Testimonials showcase (home) */
+    .testimonials-showcase {
+        @apply border-t border-charcoal/10 bg-gradient-to-b from-cream/60 via-white to-white;
     }
 
-    .testimonials-carousel-header {
-        @apply flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between;
+    .testimonials-showcase-header {
+        @apply flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between lg:gap-10;
     }
 
-    .testimonials-carousel-controls {
+    .testimonials-showcase-intro {
+        @apply max-w-2xl;
+    }
+
+    .testimonials-showcase-eyebrow {
+        @apply text-sm font-semibold uppercase tracking-widest text-gold;
+    }
+
+    .testimonials-showcase-title {
+        @apply mt-2 text-3xl md:text-4xl;
+    }
+
+    .testimonials-showcase-lead {
+        @apply mt-4 text-base leading-relaxed text-muted;
+    }
+
+    .testimonials-showcase-controls {
         @apply flex shrink-0 items-center gap-2;
     }
 
-    .testimonials-carousel-btn {
-        @apply inline-flex h-10 w-10 items-center justify-center rounded-full border border-charcoal/12 bg-white text-forest shadow-sm transition hover:border-forest/30 hover:bg-forest/5 focus:outline-none focus:ring-2 focus:ring-forest/30 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-40;
+    .testimonials-showcase-btn {
+        @apply inline-flex h-11 w-11 items-center justify-center rounded-full border border-charcoal/12 bg-white text-forest shadow-sm transition hover:border-forest/30 hover:bg-forest/5 focus:outline-none focus:ring-2 focus:ring-forest/30 focus:ring-offset-2;
     }
 
-    .testimonials-carousel-viewport {
-        @apply overflow-hidden;
+    .testimonials-showcase-body {
+        @apply mt-10 lg:mt-12;
     }
 
-    .testimonials-carousel-track {
+    .testimonials-showcase-viewport {
+        @apply overflow-hidden rounded-sm;
+    }
+
+    .testimonials-showcase-track {
         @apply flex transition-transform duration-500 ease-out;
     }
 
-    .testimonials-carousel-slide {
-        @apply w-full shrink-0;
+    .testimonials-showcase-slide {
+        @apply grid w-full shrink-0 items-stretch gap-8 md:gap-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-12;
     }
 
-    .testimonials-carousel-grid {
-        @apply grid grid-cols-1 gap-6 md:grid-cols-3;
+    .testimonials-showcase-media {
+        @apply relative overflow-hidden rounded-sm border border-charcoal/10 bg-charcoal/5 shadow-md;
     }
 
-    .testimonials-carousel-card {
-        @apply flex h-full flex-col;
+    .testimonials-showcase-photo {
+        @apply aspect-[4/5] w-full object-cover md:aspect-[5/6] lg:min-h-[24rem];
     }
 
-    .testimonials-carousel-quote {
-        @apply flex-1 font-serif text-lg italic leading-relaxed text-charcoal md:text-xl;
+    .testimonials-showcase-photo-placeholder {
+        @apply flex aspect-[4/5] w-full flex-col items-center justify-center gap-3 bg-gradient-to-br from-forest/90 to-forest px-6 text-center md:aspect-[5/6] lg:min-h-[24rem];
     }
 
-    .testimonials-carousel-author {
-        @apply mt-5 border-t border-charcoal/8 pt-4 text-sm text-muted;
+    .testimonials-showcase-photo-placeholder-text {
+        @apply text-xs font-medium uppercase tracking-wider text-cream/60;
     }
 
-    .testimonials-carousel-dots {
-        @apply mt-8 flex items-center justify-center gap-2;
+    .testimonials-showcase-content {
+        @apply flex flex-col justify-center rounded-sm border border-charcoal/10 bg-white p-6 shadow-sm md:p-8 lg:p-10;
     }
 
-    .testimonials-carousel-dot {
+    .testimonials-showcase-quote {
+        @apply m-0;
+    }
+
+    .testimonials-showcase-quote p {
+        @apply font-serif text-xl italic leading-relaxed text-charcoal md:text-2xl lg:text-[1.65rem] lg:leading-snug;
+    }
+
+    .testimonials-showcase-author {
+        @apply mt-8 flex flex-col gap-1 border-t border-charcoal/10 pt-6 not-italic;
+    }
+
+    .testimonials-showcase-name {
+        @apply text-base font-semibold text-forest not-italic;
+    }
+
+    .testimonials-showcase-detail {
+        @apply text-sm text-muted;
+    }
+
+    .testimonials-showcase-property {
+        @apply mt-1 text-xs font-medium uppercase tracking-wide text-gold;
+    }
+
+    .testimonials-showcase-dots {
+        @apply mt-8 flex flex-wrap items-center justify-center gap-2 lg:mt-10;
+    }
+
+    .testimonials-showcase-dot {
         @apply h-2 w-2 rounded-full bg-charcoal/20 transition hover:bg-charcoal/35 focus:outline-none focus:ring-2 focus:ring-forest/30 focus:ring-offset-2;
     }
 
-    .testimonials-carousel-dot.is-active {
-        @apply w-6 bg-forest;
+    .testimonials-showcase-dot.is-active {
+        @apply w-7 bg-forest;
     }
 
     /* Certifications */
@@ -1834,8 +1881,58 @@
         @apply mx-0 max-w-xl text-left;
     }
 
+    .about-mv-section {
+        @apply relative overflow-hidden border-t border-charcoal/8 bg-gradient-to-b from-cream/50 via-white to-cream/30;
+    }
+
+    .about-mv-section::before {
+        content: '';
+        @apply pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-gold/10 blur-3xl;
+    }
+
+    .about-mv-section::after {
+        content: '';
+        @apply pointer-events-none absolute -left-20 bottom-0 h-64 w-64 rounded-full bg-forest/5 blur-3xl;
+    }
+
+    .about-mv-section .container-site {
+        @apply relative;
+    }
+
+    .about-mv-principles {
+        @apply mt-10 flex flex-col gap-3 sm:mt-12 sm:flex-row sm:flex-wrap sm:gap-4 md:mt-14;
+    }
+
+    .about-mv-principle {
+        @apply flex flex-1 items-center gap-3 rounded-sm border border-charcoal/10 bg-white/80 px-4 py-3.5 text-sm font-semibold text-forest shadow-sm backdrop-blur-sm transition duration-300 hover:-translate-y-0.5 hover:border-forest/20 hover:shadow-md sm:min-w-[14rem] sm:px-5;
+    }
+
+    .about-mv-principle--forest {
+        @apply border-s-4 border-s-forest;
+    }
+
+    .about-mv-principle--gold {
+        @apply border-s-4 border-s-gold;
+    }
+
+    .about-mv-principle-icon {
+        @apply inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-forest/15 bg-forest/5 text-forest;
+    }
+
+    .about-mv-principle-icon svg {
+        @apply h-5 w-5;
+    }
+
+    .about-mv-principle-icon--gold {
+        @apply border-gold/30 bg-gold/10 text-gold;
+    }
+
+    .about-mv-grid-label {
+        @apply mt-10 text-xs font-semibold uppercase tracking-widest text-gold md:mt-12;
+    }
+
     .about-mv-grid {
-        @apply mt-12 grid gap-6 lg:grid-cols-2 lg:gap-8;
+        @apply mt-5 grid gap-6 lg:grid-cols-2 lg:gap-8;
     }
 
     .about-mv-card {
@@ -1843,11 +1940,11 @@
     }
 
     .about-mv-card-mission {
-        @apply border-t-4 border-t-forest;
+        @apply border-t-4 border-t-forest bg-gradient-to-br from-white via-white to-forest/[0.06];
     }
 
     .about-mv-card-vision {
-        @apply border-t-4 border-t-gold;
+        @apply border-t-4 border-t-gold bg-gradient-to-br from-white via-white to-gold/[0.1];
     }
 
     .about-mv-icon {
@@ -1867,11 +1964,15 @@
     }
 
     .about-mv-title {
-        @apply mt-2 font-serif text-2xl text-forest;
+        @apply mt-2 font-serif text-2xl leading-snug text-forest md:text-3xl;
     }
 
     .about-mv-body {
-        @apply mt-4 text-base leading-relaxed text-muted;
+        @apply mt-4 text-base leading-relaxed text-muted md:text-lg;
+    }
+
+    .about-mv-footer {
+        @apply mt-12;
     }
 
     .about-team-section {
@@ -2065,14 +2166,31 @@
 
     /* Sustainability page */
     .sustain-hero {
-        @apply relative overflow-hidden bg-forest text-cream;
+        @apply relative overflow-hidden border-b border-charcoal/10 bg-forest text-cream;
         background-image:
-            radial-gradient(ellipse 60% 50% at 0% 0%, rgba(184, 149, 107, 0.15), transparent 55%),
-            radial-gradient(ellipse 55% 45% at 100% 100%, rgba(255, 255, 255, 0.06), transparent 50%);
+            radial-gradient(ellipse 70% 55% at 0% 0%, rgba(184, 149, 107, 0.18), transparent 58%),
+            radial-gradient(ellipse 60% 50% at 100% 100%, rgba(255, 255, 255, 0.08), transparent 52%),
+            linear-gradient(165deg, rgba(45, 74, 62, 1) 0%, rgba(38, 62, 52, 1) 100%);
+    }
+
+    .sustain-hero-glow {
+        @apply pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-gold/70 to-transparent md:inset-x-16;
+    }
+
+    .sustain-hero-inner {
+        @apply relative z-10 py-2 md:py-6 lg:py-8;
     }
 
     .sustain-hero-grid {
-        @apply grid items-start gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14;
+        @apply grid items-center gap-10 md:gap-12 lg:grid-cols-2 lg:gap-14 xl:gap-20;
+    }
+
+    .sustain-hero-copy {
+        @apply flex flex-col justify-center lg:max-w-[34rem] lg:pr-6;
+    }
+
+    .sustain-hero-aside {
+        @apply w-full lg:max-w-md lg:justify-self-end xl:max-w-lg;
     }
 
     .sustain-eyebrow {
@@ -2084,39 +2202,55 @@
     }
 
     .sustain-hero-title {
-        @apply mt-3 text-4xl leading-tight md:text-5xl;
+        @apply mt-3 font-serif text-4xl leading-[1.1] md:text-5xl lg:text-[3.25rem];
     }
 
     .sustain-hero-lead {
-        @apply mt-5 max-w-xl text-base leading-relaxed text-cream/85 md:text-lg;
+        @apply mt-5 max-w-xl text-base leading-relaxed text-cream/88 md:mt-6 md:text-lg md:leading-relaxed;
     }
 
     .sustain-hero-ctas {
-        @apply mt-8 flex flex-wrap gap-3;
+        @apply mt-8 flex flex-wrap items-center gap-3 md:mt-10;
     }
 
     .sustain-hero-ctas .btn-primary {
-        @apply border-2 border-gold bg-transparent text-cream shadow-none hover:border-gold hover:bg-gold/15 hover:text-cream focus:ring-gold/40 focus:ring-offset-forest;
+        @apply border-2 border-gold bg-transparent px-6 py-3 text-cream shadow-none hover:border-gold hover:bg-gold/15 hover:text-cream focus:ring-gold/40 focus:ring-offset-forest;
     }
 
     .btn-outline.sustain-btn-on-dark {
-        @apply border-cream/40 bg-transparent text-cream shadow-none hover:border-cream hover:bg-cream/10 hover:text-cream focus:ring-cream/35 focus:ring-offset-forest;
+        @apply border-cream/45 bg-transparent px-6 py-3 text-cream shadow-none hover:border-cream hover:bg-cream/10 hover:text-cream focus:ring-cream/35 focus:ring-offset-forest;
     }
 
     .sustain-hero-card {
-        @apply rounded-sm border border-cream/12 bg-cream/[0.05] p-6 backdrop-blur-sm md:p-8;
+        @apply rounded-sm border border-cream/15 border-t-[3px] border-t-gold bg-cream/[0.08] p-6 shadow-[0_24px_48px_rgba(0,0,0,0.18)] backdrop-blur-md md:p-8;
+    }
+
+    .sustain-hero-card-eyebrow {
+        @apply text-xs font-semibold uppercase tracking-widest text-gold/90;
     }
 
     .sustain-hero-card-title {
-        @apply font-serif text-2xl text-cream;
+        @apply mt-2 font-serif text-xl leading-snug text-cream md:text-2xl;
     }
 
     .sustain-hero-stats {
-        @apply mt-6 divide-y divide-cream/10;
+        @apply mt-7 grid gap-4 sm:grid-cols-3 sm:gap-3;
     }
 
-    .sustain-hero-stats li {
-        @apply flex flex-col gap-0.5 py-4 first:pt-0 last:pb-0;
+    .sustain-hero-stat {
+        @apply flex flex-col items-start gap-3 rounded-sm border border-cream/10 bg-cream/[0.04] p-4 sm:items-center sm:p-3 sm:text-center;
+    }
+
+    .sustain-hero-stat-icon {
+        @apply flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-gold/30 bg-gold/10 text-gold;
+    }
+
+    .sustain-hero-stat-icon svg {
+        @apply h-5 w-5;
+    }
+
+    .sustain-hero-stat-text {
+        @apply flex min-w-0 flex-col gap-0.5;
     }
 
     .sustain-hero-stat-value {
@@ -2124,7 +2258,13 @@
     }
 
     .sustain-hero-stat-label {
-        @apply text-xs text-cream/65;
+        @apply text-xs leading-snug text-cream/70;
+    }
+
+    @media (min-width: 640px) {
+        .sustain-hero-stat-text {
+            @apply items-center;
+        }
     }
 
     .sustain-section-header {
@@ -2139,16 +2279,44 @@
         @apply mt-4 text-base leading-relaxed text-muted;
     }
 
+    .sustain-pillars-section {
+        @apply border-t border-charcoal/8 bg-gradient-to-b from-cream/50 via-white to-cream/30;
+    }
+
+    .sustain-pillars-header {
+        @apply flex flex-col gap-6 md:flex-row md:items-end md:justify-between md:gap-10;
+    }
+
+    .sustain-pillars-intro {
+        @apply max-w-2xl;
+    }
+
+    .sustain-pillars-grid-label {
+        @apply mt-10 text-xs font-semibold uppercase tracking-widest text-gold md:mt-12;
+    }
+
     .sustain-pillars-grid {
-        @apply mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8;
+        @apply mt-5 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8;
     }
 
     .sustain-pillar-card {
-        @apply flex flex-col rounded-sm border border-charcoal/10 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-forest/15 hover:shadow-md md:p-7;
+        @apply relative flex flex-col overflow-hidden rounded-sm border border-charcoal/10 bg-white p-7 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-forest/15 hover:shadow-md md:p-8;
+    }
+
+    .sustain-pillar-card--forest {
+        @apply border-t-4 border-t-forest;
+    }
+
+    .sustain-pillar-card--gold {
+        @apply border-t-4 border-t-gold;
     }
 
     .sustain-pillar-icon {
-        @apply mb-5 inline-flex h-11 w-11 items-center justify-center rounded-md border border-forest/15 bg-forest/5 text-forest;
+        @apply mb-5 inline-flex h-12 w-12 items-center justify-center rounded-md border border-forest/15 bg-forest/5 text-forest;
+    }
+
+    .sustain-pillar-icon--gold {
+        @apply border-gold/30 bg-gold/10 text-gold;
     }
 
     .sustain-pillar-icon svg {
@@ -2156,31 +2324,144 @@
     }
 
     .sustain-pillar-title {
-        @apply font-serif text-xl leading-snug text-forest;
+        @apply font-serif text-xl leading-snug text-forest md:text-2xl;
     }
 
     .sustain-pillar-body {
-        @apply mt-3 flex-1 text-sm leading-relaxed text-muted;
+        @apply mt-4 flex-1 text-base leading-relaxed text-muted;
+    }
+
+    .sustain-pillars-footer {
+        @apply mt-12 flex justify-center;
     }
 
     .sustain-impact-section {
-        @apply border-t border-charcoal/8 bg-gradient-to-b from-cream/50 to-white;
+        @apply relative overflow-hidden border-t border-charcoal/10;
     }
 
-    .sustain-impact-inner {
-        @apply grid gap-10 lg:grid-cols-2 lg:items-start lg:gap-14;
+    .sustain-impact-bg {
+        @apply pointer-events-none absolute inset-0;
+        background:
+            radial-gradient(ellipse 80% 60% at 0% 50%, rgba(45, 74, 62, 0.12), transparent 55%),
+            radial-gradient(ellipse 70% 55% at 100% 20%, rgba(251, 177, 58, 0.14), transparent 50%),
+            linear-gradient(180deg, #f5f8f6 0%, #fafaf8 45%, #ffffff 100%);
     }
 
-    .sustain-impact-list {
-        @apply grid gap-3 sm:grid-cols-2;
+    .sustain-impact-container {
+        @apply relative z-10;
     }
 
-    .sustain-impact-item {
-        @apply flex items-start gap-3 rounded-sm border border-forest/10 bg-white px-4 py-3.5 text-sm text-charcoal shadow-sm;
+    .sustain-impact-panel {
+        @apply overflow-hidden rounded-sm border border-forest/15 shadow-[0_28px_60px_rgba(45,74,62,0.14)];
+        background: linear-gradient(135deg, #2d4a3e 0%, #264238 42%, #1f3830 100%);
     }
 
-    .sustain-impact-check {
-        @apply shrink-0 font-semibold text-gold;
+    .sustain-impact-layout {
+        @apply grid gap-10 p-6 md:gap-12 md:p-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:items-center lg:gap-14 xl:p-12;
+    }
+
+    .sustain-impact-copy {
+        @apply text-cream;
+    }
+
+    .sustain-impact-eyebrow {
+        @apply text-sm font-semibold uppercase tracking-widest text-gold;
+    }
+
+    .sustain-impact-title {
+        @apply mt-2 font-serif text-3xl leading-tight text-cream md:text-4xl;
+    }
+
+    .sustain-impact-lead {
+        @apply mt-4 max-w-md text-base leading-relaxed text-cream/88;
+    }
+
+    .sustain-impact-stats {
+        @apply mt-8 flex flex-wrap gap-4;
+    }
+
+    .sustain-impact-stat {
+        @apply min-w-[7.5rem] rounded-sm border border-cream/15 bg-cream/[0.08] px-4 py-3 backdrop-blur-sm;
+    }
+
+    .sustain-impact-stat-value {
+        @apply font-serif text-3xl leading-none text-gold;
+    }
+
+    .sustain-impact-stat-label {
+        @apply mt-1 text-xs font-medium uppercase tracking-wide text-cream/75;
+    }
+
+    .sustain-impact-cta {
+        @apply mt-8 border-2 border-gold bg-gold px-6 py-3 text-forest shadow-[0_8px_24px_rgba(251,177,58,0.35)] hover:border-gold hover:bg-gold/90 hover:text-forest focus:ring-gold/40 focus:ring-offset-forest;
+    }
+
+    .sustain-impact-board {
+        @apply rounded-sm border border-cream/12 bg-cream/95 p-5 shadow-inner md:p-6;
+    }
+
+    .sustain-impact-board-label {
+        @apply text-xs font-semibold uppercase tracking-widest text-forest/70;
+    }
+
+    .sustain-impact-cards {
+        @apply mt-5 grid gap-3 sm:grid-cols-2;
+    }
+
+    .sustain-impact-card {
+        @apply flex items-start gap-3 rounded-sm border border-charcoal/8 bg-white p-4 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-forest/25 hover:shadow-md;
+        animation: sustain-impact-fade-in 0.5s ease-out both;
+        animation-delay: calc(var(--impact-i, 0) * 60ms);
+    }
+
+  @keyframes sustain-impact-fade-in {
+        from {
+            opacity: 0;
+            transform: translateY(0.5rem);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .sustain-impact-card {
+            animation: none;
+        }
+    }
+
+    .sustain-impact-card-icon {
+        @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-full;
+    }
+
+    .sustain-impact-card-icon svg {
+        @apply h-5 w-5;
+    }
+
+    .sustain-impact-card--leaf .sustain-impact-card-icon {
+        @apply border border-emerald-200 bg-emerald-50 text-emerald-700;
+    }
+
+    .sustain-impact-card--solar .sustain-impact-card-icon {
+        @apply border border-amber-200 bg-amber-50 text-amber-700;
+    }
+
+    .sustain-impact-card--water .sustain-impact-card-icon {
+        @apply border border-sky-200 bg-sky-50 text-sky-700;
+    }
+
+    .sustain-impact-card--community .sustain-impact-card-icon {
+        @apply border border-violet-200 bg-violet-50 text-violet-700;
+    }
+
+    .sustain-impact-card--shield .sustain-impact-card-icon {
+        @apply border border-forest/20 bg-forest/10 text-forest;
+    }
+
+    .sustain-impact-card-text {
+        @apply pt-0.5 text-sm font-medium leading-snug text-charcoal;
     }
 
     .sustain-inline-cta {
@@ -2355,16 +2636,41 @@
         @apply mt-4 text-base leading-relaxed text-muted;
     }
 
+    .invest-audiences-section,
+    .invest-process-section {
+        @apply border-t border-charcoal/8 bg-gradient-to-b from-cream/50 via-white to-cream/30;
+    }
+
+    .invest-section-grid-label {
+        @apply mt-10 text-xs font-semibold uppercase tracking-widest text-gold md:mt-12;
+    }
+
+    .invest-section-footer {
+        @apply mt-12;
+    }
+
     .invest-audiences-grid {
-        @apply mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-7;
+        @apply mt-5 grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8;
     }
 
     .invest-audience-card {
-        @apply flex flex-col rounded-sm border border-charcoal/10 bg-white p-6 shadow-sm transition duration-300 hover:border-forest/20 hover:shadow-md md:p-7;
+        @apply relative flex flex-col overflow-hidden rounded-sm border border-charcoal/10 bg-white p-7 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-forest/15 hover:shadow-md md:p-8;
+    }
+
+    .invest-audience-card--forest {
+        @apply border-t-4 border-t-forest;
+    }
+
+    .invest-audience-card--gold {
+        @apply border-t-4 border-t-gold;
     }
 
     .invest-audience-icon {
-        @apply mb-5 inline-flex h-11 w-11 items-center justify-center rounded-md border border-forest/15 bg-forest/5 text-forest;
+        @apply mb-5 inline-flex h-12 w-12 items-center justify-center rounded-md border border-forest/15 bg-forest/5 text-forest;
+    }
+
+    .invest-audience-icon--gold {
+        @apply border-gold/30 bg-gold/10 text-gold;
     }
 
     .invest-audience-icon svg {
@@ -2372,43 +2678,47 @@
     }
 
     .invest-audience-title {
-        @apply font-serif text-xl text-forest;
+        @apply font-serif text-xl leading-snug text-forest md:text-2xl;
     }
 
     .invest-audience-body {
-        @apply mt-3 flex-1 text-sm leading-relaxed text-muted;
+        @apply mt-4 flex-1 text-base leading-relaxed text-muted;
     }
 
     .invest-audience-cta {
         @apply mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-forest transition hover:text-gold;
     }
 
-    .invest-process-section {
-        @apply border-y border-charcoal/8 bg-gradient-to-b from-cream/50 to-white;
-    }
-
     .invest-process-list {
-        @apply mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8;
+        @apply mt-5 grid list-none gap-6 p-0 md:grid-cols-2 lg:grid-cols-3 lg:gap-8;
     }
 
     .invest-process-step {
-        @apply flex gap-4 rounded-sm border border-charcoal/8 bg-white p-6;
+        @apply relative flex flex-col overflow-hidden rounded-sm border border-charcoal/10 bg-white p-7 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-forest/15 hover:shadow-md md:p-8;
+    }
+
+    .invest-process-step--forest {
+        @apply border-t-4 border-t-forest;
+    }
+
+    .invest-process-step--gold {
+        @apply border-t-4 border-t-gold;
     }
 
     .invest-process-number {
-        @apply shrink-0 font-serif text-2xl text-gold/80;
+        @apply mb-5 inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-md border border-forest/15 bg-forest/5 font-serif text-lg text-forest;
+    }
+
+    .invest-process-number--gold {
+        @apply border-gold/30 bg-gold/10 text-gold;
     }
 
     .invest-process-title {
-        @apply font-serif text-lg text-forest;
+        @apply font-serif text-xl leading-snug text-forest md:text-2xl;
     }
 
     .invest-process-body {
-        @apply mt-2 text-sm leading-relaxed text-muted;
-    }
-
-    .invest-process-cta {
-        @apply mt-12 flex flex-wrap items-center justify-center gap-6;
+        @apply mt-4 text-base leading-relaxed text-muted;
     }
 
     .invest-insight-section {
@@ -2445,8 +2755,15 @@
 
     .invest-diaspora {
         @apply relative overflow-hidden bg-forest text-cream;
+        scroll-margin-top: 5rem;
         background-image:
             radial-gradient(ellipse 60% 50% at 100% 0%, rgba(184, 149, 107, 0.12), transparent 55%);
+    }
+
+    @media (min-width: 768px) {
+        .invest-diaspora {
+            scroll-margin-top: 6.75rem;
+        }
     }
 
     .invest-diaspora-grid {
@@ -2487,51 +2804,60 @@
     }
 
     .invest-advisory-section {
+        @apply border-t border-charcoal/8 bg-gradient-to-b from-cream/50 via-white to-cream/30;
         scroll-margin-top: 6rem;
     }
 
     .invest-advisory-grid {
-        @apply grid gap-10 lg:grid-cols-2 lg:gap-14 lg:items-start;
+        @apply mt-10 grid gap-6 lg:grid-cols-2 lg:gap-8 lg:items-start md:mt-12;
     }
 
     .invest-advisory-aside {
-        @apply lg:sticky lg:top-24 lg:z-10 lg:self-start;
+        @apply flex flex-col gap-6 lg:sticky lg:top-24 lg:z-10 lg:self-start;
+    }
+
+    .invest-advisory-panel {
+        @apply relative overflow-hidden rounded-sm border border-charcoal/10 bg-white p-7 shadow-sm md:p-8;
+    }
+
+    .invest-advisory-panel--forest {
+        @apply border-t-4 border-t-forest;
+    }
+
+    .invest-advisory-panel--gold {
+        @apply border-t-4 border-t-gold;
+    }
+
+    .invest-advisory-panel-label {
+        @apply text-xs font-semibold uppercase tracking-widest text-gold;
     }
 
     .invest-advisory-badge {
-        @apply mt-6 inline-flex items-center gap-2 rounded-full border border-gold/25 bg-gold/8 px-3.5 py-1.5 text-xs font-medium text-forest;
+        @apply mt-4 inline-flex items-center gap-2 rounded-full border border-gold/25 bg-gold/8 px-3.5 py-1.5 text-xs font-medium text-forest;
     }
 
     .invest-advisory-benefits {
-        @apply mt-6 space-y-3;
+        @apply mt-5 space-y-4;
     }
 
     .invest-advisory-benefits li {
-        @apply flex gap-3 text-sm leading-relaxed text-muted;
+        @apply flex gap-3 text-base leading-relaxed text-muted;
     }
 
     .invest-advisory-check {
-        @apply mt-0.5 h-4 w-4 shrink-0 text-gold;
-    }
-
-    .invest-advisory-contact {
-        @apply mt-8 overflow-hidden rounded-sm border border-charcoal/10 bg-gradient-to-br from-cream/40 to-white shadow-sm;
-    }
-
-    .invest-advisory-contact-title {
-        @apply border-b border-charcoal/8 bg-forest/[0.03] px-5 py-4 font-serif text-lg text-forest;
+        @apply mt-0.5 h-5 w-5 shrink-0 text-gold;
     }
 
     .invest-advisory-channels {
-        @apply divide-y divide-charcoal/8;
+        @apply mt-4 space-y-1;
     }
 
     .invest-advisory-channel {
-        @apply flex items-center gap-3 px-5 py-4 transition hover:bg-forest/[0.04];
+        @apply flex items-center gap-3 rounded-md px-2 py-3 transition hover:bg-forest/[0.04];
     }
 
     .invest-advisory-channel-icon {
-        @apply inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-forest/12 bg-forest/5 text-forest;
+        @apply inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-md border border-forest/15 bg-forest/5 text-forest;
     }
 
     .invest-advisory-channel-icon svg {
@@ -2547,7 +2873,7 @@
     }
 
     .invest-advisory-channel-label {
-        @apply text-xs font-semibold uppercase tracking-wider text-charcoal/55;
+        @apply text-xs font-semibold uppercase tracking-widest text-gold;
     }
 
     .invest-advisory-channel-value {
@@ -2558,16 +2884,24 @@
         @apply h-4 w-4 shrink-0 text-gold transition duration-200 group-hover:translate-x-0.5;
     }
 
-    .invest-advisory-actions {
-        @apply mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap;
+    .invest-advisory-aside-ctas {
+        @apply flex-wrap gap-2;
     }
 
-    .invest-advisory-cta-primary {
-        @apply inline-flex items-center justify-center gap-2 rounded-md border-2 border-forest bg-forest px-5 py-2.5 text-sm font-semibold text-cream shadow-sm transition hover:border-forest/90 hover:bg-forest/90;
+    .invest-advisory-form-card {
+        @apply p-7 md:p-8;
     }
 
-    .invest-advisory-cta-secondary {
-        @apply inline-flex items-center justify-center gap-2 rounded-md border border-charcoal/15 bg-white px-5 py-2.5 text-sm font-semibold text-forest transition hover:border-forest/25 hover:bg-forest/5;
+    .invest-advisory-form-card.form-card {
+        @apply shadow-sm;
+    }
+
+    .invest-advisory-form-title {
+        @apply mt-2 font-serif text-2xl leading-snug text-forest md:text-3xl;
+    }
+
+    .invest-advisory-form-lead {
+        @apply mt-2 text-base leading-relaxed text-muted;
     }
 
     /* Scroll to top */
@@ -3546,11 +3880,11 @@
     }
 
     .leadership-profile-header {
-        @apply grid gap-8 sm:gap-10 lg:grid-cols-[minmax(0,17rem)_1fr] lg:items-stretch lg:gap-12 xl:grid-cols-[minmax(0,20rem)_1fr] xl:gap-14;
+        @apply grid gap-8 sm:gap-10 lg:grid-cols-[minmax(0,20rem)_1fr] lg:items-center lg:gap-12 xl:grid-cols-[minmax(0,24rem)_1fr] xl:gap-14;
     }
 
     .leadership-profile-portrait {
-        @apply mx-auto flex w-full max-w-[15rem] items-center justify-center self-center sm:max-w-[17rem] lg:mx-0 lg:max-w-none lg:min-h-full lg:self-stretch;
+        @apply mx-auto w-full max-w-[18rem] shrink-0 self-center sm:max-w-[20rem] lg:mx-0 lg:max-w-none lg:w-full lg:self-center;
     }
 
     .leadership-profile-portrait-frame {
@@ -3558,11 +3892,11 @@
     }
 
     .leadership-profile-photo {
-        @apply aspect-[4/5] w-full object-cover object-center;
+        @apply aspect-[4/5] w-full object-cover object-top;
     }
 
     .leadership-profile-initials {
-        @apply flex aspect-[4/5] items-center justify-center bg-cream/10 font-serif text-5xl text-cream/90;
+        @apply flex aspect-[4/5] items-center justify-center bg-cream/10 font-serif text-5xl text-cream/90 xl:text-6xl;
     }
 
     .leadership-profile-intro {

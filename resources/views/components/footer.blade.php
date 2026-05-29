@@ -38,35 +38,41 @@
 @endphp
 
 <footer class="site-footer">
-    <div class="site-footer-accent" aria-hidden="true"></div>
-
     <div class="site-footer-main section-padding pb-10 md:pb-12">
-        <div class="container-site site-footer-grid">
-            {{-- Brand, contact & social --}}
-            <div class="site-footer-brand">
-                <a href="{{ route('home') }}" class="site-footer-brand-lockup">
-                    @if($settings->themeLogoUrl())
-                        <x-site-logo :settings="$settings" variant="theme" class="site-footer-brand-logo" />
-                    @endif
-                    <span class="site-footer-brand-name">{{ $settings->company_name }}</span>
-                </a>
-
-                @if($settings->tagline)
-                    <p class="site-footer-tagline">{{ $settings->tagline }}</p>
-                @endif
-
-                <div class="site-footer-cta">
-                    <a href="{{ route('book-visit') }}" class="btn btn-primary site-footer-cta-btn">Book a site visit</a>
-                    @if($settings->whatsapp)
-                        <a
-                            href="{{ $settings->whatsappUrl() }}"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="btn btn-outline site-footer-cta-btn"
-                            data-track="whatsapp_click"
-                        >WhatsApp us</a>
+        <div class="container-site">
+            <div class="site-footer-header">
+                <div class="site-footer-intro">
+                    <p class="about-eyebrow-dark">Get in touch</p>
+                    <h2 class="about-section-title site-footer-title">Ready to explore verified land?</h2>
+                    @if($settings->tagline)
+                        <p class="about-section-lead about-section-lead-left">{{ $settings->tagline }}</p>
                     @endif
                 </div>
+                <div class="about-team-cta-group about-team-cta-desktop">
+                    <a href="{{ route('book-visit') }}" class="about-team-cta">
+                        Book a site visit
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/>
+                        </svg>
+                    </a>
+                    <a href="{{ route('contact') }}" class="about-team-cta about-team-cta-secondary">
+                        Contact us
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="site-footer-grid">
+            {{-- Brand & contact --}}
+            <div class="site-footer-brand">
+                <div class="site-footer-brand-card site-footer-col-card site-footer-col-card--forest">
+                <a href="{{ route('home') }}" class="site-footer-brand-lockup" aria-label="{{ $settings->company_name }}">
+                    @if($settings->footerLogoUrl())
+                        <x-site-logo :settings="$settings" variant="footer" class="site-footer-brand-logo" />
+                    @endif
+                </a>
 
                 <ul class="site-footer-contact">
                     @if($settings->phone)
@@ -96,10 +102,12 @@
                 </ul>
 
                 <p class="site-footer-seo">Land for sale in Nairobi · Plots in Kiambu · Clean title deeds · Diaspora investment Kenya</p>
+                </div>
             </div>
 
             {{-- Company --}}
             <div class="site-footer-col">
+                <div class="site-footer-col-card site-footer-col-card--forest">
                 <p class="site-footer-heading">Company</p>
                 <ul class="site-footer-links">
                     @foreach($footerCompany as $link)
@@ -110,10 +118,12 @@
                         </li>
                     @endforeach
                 </ul>
+                </div>
             </div>
 
             {{-- Advisory --}}
             <div class="site-footer-col">
+                <div class="site-footer-col-card site-footer-col-card--gold">
                 <p class="site-footer-heading">Advisory</p>
                 <ul class="site-footer-links">
                     @foreach($footerAdvisory as $link)
@@ -129,11 +139,12 @@
                         </li>
                     @endforeach
                 </ul>
+                </div>
             </div>
 
             {{-- Newsletter --}}
             <div class="site-footer-col site-footer-newsletter">
-                <div class="site-footer-newsletter-card">
+                <div class="site-footer-newsletter-card site-footer-col-card site-footer-col-card--forest">
                     <p class="site-footer-heading">Stay informed</p>
                     <p class="site-footer-newsletter-lead">Project updates, new listings, and investment insights delivered to your inbox.</p>
 
@@ -148,6 +159,30 @@
                         <button type="submit" class="btn btn-primary w-full">Subscribe</button>
                     </form>
                 </div>
+            </div>
+            </div>
+
+            <div class="about-team-footer site-footer-cta-mobile">
+                <a href="{{ route('book-visit') }}" class="about-team-cta about-team-cta-full">
+                    Book a site visit
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/>
+                    </svg>
+                </a>
+                @if($settings->whatsapp)
+                    <a
+                        href="{{ $settings->whatsappUrl() }}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="about-team-cta about-team-cta-secondary about-team-cta-full"
+                        data-track="whatsapp_click"
+                    >
+                        WhatsApp us
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/>
+                        </svg>
+                    </a>
+                @endif
             </div>
         </div>
     </div>

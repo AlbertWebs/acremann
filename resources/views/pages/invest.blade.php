@@ -55,9 +55,6 @@
     <div class="container-site">
         <div class="invest-hero-grid">
             <div class="invest-hero-copy">
-                @if($settings->whiteLogoUrl())
-                    <x-site-logo :settings="$settings" variant="white" class="mb-6 max-h-10 w-auto" />
-                @endif
                 <p class="invest-eyebrow">{{ $page?->subtitle ?? 'Investment advisory' }}</p>
                 <h1 id="invest-hero-heading" class="invest-hero-title">{{ $page?->title ?? 'Invest in Kenya land with confidence' }}</h1>
                 <p class="invest-hero-lead">{{ $settings->investmentIntro() }}</p>
@@ -126,18 +123,42 @@
 </section>
 
 {{-- Who we serve --}}
-<section class="invest-section section-padding bg-white" aria-labelledby="invest-audiences-heading">
+<section class="invest-audiences-section section-padding" aria-labelledby="invest-audiences-heading">
     <div class="container-site">
-        <div class="invest-section-header">
-            <p class="invest-eyebrow invest-eyebrow-dark">Who we serve</p>
-            <h2 id="invest-audiences-heading" class="invest-section-title">Built for every serious land buyer</h2>
-            <p class="invest-section-lead">From first-time homeowners to institutional capital and diaspora families — the same standards of title verification and advisory discipline apply.</p>
+        <div class="about-team-header">
+            <div class="about-team-intro">
+                <p class="about-eyebrow-dark">Who we serve</p>
+                <h2 id="invest-audiences-heading" class="about-section-title">Built for every serious land buyer</h2>
+                <p class="about-section-lead about-section-lead-left">From first-time homeowners to institutional capital and diaspora families — the same standards of title verification and advisory discipline apply.</p>
+            </div>
+            <div class="about-team-cta-group about-team-cta-desktop">
+                <a href="{{ route('properties.index') }}" class="about-team-cta">
+                    Explore properties
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/>
+                    </svg>
+                </a>
+                <a href="#advisory" class="about-team-cta about-team-cta-secondary">
+                    Speak to an advisor
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/>
+                    </svg>
+                </a>
+            </div>
         </div>
 
+        <p class="invest-section-grid-label">Four buyer profiles</p>
         <div class="invest-audiences-grid">
-            @foreach($audiences as $audience)
-                <article class="invest-audience-card">
-                    <div class="invest-audience-icon" aria-hidden="true">
+            @foreach($audiences as $index => $audience)
+                <article @class([
+                    'invest-audience-card',
+                    'invest-audience-card--forest' => $index % 2 === 0,
+                    'invest-audience-card--gold' => $index % 2 === 1,
+                ])>
+                    <div @class([
+                        'invest-audience-icon',
+                        'invest-audience-icon--gold' => $index % 2 === 1,
+                    ]) aria-hidden="true">
                         @if($audience['icon'] === 'home')
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"/></svg>
                         @elseif($audience['icon'] === 'chart')
@@ -157,33 +178,68 @@
                 </article>
             @endforeach
         </div>
+
+        <div class="about-team-footer invest-section-footer">
+            <a href="{{ route('properties.index') }}" class="about-team-cta about-team-cta-full">
+                Explore properties
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/>
+                </svg>
+            </a>
+        </div>
     </div>
 </section>
 
 {{-- Process --}}
-<section class="invest-section invest-process-section section-padding" aria-labelledby="invest-process-heading">
+<section class="invest-process-section section-padding" aria-labelledby="invest-process-heading">
     <div class="container-site">
-        <div class="invest-section-header invest-section-header-center">
-            <p class="invest-eyebrow invest-eyebrow-dark">How we work</p>
-            <h2 id="invest-process-heading" class="invest-section-title">A disciplined path from enquiry to title</h2>
-            <p class="invest-section-lead">Institutional-grade process without institutional friction — clear milestones at every stage.</p>
+        <div class="about-team-header">
+            <div class="about-team-intro">
+                <p class="about-eyebrow-dark">How we work</p>
+                <h2 id="invest-process-heading" class="about-section-title">A disciplined path from enquiry to title</h2>
+                <p class="about-section-lead about-section-lead-left">Institutional-grade process without institutional friction — clear milestones at every stage.</p>
+            </div>
+            <div class="about-team-cta-group about-team-cta-desktop">
+                <a href="{{ route('book-visit') }}" class="about-team-cta">
+                    Book a site visit
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/>
+                    </svg>
+                </a>
+                <a href="{{ route('services') }}" class="about-team-cta about-team-cta-secondary">
+                    View all services
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/>
+                    </svg>
+                </a>
+            </div>
         </div>
 
+        <p class="invest-section-grid-label">Five stages</p>
         <ol class="invest-process-list">
-            @foreach($processSteps as $step)
-                <li class="invest-process-step">
-                    <span class="invest-process-number" aria-hidden="true">{{ $step['step'] }}</span>
-                    <div>
-                        <h3 class="invest-process-title">{{ $step['title'] }}</h3>
-                        <p class="invest-process-body">{{ $step['body'] }}</p>
-                    </div>
+            @foreach($processSteps as $index => $step)
+                <li @class([
+                    'invest-process-step',
+                    'invest-process-step--forest' => $index % 2 === 0,
+                    'invest-process-step--gold' => $index % 2 === 1,
+                ])>
+                    <span @class([
+                        'invest-process-number',
+                        'invest-process-number--gold' => $index % 2 === 1,
+                    ]) aria-hidden="true">{{ $step['step'] }}</span>
+                    <h3 class="invest-process-title">{{ $step['title'] }}</h3>
+                    <p class="invest-process-body">{{ $step['body'] }}</p>
                 </li>
             @endforeach
         </ol>
 
-        <div class="invest-process-cta">
-            <a href="{{ route('book-visit') }}" class="btn-primary">Book a site visit</a>
-            <a href="{{ route('services') }}" class="invest-inline-cta">View all services</a>
+        <div class="about-team-footer invest-section-footer">
+            <a href="{{ route('book-visit') }}" class="about-team-cta about-team-cta-full">
+                Book a site visit
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/>
+                </svg>
+            </a>
         </div>
     </div>
 </section>
@@ -285,36 +341,57 @@
 @endif
 
 {{-- Advisory form --}}
-<section id="advisory" class="invest-advisory-section invest-section section-padding bg-white">
+<section id="advisory" class="invest-advisory-section section-padding" aria-labelledby="invest-advisory-heading">
     <div class="container-site">
+        <div class="about-team-header">
+            <div class="about-team-intro">
+                <p class="about-eyebrow-dark">Get started</p>
+                <h2 id="invest-advisory-heading" class="about-section-title">Request investment advisory</h2>
+                <p class="about-section-lead about-section-lead-left">Share your goals and we'll respond with a tailored shortlist — no obligation, advisory-first.</p>
+            </div>
+            <div class="about-team-cta-group about-team-cta-desktop">
+                <a href="{{ route('properties.index') }}" class="about-team-cta">
+                    Explore properties
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/>
+                    </svg>
+                </a>
+                <a href="{{ route('book-visit') }}" class="about-team-cta about-team-cta-secondary">
+                    Book a site visit
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+
         <div class="invest-advisory-grid">
             <div class="invest-advisory-aside">
-                <p class="invest-eyebrow invest-eyebrow-dark">Get started</p>
-                <h2 class="invest-section-title">Request investment advisory</h2>
-                <p class="invest-section-lead">Share your goals and we'll respond with a tailored shortlist — no obligation, advisory-first.</p>
+                <div class="invest-advisory-panel invest-advisory-panel--forest">
+                    <p class="invest-advisory-panel-label">What you get</p>
+                    <p class="invest-advisory-badge">
+                        <svg class="h-4 w-4 shrink-0 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        Typical response within one business day
+                    </p>
 
-                <p class="invest-advisory-badge">
-                    <svg class="h-4 w-4 shrink-0 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    Typical response within one business day
-                </p>
+                    <ul class="invest-advisory-benefits" role="list">
+                        <li>
+                            <svg class="invest-advisory-check" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            Curated shortlist matched to your budget and timeline
+                        </li>
+                        <li>
+                            <svg class="invest-advisory-check" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            Title status and location context for every plot
+                        </li>
+                        <li>
+                            <svg class="invest-advisory-check" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            No obligation — speak with us before you commit
+                        </li>
+                    </ul>
+                </div>
 
-                <ul class="invest-advisory-benefits" role="list">
-                    <li>
-                        <svg class="invest-advisory-check" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                        Curated shortlist matched to your budget and timeline
-                    </li>
-                    <li>
-                        <svg class="invest-advisory-check" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                        Title status and location context for every plot
-                    </li>
-                    <li>
-                        <svg class="invest-advisory-check" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                        No obligation — speak with us before you commit
-                    </li>
-                </ul>
-
-                <div class="invest-advisory-contact">
-                    <h3 class="invest-advisory-contact-title">Prefer a conversation first?</h3>
+                <div class="invest-advisory-panel invest-advisory-panel--gold">
+                    <p class="invest-advisory-panel-label">Prefer a conversation first?</p>
                     <ul class="invest-advisory-channels">
                         @if($settings->phone)
                             <li>
@@ -373,24 +450,23 @@
                     </ul>
                 </div>
 
-                <div class="invest-advisory-actions">
-                    <a href="{{ route('properties.index') }}" class="invest-advisory-cta-primary">
-                        Explore properties
-                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
-                    </a>
-                    <a href="{{ route('sustainability') }}" class="invest-advisory-cta-secondary">
+                <div class="invest-advisory-aside-ctas about-team-cta-group hidden md:flex">
+                    <a href="{{ route('sustainability') }}" class="about-team-cta">
                         Our sustainability approach
-                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/>
+                        </svg>
                     </a>
                 </div>
             </div>
 
-            <div id="enquire" class="form-card">
+            <div id="enquire" class="form-card invest-advisory-form-card invest-advisory-panel invest-advisory-panel--gold">
                 @if(session('success'))
                     <p class="mb-6 rounded-sm border border-forest/20 bg-forest/5 px-4 py-3 text-sm text-forest">{{ session('success') }}</p>
                 @endif
-                <h3 class="font-serif text-xl text-forest">Investment enquiry</h3>
-                <p class="mt-1 text-sm text-muted">We typically respond within one business day.</p>
+                <p class="invest-advisory-panel-label">Investment enquiry</p>
+                <h3 class="invest-advisory-form-title">Tell us about your goals</h3>
+                <p class="invest-advisory-form-lead">We typically respond within one business day.</p>
                 <div class="mt-6">
                     <x-lead-form
                         source="invest"
@@ -400,6 +476,15 @@
                     />
                 </div>
             </div>
+        </div>
+
+        <div class="about-team-footer invest-section-footer">
+            <a href="{{ route('book-visit') }}" class="about-team-cta about-team-cta-full">
+                Book a site visit
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/>
+                </svg>
+            </a>
         </div>
     </div>
 </section>

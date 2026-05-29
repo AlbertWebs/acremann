@@ -11,6 +11,11 @@
     />
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=cormorant-garamond:400,500,600|dm-sans:400,500,600,700" rel="stylesheet" />
+    <script>
+        if (window.location.hash && 'scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+    </script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @php($schemaSettings = $settings ?? \App\Models\SiteSetting::current())
     <script type="application/ld+json">

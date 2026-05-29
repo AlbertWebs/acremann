@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Models\SiteSetting;
+use Database\Seeders\AcremannSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -11,7 +13,7 @@ class HomePageTest extends TestCase
 
     public function test_home_page_loads(): void
     {
-        $this->seed(\Database\Seeders\AcremannSeeder::class);
+        $this->seed(AcremannSeeder::class);
 
         $response = $this->get('/');
 
@@ -23,7 +25,7 @@ class HomePageTest extends TestCase
 
     public function test_properties_page_loads(): void
     {
-        $this->seed(\Database\Seeders\AcremannSeeder::class);
+        $this->seed(AcremannSeeder::class);
 
         $response = $this->get('/properties');
 
@@ -31,9 +33,29 @@ class HomePageTest extends TestCase
         $response->assertSee('Nachu');
     }
 
+    public function test_home_page_shows_hero_youtube_video_when_configured(): void
+    {
+        $this->seed(AcremannSeeder::class);
+
+        $settings = SiteSetting::current();
+        $settings->update([
+            'hero_media_mode' => 'gallery',
+            'hero_images' => ['hero/sample-1.jpg', 'hero/sample-2.jpg'],
+            'hero_video_enabled' => true,
+            'hero_video_provider' => 'youtube',
+            'hero_video_url' => 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+        ]);
+
+        $response = $this->get('/');
+
+        $response->assertStatus(200);
+        $response->assertSee('youtube-nocookie.com/embed/dQw4w9WgXcQ', false);
+        $response->assertSee('home-hero-video', false);
+    }
+
     public function test_lead_form_submission(): void
     {
-        $this->seed(\Database\Seeders\AcremannSeeder::class);
+        $this->seed(AcremannSeeder::class);
 
         $response = $this->post('/leads', [
             'source' => 'contact',

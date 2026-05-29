@@ -46,7 +46,7 @@ class SiteSettingForm
     {
         return [
             Section::make('Logos & icon')
-                ->description('Shown in the header, footer, admin sidebar, and browser tab.')
+                ->description('Theme logo for the header and admin; footer logo for the site footer; white logo for dark hero sections.')
                 ->icon(Heroicon::OutlinedPhoto)
                 ->compact()
                 ->schema([
@@ -56,7 +56,14 @@ class SiteSettingForm
                         ->directory('branding')
                         ->disk('public')
                         ->maxSize(2048)
-                        ->helperText('For light backgrounds.'),
+                        ->helperText('Header, admin sidebar, and fallback when no footer logo is set.'),
+                    FileUpload::make('logo_footer_path')
+                        ->label('Footer logo')
+                        ->image()
+                        ->directory('branding')
+                        ->disk('public')
+                        ->maxSize(2048)
+                        ->helperText('Shown in the site footer brand card. Leave empty to use the theme logo.'),
                     FileUpload::make('logo_white_path')
                         ->label('White logo')
                         ->image()
@@ -78,7 +85,7 @@ class SiteSettingForm
                         ])
                         ->helperText('32×32 or 64×64 px.'),
                 ])
-                ->columns(3)
+                ->columns(4)
                 ->columnSpanFull(),
             Section::make('Company identity')
                 ->icon(Heroicon::OutlinedBuildingOffice2)

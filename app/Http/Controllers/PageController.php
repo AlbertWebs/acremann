@@ -34,9 +34,12 @@ class PageController extends Controller
 
     public function sustainability()
     {
-        $impactMarkers = Property::published()
+        $impactProperties = Property::published()
             ->whereNotNull('sustainability_markers')
-            ->get()
+            ->orderBy('sort_order')
+            ->get();
+
+        $impactMarkers = $impactProperties
             ->pluck('sustainability_markers')
             ->flatten()
             ->filter()
@@ -46,6 +49,7 @@ class PageController extends Controller
         return view('pages.sustainability', [
             'settings' => $this->settings(),
             'impactMarkers' => $impactMarkers,
+            'impactPropertyCount' => $impactProperties->count(),
         ]);
     }
 

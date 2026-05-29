@@ -3,6 +3,81 @@ import Alpine from 'alpinejs';
 import './rich-editor';
 import { initMotion } from './motion';
 
+function prefersReducedMotion() {
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
+
+function scrollToHashTarget(hash) {
+    if (!hash || hash === '#') {
+        return;
+    }
+
+    const target = document.querySelector(hash);
+
+    if (!target) {
+        return;
+    }
+
+    target.scrollIntoView({
+        behavior: prefersReducedMotion() ? 'auto' : 'smooth',
+        block: 'start',
+    });
+}
+
+function initAnchorSmoothScroll() {
+    if (window.location.hash) {
+        requestAnimationFrame(() => scrollToHashTarget(window.location.hash));
+    }
+
+    document.addEventListener('click', (event) => {
+        const anchor = event.target.closest('a[href]');
+
+        if (!anchor) {
+            return;
+        }
+
+        const href = anchor.getAttribute('href');
+
+        if (!href || !href.includes('#')) {
+            return;
+        }
+
+        let url;
+
+        try {
+            url = new URL(anchor.href, window.location.href);
+        } catch {
+            return;
+        }
+
+        if (!url.hash || url.hash === '#') {
+            return;
+        }
+
+        const isSamePage =
+            url.pathname === window.location.pathname
+            && url.hostname === window.location.hostname;
+
+        if (!isSamePage) {
+            return;
+        }
+
+        const target = document.querySelector(url.hash);
+
+        if (!target) {
+            return;
+        }
+
+        event.preventDefault();
+
+        if (window.location.hash !== url.hash) {
+            history.pushState(null, '', `${url.pathname}${url.search}${url.hash}`);
+        }
+
+        scrollToHashTarget(url.hash);
+    });
+}
+
 document.addEventListener('alpine:init', () => {
     Alpine.data('clientPortalLookup', (config) => ({
         tab: config.initialTab ?? 'title',
@@ -172,3 +247,9 @@ document.addEventListener('alpine:init', () => {
 window.Alpine = Alpine;
 Alpine.start();
 initMotion();
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAnchorSmoothScroll);
+} else {
+    initAnchorSmoothScroll();
+}

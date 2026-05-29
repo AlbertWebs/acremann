@@ -5,6 +5,7 @@ namespace App\Filament\Resources\SiteSettings;
 use App\Filament\Resources\Invest\Pages\ManageInvestIntro;
 use App\Filament\Resources\SiteSettings\Pages\ManageAssistantSettings;
 use App\Filament\Resources\SiteSettings\Pages\ManageHomepageHero;
+use App\Filament\Resources\SiteSettings\Pages\ManageHomepageHeroVideo;
 use App\Filament\Resources\SiteSettings\Pages\ManageServicesPage;
 use App\Filament\Resources\SiteSettings\Pages\ManageSiteSetting;
 use App\Filament\Resources\SiteSettings\Schemas\SiteSettingForm;
@@ -50,6 +51,7 @@ class SiteSettingResource extends Resource
         return [
             'index' => ManageSiteSetting::route('/'),
             'hero' => ManageHomepageHero::route('/hero'),
+            'hero-video' => ManageHomepageHeroVideo::route('/hero-video'),
             'invest-intro' => ManageInvestIntro::route('/invest-intro'),
             'assistant' => ManageAssistantSettings::route('/assistant-content'),
             'services-page' => ManageServicesPage::route('/services-page'),

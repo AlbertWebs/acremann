@@ -8,9 +8,6 @@
     <div class="container-site">
         <div class="about-hero-grid">
             <div class="about-hero-copy">
-                @if($settings->whiteLogoUrl())
-                    <x-site-logo :settings="$settings" variant="white" class="mb-6 max-h-10 w-auto" />
-                @endif
                 <p class="about-eyebrow">About Acremann</p>
                 <h1 id="about-hero-heading" class="about-hero-title">Legacy-minded real estate advisory</h1>
                 <p class="about-hero-lead">{{ $settings->aboutSummary() }}</p>
@@ -35,13 +32,52 @@
     </div>
 </section>
 
-<section class="about-mv-section section-padding bg-white" aria-labelledby="about-mv-heading">
+<section class="about-mv-section section-padding" aria-labelledby="about-mv-heading">
     <div class="container-site">
-        <div class="about-section-header">
-            <p class="about-eyebrow-dark">Purpose</p>
-            <h2 id="about-mv-heading" class="about-section-title">Mission &amp; vision</h2>
-            <p class="about-section-lead">The principles that guide every plot we list, every title we verify, and every client we advise.</p>
+        <div class="about-team-header">
+            <div class="about-team-intro">
+                <p class="about-eyebrow-dark">Purpose</p>
+                <h2 id="about-mv-heading" class="about-section-title">Mission &amp; vision</h2>
+                <p class="about-section-lead about-section-lead-left">The principles that guide every plot we list, every title we verify, and every client we advise.</p>
+            </div>
+            <div class="about-team-cta-group about-team-cta-desktop">
+                <a href="{{ route('services') }}" class="about-team-cta">
+                    Our services
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/>
+                    </svg>
+                </a>
+                <a href="{{ route('sustainability') }}" class="about-team-cta about-team-cta-secondary">
+                    Our approach
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/>
+                    </svg>
+                </a>
+            </div>
         </div>
+
+        <ul class="about-mv-principles" role="list">
+            <li class="about-mv-principle about-mv-principle--forest">
+                <span class="about-mv-principle-icon" aria-hidden="true">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"/></svg>
+                </span>
+                Clean title discipline
+            </li>
+            <li class="about-mv-principle about-mv-principle--gold">
+                <span class="about-mv-principle-icon about-mv-principle-icon--gold" aria-hidden="true">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/></svg>
+                </span>
+                Client-first advisory
+            </li>
+            <li class="about-mv-principle about-mv-principle--forest">
+                <span class="about-mv-principle-icon" aria-hidden="true">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.25 21h19.5M4.5 21V9.75A2.25 2.25 0 0 1 6.75 7.5h10.5A2.25 2.25 0 0 1 19.5 9.75V21M6 21v-4.5h12V21"/></svg>
+                </span>
+                Legacy-minded development
+            </li>
+        </ul>
+
+        <p class="about-mv-grid-label">Two commitments</p>
         <div class="about-mv-grid">
             <article class="about-mv-card about-mv-card-mission">
                 <div class="about-mv-icon" aria-hidden="true">
@@ -65,6 +101,15 @@
                 <h3 class="about-mv-title">Where we are headed</h3>
                 <p class="about-mv-body">{{ $settings->visionStatement() }}</p>
             </article>
+        </div>
+
+        <div class="about-team-footer about-mv-footer">
+            <a href="{{ route('contact') }}" class="about-team-cta about-team-cta-full">
+                Work with us
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/>
+                </svg>
+            </a>
         </div>
     </div>
 </section>

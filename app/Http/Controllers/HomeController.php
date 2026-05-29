@@ -16,7 +16,7 @@ class HomeController extends Controller
             'settings' => $this->settings(),
             'featuredProperties' => Property::published()->featured()->with('plots')->orderBy('sort_order')->take(6)->get(),
             'properties' => Property::published()->with('plots')->orderBy('sort_order')->take(3)->get(),
-            'testimonials' => Testimonial::published()->where('is_featured', true)->take(9)->get(),
+            'testimonials' => Testimonial::published()->where('is_featured', true)->orderBy('sort_order')->get(),
             'team' => TeamMember::published()->take(2)->get(),
             'certifications' => Certification::published()->take(8)->get(),
             'posts' => Post::published()->take(3)->get(),

@@ -12,6 +12,7 @@ use App\Filament\Resources\Properties\PropertyResource;
 use App\Filament\Resources\Services\ServiceResource;
 use App\Filament\Resources\SiteSettings\Pages\ManageAssistantSettings;
 use App\Filament\Resources\SiteSettings\Pages\ManageHomepageHero;
+use App\Filament\Resources\SiteSettings\Pages\ManageHomepageHeroVideo;
 use App\Filament\Resources\SiteSettings\Pages\ManageServicesPage;
 use App\Filament\Resources\SiteSettings\SiteSettingResource;
 use App\Filament\Resources\SiteVisitBookings\SiteVisitBookingResource;
@@ -127,6 +128,11 @@ class AdminPanelProvider extends PanelProvider
                     ->icon(Heroicon::OutlinedHomeModern)
                     ->url(fn (): string => ManageHomepageHero::getUrl(['record' => SiteSetting::current()]))
                     ->sort(-13),
+                Action::make('homepageHeroVideo')
+                    ->label('Hero video')
+                    ->icon(Heroicon::OutlinedVideoCamera)
+                    ->url(fn (): string => ManageHomepageHeroVideo::getUrl(['record' => SiteSetting::current()]))
+                    ->sort(-12),
                 Action::make('properties')
                     ->label('Properties')
                     ->icon(Heroicon::OutlinedBuildingOffice2)
