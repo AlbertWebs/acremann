@@ -2363,15 +2363,27 @@
     }
 
     .sustain-impact-section {
-        @apply relative overflow-hidden border-t border-charcoal/10;
+        @apply relative z-0 overflow-hidden border-t border-charcoal/10;
     }
 
     .sustain-impact-bg {
         @apply pointer-events-none absolute inset-0;
+    }
+
+    .sustain-impact-bg-image {
+        @apply h-full w-full object-cover object-center;
+    }
+
+    .sustain-impact-bg-overlay {
+        @apply absolute inset-0;
         background:
-            radial-gradient(ellipse 80% 60% at 0% 50%, rgba(45, 74, 62, 0.12), transparent 55%),
-            radial-gradient(ellipse 70% 55% at 100% 20%, rgba(251, 177, 58, 0.14), transparent 50%),
-            linear-gradient(180deg, #f5f8f6 0%, #fafaf8 45%, #ffffff 100%);
+            linear-gradient(
+                135deg,
+                rgba(45, 74, 62, 0.94) 0%,
+                rgba(45, 74, 62, 0.88) 40%,
+                rgba(38, 62, 52, 0.82) 100%
+            ),
+            radial-gradient(ellipse 70% 60% at 0% 100%, rgba(45, 74, 62, 0.5), transparent 65%);
     }
 
     .sustain-impact-container {
@@ -2379,8 +2391,8 @@
     }
 
     .sustain-impact-panel {
-        @apply overflow-hidden rounded-sm border border-forest/15 shadow-[0_28px_60px_rgba(45,74,62,0.14)];
-        background: linear-gradient(135deg, #2d4a3e 0%, #264238 42%, #1f3830 100%);
+        @apply relative z-10 overflow-hidden rounded-sm border border-cream/15 shadow-[0_28px_60px_rgba(0,0,0,0.22)];
+        background: transparent;
     }
 
     .sustain-impact-layout {

@@ -193,7 +193,10 @@
     };
 @endphp
 <section class="sustain-impact-section section-padding" aria-labelledby="sustain-impact-heading">
-    <div class="sustain-impact-bg" aria-hidden="true"></div>
+    <div class="sustain-impact-bg" aria-hidden="true">
+        <img src="{{ asset('bg/ground.jpg') }}" alt="" class="sustain-impact-bg-image">
+        <div class="sustain-impact-bg-overlay"></div>
+    </div>
     <div class="container-site sustain-impact-container">
         <div class="sustain-impact-panel">
             <div class="sustain-impact-layout">
