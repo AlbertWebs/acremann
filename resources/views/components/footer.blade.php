@@ -32,7 +32,7 @@
         $settings->instagram_url ? ['url' => $settings->instagram_url, 'label' => 'Instagram', 'icon' => 'instagram'] : null,
         $settings->linkedin_url ? ['url' => $settings->linkedin_url, 'label' => 'LinkedIn', 'icon' => 'linkedin'] : null,
         $settings->youtube_url ? ['url' => $settings->youtube_url, 'label' => 'YouTube', 'icon' => 'youtube'] : null,
-        $settings->podcast_url ? ['url' => $settings->podcast_url, 'label' => 'Podcast', 'icon' => 'podcast'] : null,
+        $settings->podcast_url ? ['url' => $settings->podcast_url, 'label' => 'TikTok', 'icon' => 'tiktok'] : null,
         $settings->whatsapp ? ['url' => $settings->whatsappUrl(), 'label' => 'WhatsApp', 'icon' => 'whatsapp'] : null,
     ]));
 @endphp

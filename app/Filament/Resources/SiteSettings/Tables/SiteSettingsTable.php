@@ -28,6 +28,7 @@ class SiteSettingsTable
                 TextColumn::make('youtube_url')
                     ->searchable(),
                 TextColumn::make('podcast_url')
+                    ->label('TikTok')
                     ->searchable(),
                 TextColumn::make('facebook_url')
                     ->searchable(),

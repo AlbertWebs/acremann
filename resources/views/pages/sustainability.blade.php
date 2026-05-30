@@ -278,7 +278,7 @@
         <div class="sustain-cta-band">
             <div>
                 <h2 class="sustain-cta-title">Planning a purchase with legacy in mind?</h2>
-                <p class="sustain-cta-lead">Book a site visit or speak with advisory — we'll walk you through sustainability features plot by plot.</p>
+                <p class="sustain-cta-lead">Book a site visit or speak to advisor — we'll walk you through sustainability features plot by plot.</p>
             </div>
             <div class="sustain-cta-buttons">
                 <a href="{{ route('book-visit') }}" class="btn-primary">Book a site visit</a>

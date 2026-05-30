@@ -43,7 +43,7 @@ class AcremannSeeder extends Seeder
             'email' => 'info@acremannproperties.com',
             'address' => 'Nairobi, Kenya',
             'youtube_url' => 'https://youtube.com',
-            'podcast_url' => 'https://podcasts.google.com',
+            'podcast_url' => 'https://www.tiktok.com',
             'csr_statement' => 'We invest in community tree planting, drainage improvements, and ethical land stewardship across every project.',
             'referral_program' => 'Refer a friend to Acremann and earn rewards when they complete a purchase. Our loyalty program recognises clients who grow with us.',
             'sustainability_intro' => 'Responsible land use, green open spaces, and solar-ready planning guide every Acremann development. We plan tree planting, drainage, and protected open space from the start, with clear sustainability markers on every project across Nairobi, Kiambu, Kikuyu and Nachu.',

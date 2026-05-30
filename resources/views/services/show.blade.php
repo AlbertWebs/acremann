@@ -253,7 +253,7 @@
         <div class="service-show-content-layout">
             <aside class="service-show-sidebar" aria-label="Get in touch">
                 <div class="service-show-sidebar-card">
-                    <h2 class="service-show-sidebar-title">Speak to advisory</h2>
+                    <h2 class="service-show-sidebar-title">Speak to advisor</h2>
                     <p class="service-show-sidebar-lead">Questions about {{ strtolower($service->title) }}? We are here to help.</p>
                     <div class="service-show-sidebar-actions">
                         <a href="{{ route('contact') }}" class="btn-primary w-full justify-center">Contact us</a>

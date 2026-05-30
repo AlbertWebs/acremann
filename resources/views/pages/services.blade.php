@@ -63,7 +63,7 @@
                 <p class="services-cta-lead">Tell us your goals — residential plot, investment, or diaspora purchase — and we will point you to the right advisory path.</p>
             </div>
             <div class="services-cta-buttons">
-                <a href="{{ route('contact') }}" class="btn-primary">Speak to advisory</a>
+                <a href="{{ route('contact') }}" class="btn-primary">Speak to advisor</a>
                 <a href="{{ route('invest') }}" class="btn-outline">Invest with Acremann</a>
             </div>
         </div>

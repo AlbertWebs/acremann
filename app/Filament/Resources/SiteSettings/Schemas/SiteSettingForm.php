@@ -139,7 +139,7 @@ class SiteSettingForm
                 ->collapsed()
                 ->schema([
                     TextInput::make('youtube_url')->label('YouTube')->url()->placeholder('https://'),
-                    TextInput::make('podcast_url')->label('Podcast')->url()->placeholder('https://'),
+                    TextInput::make('podcast_url')->label('TikTok')->url()->placeholder('https://www.tiktok.com/@…'),
                     TextInput::make('facebook_url')->label('Facebook')->url()->placeholder('https://'),
                     TextInput::make('instagram_url')->label('Instagram')->url()->placeholder('https://'),
                     TextInput::make('linkedin_url')->label('LinkedIn')->url()->placeholder('https://'),
