@@ -3,7 +3,6 @@
     $metaTitle = $service->seoTitle();
     $metaDescription = $service->seoDescription();
     $headerImageUrl = $service->headerImageUrl();
-    $featuredImageUrl = $service->featuredImageUrl();
     $waMessage = "Hello Acremann, I would like to enquire about your {$service->title} service.";
     $localSummary = $service->plainLocalSummary() ?: 'Whether you are buying your first plot in Nairobi, Kiambu, Kikuyu or Nachu, or adding to an existing portfolio, we provide on-ground verification, transparent pricing, and advisory through handover.';
     $diasporaSummary = $service->plainDiasporaSummary() ?: 'Buying from the UK, US, UAE or elsewhere? We structure remote purchases with documented milestones, verified title packs, video walkthroughs, and clear communication across time zones.';
@@ -140,11 +139,6 @@
 
             <aside class="service-show-hero-panel" aria-label="Quick actions">
                 <div class="service-show-panel-card">
-                    @if(filled($featuredImageUrl))
-                        <div class="service-show-panel-media">
-                            <img src="{{ $featuredImageUrl }}" alt="" class="service-show-panel-media-img" loading="lazy" decoding="async">
-                        </div>
-                    @endif
                     <h2 class="service-show-panel-title">How can we help?</h2>
                     <p class="service-show-panel-lead">Typical enquiries receive a response within one business day.</p>
                     <ul class="service-show-panel-actions">
