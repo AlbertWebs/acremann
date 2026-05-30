@@ -1702,21 +1702,167 @@ input[type='radio'].fi-radio-input:checked {
     background-color: rgba(26, 26, 24, 0.06);
 }
 
-/* Property & event edit — upload thumbnails fill their frames */
+/* Service edit — media preview */
+.acremann-service-media-preview {
+    margin-bottom: 0.5rem;
+    padding: 1rem;
+    border-radius: 0.625rem;
+    border: 1px solid rgba(26, 26, 24, 0.08);
+    background: linear-gradient(180deg, #fafaf8 0%, #f3f2ee 100%);
+}
+
+.acremann-service-media-preview-label {
+    margin: 0 0 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #6b6b66;
+}
+
+.acremann-service-media-preview-block + .acremann-service-media-preview-block {
+    margin-top: 1rem;
+}
+
+.acremann-service-media-preview-sublabel {
+    margin: 0 0 0.5rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #8a8a84;
+}
+
+.acremann-service-media-preview-hero {
+    position: relative;
+    overflow: hidden;
+    min-height: 9rem;
+    border-radius: 0.375rem;
+    background:
+        radial-gradient(ellipse 55% 45% at 100% 0%, rgba(184, 149, 107, 0.14), transparent 50%),
+        linear-gradient(135deg, #2d4a3e 0%, #264238 100%);
+}
+
+.acremann-service-media-preview-hero--has-image {
+    min-height: 11rem;
+}
+
+.acremann-service-media-preview-hero-image {
+    position: absolute;
+    inset: 0;
+    display: block;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.acremann-service-media-preview-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        90deg,
+        rgba(45, 74, 62, 0.92) 0%,
+        rgba(45, 74, 62, 0.78) 35%,
+        rgba(45, 74, 62, 0.48) 65%,
+        rgba(45, 74, 62, 0.22) 100%
+    );
+}
+
+.acremann-service-media-preview-hero-copy {
+    position: relative;
+    z-index: 1;
+    max-width: 28rem;
+    padding: 1rem 1.125rem;
+}
+
+.acremann-service-media-preview-hero-title {
+    margin: 0;
+    font-family: 'Cormorant Garamond', ui-serif, Georgia, serif;
+    font-size: 1.375rem;
+    font-weight: 500;
+    line-height: 1.2;
+    color: #fafaf8;
+}
+
+.acremann-service-media-preview-hero-lead {
+    margin: 0.375rem 0 0;
+    font-size: 0.8125rem;
+    line-height: 1.45;
+    color: rgba(250, 250, 248, 0.85);
+}
+
+.acremann-service-media-preview-card {
+    overflow: hidden;
+    border-radius: 0.375rem;
+    border: 1px solid rgba(26, 26, 24, 0.08);
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(26, 26, 24, 0.06);
+}
+
+.acremann-service-media-preview-card-media {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background-color: rgba(45, 74, 62, 0.06);
+}
+
+.acremann-service-media-preview-card-media img {
+    display: block;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.acremann-service-media-preview-empty {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem;
+    text-align: center;
+    font-size: 0.6875rem;
+    line-height: 1.35;
+    color: #6b6b66;
+}
+
+.acremann-service-media-preview-card-body {
+    padding: 0.875rem 1rem 1rem;
+}
+
+.acremann-service-media-preview-card-title {
+    margin: 0;
+    font-family: 'Cormorant Garamond', ui-serif, Georgia, serif;
+    font-size: 1.125rem;
+    font-weight: 500;
+    line-height: 1.25;
+    color: #2d4a3e;
+}
+
+.acremann-service-media-preview-card-summary {
+    margin: 0.375rem 0 0;
+    font-size: 0.8125rem;
+    line-height: 1.45;
+    color: #6b6b66;
+}
+
+/* Property, event & service edit — upload thumbnails fill their frames */
 .acremann-property-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'],
-.acremann-event-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] {
+.acremann-event-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'],
+.acremann-service-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] {
     --filepond-item-preview-height: 14rem;
 }
 
 .acremann-property-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--item,
-.acremann-event-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--item {
+.acremann-event-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--item,
+.acremann-service-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--item {
     width: calc(50% - 0.375rem);
     min-height: 14rem;
     margin: 0;
 }
 
 .acremann-property-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--file,
-.acremann-event-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--file {
+.acremann-event-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--file,
+.acremann-service-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--file {
     min-height: 14rem;
     height: 100%;
 }
@@ -1724,38 +1870,47 @@ input[type='radio'].fi-radio-input:checked {
 .acremann-property-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--item-panel,
 .acremann-property-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--image-preview-wrapper,
 .acremann-event-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--item-panel,
-.acremann-event-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--image-preview-wrapper {
+.acremann-event-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--image-preview-wrapper,
+.acremann-service-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--item-panel,
+.acremann-service-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--image-preview-wrapper {
     min-height: 14rem;
     height: 100% !important;
 }
 
 .acremann-property-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--image-preview,
-.acremann-event-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--image-preview {
+.acremann-event-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--image-preview,
+.acremann-service-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--image-preview {
     transform: none !important;
 }
 
 .acremann-property-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--image-preview-overlay,
-.acremann-event-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--image-preview-overlay {
+.acremann-event-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--image-preview-overlay,
+.acremann-service-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--image-preview-overlay {
     background: #3a3a38;
 }
 
 .acremann-property-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--image-preview img,
 .acremann-property-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--image-preview canvas,
 .acremann-event-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--image-preview img,
-.acremann-event-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--image-preview canvas {
+.acremann-event-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--image-preview canvas,
+.acremann-service-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--image-preview img,
+.acremann-service-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--image-preview canvas {
     width: 100% !important;
     height: 100% !important;
     object-fit: cover;
 }
 
 .acremann-property-media-section .fi-fo-file-upload .filepond--root:not([data-style-panel-layout='grid']) .filepond--image-preview-wrapper,
-.acremann-property-media-section .fi-fo-file-upload .filepond--root:not([data-style-panel-layout='grid']) .filepond--item-panel {
-    min-height: 18rem;
+.acremann-property-media-section .fi-fo-file-upload .filepond--root:not([data-style-panel-layout='grid']) .filepond--item-panel,
+.acremann-service-media-section .fi-fo-file-upload .filepond--root:not([data-style-panel-layout='grid']) .filepond--image-preview-wrapper,
+.acremann-service-media-section .fi-fo-file-upload .filepond--root:not([data-style-panel-layout='grid']) .filepond--item-panel {
+    min-height: 14rem;
 }
 
 @media (min-width: 1024px) {
     .acremann-property-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--item,
-    .acremann-event-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--item {
+    .acremann-event-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--item,
+    .acremann-service-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'] .filepond--item {
         width: calc(33.333% - 0.5rem);
     }
 }

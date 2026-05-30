@@ -4,10 +4,11 @@ namespace App\Filament\Resources\Services\Schemas;
 
 use App\Filament\Support\FormComponents;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\View;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 
@@ -44,14 +45,23 @@ class ServiceForm
                 Section::make('Images')
                     ->description('Header image appears behind the title on the service page with a green overlay. Featured image is used on the services listing card.')
                     ->icon(Heroicon::OutlinedPhoto)
+                    ->extraAttributes(['class' => 'acremann-service-media-section'])
                     ->schema([
+                        View::make('filament.services.media-preview')
+                            ->columnSpanFull(),
                         FileUpload::make('header_image')
                             ->label('Header background image')
                             ->image()
                             ->directory('services/headers')
                             ->disk('public')
                             ->maxSize(5120)
-                            ->helperText('Recommended: wide landscape photo (e.g. 1920×800). Darker overlay on the left keeps text readable.')
+                            ->imagePreviewHeight('20rem')
+                            ->itemPanelAspectRatio('21/9')
+                            ->openable()
+                            ->downloadable()
+                            ->live()
+                            ->uploadButtonPosition('center bottom')
+                            ->helperText('Wide landscape photo (e.g. 1920×800). Click the area below or use Choose file to upload.')
                             ->columnSpanFull(),
                         FileUpload::make('featured_image')
                             ->label('Featured image (listing card)')
@@ -59,7 +69,13 @@ class ServiceForm
                             ->directory('services/featured')
                             ->disk('public')
                             ->maxSize(4096)
-                            ->helperText('Shown on /services grid. Falls back to the icon if empty.')
+                            ->imagePreviewHeight('14rem')
+                            ->itemPanelAspectRatio('16/9')
+                            ->openable()
+                            ->downloadable()
+                            ->live()
+                            ->uploadButtonPosition('center bottom')
+                            ->helperText('Shown on /services grid. Falls back to the icon if empty. Recommended 16:9.')
                             ->columnSpanFull(),
                     ])
                     ->columnSpanFull(),
