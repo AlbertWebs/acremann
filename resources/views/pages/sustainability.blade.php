@@ -38,7 +38,11 @@
 @endphp
 @section('content')
 {{-- Hero --}}
-<section class="sustain-hero section-padding" aria-labelledby="sustain-hero-heading">
+<section class="sustain-hero sustain-hero--has-image section-padding" aria-labelledby="sustain-hero-heading">
+    <div class="sustain-hero-media" aria-hidden="true">
+        <img src="{{ asset('bg/APL105.jpg') }}" alt="" class="sustain-hero-image" fetchpriority="high">
+        <div class="sustain-hero-overlay"></div>
+    </div>
     <div class="sustain-hero-glow" aria-hidden="true"></div>
     <div class="container-site sustain-hero-inner">
         <div class="sustain-hero-grid">

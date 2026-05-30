@@ -2166,11 +2166,38 @@
 
     /* Sustainability page */
     .sustain-hero {
-        @apply relative overflow-hidden border-b border-charcoal/10 bg-forest text-cream;
+        @apply relative z-0 overflow-hidden border-b border-charcoal/10 bg-forest text-cream;
         background-image:
             radial-gradient(ellipse 70% 55% at 0% 0%, rgba(184, 149, 107, 0.18), transparent 58%),
             radial-gradient(ellipse 60% 50% at 100% 100%, rgba(255, 255, 255, 0.08), transparent 52%),
             linear-gradient(165deg, rgba(45, 74, 62, 1) 0%, rgba(38, 62, 52, 1) 100%);
+    }
+
+    .sustain-hero--has-image {
+        @apply min-h-[22rem] md:min-h-[26rem] lg:min-h-[28rem];
+        background-image: none;
+    }
+
+    .sustain-hero-media {
+        @apply pointer-events-none absolute inset-0;
+    }
+
+    .sustain-hero-image {
+        @apply h-full w-full object-cover object-center;
+    }
+
+    .sustain-hero-overlay {
+        @apply absolute inset-0;
+        background:
+            linear-gradient(
+                100deg,
+                rgba(45, 74, 62, 0.96) 0%,
+                rgba(45, 74, 62, 0.9) 22%,
+                rgba(45, 74, 62, 0.72) 45%,
+                rgba(45, 74, 62, 0.45) 68%,
+                rgba(45, 74, 62, 0.22) 100%
+            ),
+            radial-gradient(ellipse 80% 70% at 0% 50%, rgba(45, 74, 62, 0.35), transparent 70%);
     }
 
     .sustain-hero-glow {
@@ -2178,7 +2205,7 @@
     }
 
     .sustain-hero-inner {
-        @apply relative z-10 py-2 md:py-6 lg:py-8;
+        @apply relative z-10 flex min-h-[12rem] flex-col justify-center py-2 md:min-h-[14rem] md:py-6 lg:py-8;
     }
 
     .sustain-hero-grid {
@@ -4016,7 +4043,10 @@
     }
 
     .site-preloader-logo {
-        @apply h-auto max-h-12 w-auto max-w-[11rem] object-contain;
+        @apply h-auto max-h-12 w-auto max-w-[11rem] object-contain object-left;
+        /* Same white-logo treatment as login brand panel */
+        mix-blend-mode: screen;
+        filter: brightness(3.25) contrast(1.05) saturate(0.2);
     }
 
     .site-preloader-name {
