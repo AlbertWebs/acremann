@@ -1720,8 +1720,20 @@ input[type='radio'].fi-radio-input:checked {
     color: #6b6b66;
 }
 
+.acremann-service-media-preview-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 768px) {
+    .acremann-service-media-preview-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
 .acremann-service-media-preview-block + .acremann-service-media-preview-block {
-    margin-top: 1rem;
+    margin-top: 0;
 }
 
 .acremann-service-media-preview-sublabel {
@@ -1736,7 +1748,7 @@ input[type='radio'].fi-radio-input:checked {
 .acremann-service-media-preview-hero {
     position: relative;
     overflow: hidden;
-    min-height: 9rem;
+    min-height: 8rem;
     border-radius: 0.375rem;
     background:
         radial-gradient(ellipse 55% 45% at 100% 0%, rgba(184, 149, 107, 0.14), transparent 50%),
@@ -1744,7 +1756,7 @@ input[type='radio'].fi-radio-input:checked {
 }
 
 .acremann-service-media-preview-hero--has-image {
-    min-height: 11rem;
+    min-height: 9rem;
 }
 
 .acremann-service-media-preview-hero-image {
@@ -1845,6 +1857,54 @@ input[type='radio'].fi-radio-input:checked {
     color: #6b6b66;
 }
 
+/* Service edit — compact side-by-side uploads with visible browse controls */
+.acremann-service-media-section .fi-fo-file-upload .filepond--root {
+    min-height: 10rem;
+}
+
+.acremann-service-media-section .fi-fo-file-upload .filepond--drop-label {
+    display: flex;
+    min-height: 10rem;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    color: #6b6b66;
+    font-size: 0.875rem;
+    line-height: 1.45;
+    text-align: center;
+}
+
+.acremann-service-media-section .fi-fo-file-upload .filepond--label-action {
+    color: #2d4a3e;
+    font-weight: 600;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.acremann-service-media-section .fi-fo-file-upload .filepond--drop-label label {
+    cursor: pointer;
+}
+
+.acremann-service-media-section .fi-fo-file-upload .filepond--root:not([data-style-panel-layout='grid']) .filepond--image-preview-wrapper,
+.acremann-service-media-section .fi-fo-file-upload .filepond--root:not([data-style-panel-layout='grid']) .filepond--item-panel {
+    min-height: 10rem;
+    max-height: 10rem;
+}
+
+.acremann-service-media-section .fi-fo-file-upload .filepond--image-preview-overlay {
+    opacity: 0.35;
+}
+
+.acremann-service-media-section .fi-fo-file-upload .filepond--file-action-button {
+    cursor: pointer;
+}
+
+.acremann-service-media-section .fi-fo-file-upload .filepond--action-process-item,
+.acremann-service-media-section .fi-fo-file-upload .filepond--action-revert-item,
+.acremann-service-media-section .fi-fo-file-upload .filepond--action-remove-item {
+    z-index: 3;
+}
+
 /* Property, event & service edit — upload thumbnails fill their frames */
 .acremann-property-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'],
 .acremann-event-media-section .fi-fo-file-upload .filepond--root[data-style-panel-layout='grid'],
@@ -1901,9 +1961,7 @@ input[type='radio'].fi-radio-input:checked {
 }
 
 .acremann-property-media-section .fi-fo-file-upload .filepond--root:not([data-style-panel-layout='grid']) .filepond--image-preview-wrapper,
-.acremann-property-media-section .fi-fo-file-upload .filepond--root:not([data-style-panel-layout='grid']) .filepond--item-panel,
-.acremann-service-media-section .fi-fo-file-upload .filepond--root:not([data-style-panel-layout='grid']) .filepond--image-preview-wrapper,
-.acremann-service-media-section .fi-fo-file-upload .filepond--root:not([data-style-panel-layout='grid']) .filepond--item-panel {
+.acremann-property-media-section .fi-fo-file-upload .filepond--root:not([data-style-panel-layout='grid']) .filepond--item-panel {
     min-height: 14rem;
 }
 

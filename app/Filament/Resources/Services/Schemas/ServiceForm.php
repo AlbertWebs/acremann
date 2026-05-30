@@ -46,6 +46,10 @@ class ServiceForm
                     ->description('Header image appears behind the title on the service page with a green overlay. Featured image is used on the services listing card.')
                     ->icon(Heroicon::OutlinedPhoto)
                     ->extraAttributes(['class' => 'acremann-service-media-section'])
+                    ->columns([
+                        'default' => 1,
+                        'lg' => 2,
+                    ])
                     ->schema([
                         View::make('filament.services.media-preview')
                             ->columnSpanFull(),
@@ -55,28 +59,28 @@ class ServiceForm
                             ->directory('services/headers')
                             ->disk('public')
                             ->maxSize(5120)
-                            ->imagePreviewHeight('20rem')
-                            ->itemPanelAspectRatio('21/9')
+                            ->imagePreviewHeight('10rem')
+                            ->itemPanelAspectRatio('16/9')
                             ->openable()
                             ->downloadable()
                             ->live()
-                            ->uploadButtonPosition('center bottom')
-                            ->helperText('Wide landscape photo (e.g. 1920×800). Click the area below or use Choose file to upload.')
-                            ->columnSpanFull(),
+                            ->placeholder('Drag & drop or <span class="filepond--label-action">Browse</span> to upload')
+                            ->helperText('Wide landscape photo (e.g. 1920×800).')
+                            ->columnSpan(1),
                         FileUpload::make('featured_image')
                             ->label('Featured image (listing card)')
                             ->image()
                             ->directory('services/featured')
                             ->disk('public')
                             ->maxSize(4096)
-                            ->imagePreviewHeight('14rem')
+                            ->imagePreviewHeight('10rem')
                             ->itemPanelAspectRatio('16/9')
                             ->openable()
                             ->downloadable()
                             ->live()
-                            ->uploadButtonPosition('center bottom')
-                            ->helperText('Shown on /services grid. Falls back to the icon if empty. Recommended 16:9.')
-                            ->columnSpanFull(),
+                            ->placeholder('Drag & drop or <span class="filepond--label-action">Browse</span> to upload')
+                            ->helperText('Shown on /services grid. Falls back to the icon if empty.')
+                            ->columnSpan(1),
                     ])
                     ->columnSpanFull(),
                 Section::make('Service page content')
