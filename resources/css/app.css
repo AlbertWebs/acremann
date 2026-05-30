@@ -1143,17 +1143,6 @@
         @apply max-w-3xl;
     }
 
-    .services-hero-brand {
-        @apply transition opacity-90 hover:opacity-100;
-    }
-
-    .services-hero-logo {
-        @apply h-10 w-auto max-w-[11rem] object-contain object-left md:h-11;
-        /* White logo slot only; lighten green-on-black PNGs until a cream/white transparent asset is uploaded */
-        mix-blend-mode: screen;
-        filter: brightness(1.15) contrast(1.05);
-    }
-
     .services-eyebrow {
         @apply text-sm font-semibold uppercase tracking-widest text-gold;
     }
