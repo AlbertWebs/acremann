@@ -4262,6 +4262,55 @@
         @apply my-6 border-l-4 border-gold/80 py-1 pl-5 italic text-charcoal;
     }
 
+    .insight-show-prose .insight-table-wrap {
+        @apply my-8 overflow-x-auto rounded-sm border border-charcoal/10 bg-white shadow-sm;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .insight-show-prose .insight-table-wrap table {
+        @apply w-full min-w-[36rem] border-collapse text-left text-sm;
+    }
+
+    .insight-show-prose .insight-table-wrap :where(th, td) {
+        @apply px-4 py-3.5 align-top leading-snug;
+    }
+
+    .insight-show-prose .insight-table-wrap thead th {
+        @apply border-b border-forest/20 bg-forest text-xs font-semibold uppercase tracking-wider text-cream;
+    }
+
+    .insight-show-prose .insight-table-wrap tbody tr {
+        @apply border-b border-charcoal/8 transition-colors last:border-0;
+    }
+
+    .insight-show-prose .insight-table-wrap tbody tr:nth-child(even) {
+        @apply bg-cream/50;
+    }
+
+    .insight-show-prose .insight-table-wrap tbody tr:hover {
+        @apply bg-forest/[0.05];
+    }
+
+    .insight-show-prose .insight-table-wrap tbody td {
+        @apply text-charcoal/90;
+    }
+
+    .insight-show-prose .insight-table-wrap tbody td:first-child {
+        @apply font-semibold text-forest;
+    }
+
+    .insight-show-prose .insight-table-wrap tbody th {
+        @apply bg-cream/60 font-semibold text-forest;
+    }
+
+    .insight-show-prose .insight-table-wrap caption {
+        @apply caption-bottom px-4 pt-3 pb-1 text-left text-sm font-medium text-charcoal;
+    }
+
+    .insight-show-prose .insight-table-wrap p {
+        @apply mt-0;
+    }
+
     .events-show-prose {
         @apply max-w-none text-base leading-relaxed text-charcoal;
     }

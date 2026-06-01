@@ -58,4 +58,22 @@ class Post extends Model
     {
         return $this->meta_description ?: $this->excerpt;
     }
+
+    /**
+     * Article HTML with accessible table wrappers for insight prose styling.
+     */
+    public function renderedBody(): string
+    {
+        $body = (string) $this->body;
+
+        if ($body === '' || ! str_contains(strtolower($body), '<table')) {
+            return $body;
+        }
+
+        return (string) preg_replace_callback(
+            '/<table\b[^>]*>[\s\S]*?<\/table>/i',
+            static fn (array $match): string => '<div class="insight-table-wrap">'.$match[0].'</div>',
+            $body,
+        );
+    }
 }

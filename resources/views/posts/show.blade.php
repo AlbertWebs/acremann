@@ -45,7 +45,7 @@
                 <div class="insight-show-main">
                     <div class="insight-show-article">
                         <div class="insight-show-prose" aria-label="Article content">
-                            {!! $post->body !!}
+                            {!! $post->renderedBody() !!}
                         </div>
                     </div>
 
