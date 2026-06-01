@@ -79,6 +79,20 @@
             </button>
         </div>
 
+        <nav
+            x-show="canGoBack"
+            x-cloak
+            class="assistant-panel-nav"
+            aria-label="Assistant navigation"
+        >
+            <button type="button" @click="goBack()" class="assistant-nav-back">
+                <svg class="assistant-nav-back-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.75 19.5 8.25 12l7.5-7.5"/>
+                </svg>
+                <span x-text="backLabel()"></span>
+            </button>
+        </nav>
+
         <div class="assistant-panel-body">
             <div class="assistant-panel-scroll">
                 <div class="assistant-panel-section" x-show="step === 'menu'">
@@ -127,7 +141,6 @@
                             <p class="assistant-panel-empty">No FAQs published for the assistant yet.</p>
                         @endforelse
                     </div>
-                    <button type="button" @click="backToMenu()" class="assistant-back-link">← Back to menu</button>
                 </div>
 
                 <div class="assistant-panel-section" x-show="step === 'title'" x-cloak>
@@ -138,14 +151,10 @@
                             <a href="{{ $assistantConfig['title_link_url'] }}" @click="track('link_click', { label: @js($assistantConfig['title_link_label']) })" class="assistant-inline-link">{{ $assistantConfig['title_link_label'] }}</a>
                         @endif
                     </div>
-                    <button type="button" @click="backToMenu()" class="assistant-back-link">← Back to menu</button>
                 </div>
 
                 <div class="assistant-panel-section assistant-panel-section--compact" x-show="step === 'lead'" x-cloak>
-                    <div class="assistant-step-header">
-                        <p class="assistant-step-title" x-text="formHeading()"></p>
-                        <button type="button" @click="backToMenu()" class="assistant-back-link assistant-back-link--inline">← Menu</button>
-                    </div>
+                    <p class="assistant-step-title" x-text="formHeading()"></p>
                 </div>
             </div>
 
@@ -178,7 +187,7 @@
                     </div>
                     <div x-show="submitted" class="assistant-form-success">
                         <p class="assistant-form-success-text" x-text="successMessage"></p>
-                        <button type="button" @click="backToMenu()" class="assistant-back-link">← Back to menu</button>
+                        <button type="button" @click="goBack()" class="assistant-back-link" x-text="backLabel()"></button>
                     </div>
                 </form>
             </div>
@@ -192,6 +201,8 @@ function chatbot(config) {
         open: false,
         step: 'menu',
         journey: 'general',
+        stepLabel: null,
+        history: [],
         submitted: false,
         submitting: false,
         submitError: null,
@@ -203,6 +214,9 @@ function chatbot(config) {
         },
         get showEnquiryForm() {
             return ['lead', 'faq', 'title'].includes(this.step);
+        },
+        get canGoBack() {
+            return this.step !== 'menu';
         },
         form: { name: '', phone: '', email: '', message: '', buyer_type: '', budget: '', consent: false },
         init() {
@@ -229,23 +243,84 @@ function chatbot(config) {
         selectMenuItem(item) {
             this.goTo(item.step, item.journey, item.label);
         },
-        goTo(step, journey, label) {
+        defaultStepLabel(step) {
+            if (step === 'menu') return 'Menu';
+            if (step === 'faq') return 'Common questions';
+            if (step === 'title') return 'Title & process';
+            return 'Enquiry';
+        },
+        goTo(step, journey, label, options = {}) {
+            const fromBack = options.fromBack ?? false;
+
+            if (! fromBack && this.step !== step) {
+                this.history.push({
+                    step: this.step,
+                    journey: this.journey,
+                    label: this.stepLabel ?? this.defaultStepLabel(this.step),
+                });
+            }
+
             if (this.step !== step) {
                 this.submitted = false;
                 this.submitError = null;
             }
+
             this.step = step;
+
             if (step === 'menu') {
                 this.journey = 'general';
-            } else if (journey) {
-                this.journey = journey;
+                this.stepLabel = null;
+                this.history = [];
+            } else {
+                if (journey) {
+                    this.journey = journey;
+                }
+                this.stepLabel = label ?? this.defaultStepLabel(step);
             }
-            this.track('menu_select', { step, journey: this.activeJourney(), label });
+
+            this.track('menu_select', { step, journey: this.activeJourney(), label: label ?? null });
         },
-        backToMenu() {
+        backLabel() {
+            const previous = this.history[this.history.length - 1];
+
+            if (! previous || previous.step === 'menu') {
+                return 'Back to menu';
+            }
+
+            return previous.label ? `Back to ${previous.label}` : 'Back';
+        },
+        goBack() {
+            const previous = this.history.pop();
+
+            if (! previous) {
+                this.backToMenu();
+                return;
+            }
+
+            this.step = previous.step;
+            this.journey = previous.journey ?? 'general';
+            this.stepLabel = previous.label ?? null;
             this.submitted = false;
             this.submitError = null;
-            this.goTo('menu', 'general', 'Back to menu');
+
+            if (previous.step === 'menu') {
+                this.history = [];
+            }
+
+            this.track('nav_back', {
+                step: this.step,
+                journey: this.activeJourney(),
+                label: this.backLabel(),
+            });
+        },
+        backToMenu() {
+            this.history = [];
+            this.submitted = false;
+            this.submitError = null;
+            this.step = 'menu';
+            this.journey = 'general';
+            this.stepLabel = null;
+            this.track('nav_back', { step: 'menu', journey: 'general', label: 'Back to menu' });
         },
         activeJourney() {
             if (this.step === 'faq') return 'faq';

@@ -37,4 +37,23 @@ class VideoEmbedTest extends TestCase
     {
         $this->assertNull(VideoEmbed::fromUrl('https://example.com/not-a-video'));
     }
+
+    public function test_vimeo_thumbnail_url(): void
+    {
+        $url = VideoEmbed::vimeoThumbnailUrl('https://vimeo.com/1197477405');
+
+        $this->assertSame('https://vumbnail.com/1197477405.jpg', $url);
+    }
+
+    public function test_modal_embed_for_vimeo_includes_autoplay_and_privacy_params(): void
+    {
+        $embed = VideoEmbed::modalFromUrl('https://vimeo.com/1197477405?share=copy');
+
+        $this->assertNotNull($embed);
+        $this->assertSame('vimeo', $embed['provider']);
+        $this->assertStringContainsString('player.vimeo.com/video/1197477405', $embed['embed_url']);
+        $this->assertStringContainsString('autoplay=1', $embed['embed_url']);
+        $this->assertStringContainsString('dnt=1', $embed['embed_url']);
+        $this->assertStringNotContainsString('background=1', $embed['embed_url']);
+    }
 }

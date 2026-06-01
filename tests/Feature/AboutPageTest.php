@@ -23,4 +23,19 @@ class AboutPageTest extends TestCase
         $response->assertDontSee('<p>To deliver legally-grounded', false);
         $response->assertDontSee('<p>Acremann Properties is', false);
     }
+
+    public function test_about_page_shows_brand_video_play_button(): void
+    {
+        $this->seed(\Database\Seeders\AcremannSeeder::class);
+
+        config(['acremann.brand_video_url' => 'https://vimeo.com/1197477405']);
+
+        $response = $this->get('/about');
+
+        $response->assertOk();
+        $response->assertSee('about-hero-video', false);
+        $response->assertSee('Play Acremann Properties video', false);
+        $response->assertSee('Watch: Acremann Properties', false);
+        $response->assertDontSee('player.vimeo.com/video/1197477405', false);
+    }
 }

@@ -818,7 +818,115 @@
         @apply mt-3 flex-1 text-sm leading-relaxed text-cream/80 md:text-[0.9375rem];
     }
 
-    /* Homepage hero video */
+    /* Brand video play trigger & modal (homepage, about, etc.) */
+    .brand-video-slot {
+        @apply relative isolate overflow-hidden rounded-sm;
+    }
+
+    .brand-video-poster {
+        @apply absolute inset-0 bg-cover bg-center;
+    }
+
+    .brand-video-poster-overlay {
+        @apply pointer-events-none absolute inset-0 bg-gradient-to-t from-forest/80 via-forest/25 to-forest/10;
+    }
+
+    .brand-video-caption {
+        @apply relative z-10 mt-3 text-center text-sm font-medium text-cream/85;
+    }
+
+    .about-hero-video {
+        @apply aspect-[16/10] w-full border border-cream/15 shadow-xl;
+        box-shadow:
+            0 0 0 1px rgba(184, 149, 107, 0.2),
+            0 20px 40px -12px rgba(0, 0, 0, 0.35);
+    }
+
+    .about-hero-video .brand-video-caption {
+        @apply absolute bottom-0 left-0 right-0 m-0 bg-gradient-to-t from-forest/90 to-transparent px-4 pb-4 pt-10 text-left text-cream;
+    }
+
+    .home-hero-media-slot {
+        @apply relative isolate;
+    }
+
+    .home-hero-media-slot > a {
+        @apply relative z-0;
+    }
+
+    .home-hero-video-play {
+        @apply pointer-events-none absolute inset-0 z-20 flex items-center justify-center;
+    }
+
+    .home-hero-play-btn {
+        @apply pointer-events-auto relative flex h-16 w-16 items-center justify-center rounded-full border-2 border-gold/90 bg-forest/85 text-cream shadow-lg backdrop-blur-sm transition duration-200 hover:scale-105 hover:bg-forest focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-transparent md:h-[4.5rem] md:w-[4.5rem];
+    }
+
+    .home-hero-play-btn-core {
+        @apply relative z-10 flex h-full w-full items-center justify-center;
+    }
+
+    .home-hero-play-icon {
+        @apply ml-1 h-7 w-7 md:h-8 md:w-8;
+    }
+
+    .home-hero-play-btn-ripple {
+        @apply absolute inset-0 rounded-full border-2 border-gold/70;
+        animation: home-hero-play-ripple 2.4s ease-out infinite;
+    }
+
+    .home-hero-play-btn-ripple--2 {
+        animation-delay: 1.2s;
+    }
+
+    @keyframes home-hero-play-ripple {
+        0% {
+            transform: scale(1);
+            opacity: 0.75;
+        }
+
+        100% {
+            transform: scale(1.85);
+            opacity: 0;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .home-hero-play-btn-ripple {
+            animation: none;
+            opacity: 0.35;
+        }
+
+        .home-hero-play-btn:hover {
+            transform: none;
+        }
+    }
+
+    .home-hero-video-modal {
+        @apply fixed inset-0 z-[90] flex items-center justify-center p-4 md:p-8;
+    }
+
+    .home-hero-video-modal-backdrop {
+        @apply absolute inset-0 bg-charcoal/80 backdrop-blur-sm;
+    }
+
+    .home-hero-video-modal-panel {
+        @apply relative z-10 w-full max-w-5xl;
+    }
+
+    .home-hero-video-modal-close {
+        @apply absolute -top-2 right-0 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-cream/10 text-cream transition hover:bg-cream/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold md:-right-12 md:top-0;
+    }
+
+    .home-hero-video-modal-frame {
+        @apply relative aspect-video w-full overflow-hidden rounded-sm bg-charcoal shadow-2xl;
+    }
+
+    .home-hero-video-modal-iframe {
+        @apply absolute inset-0 h-full w-full border-0;
+    }
+
+    /* Homepage hero video (CMS background slot) */
     .home-hero-video {
         @apply relative isolate;
     }
@@ -1575,23 +1683,71 @@
 
     /* Property detail page */
     .property-show-hero {
-        @apply border-b border-charcoal/10 bg-gradient-to-b from-cream/80 via-white to-white pt-24 md:pt-28;
+        @apply relative overflow-hidden border-b border-forest/20 bg-forest text-cream;
+        background-image:
+            radial-gradient(ellipse 70% 55% at 0% 0%, rgba(184, 149, 107, 0.22), transparent 55%),
+            radial-gradient(ellipse 50% 40% at 100% 100%, rgba(255, 255, 255, 0.06), transparent 50%);
+    }
+
+    .property-show-hero--has-image {
+        @apply min-h-[24rem] md:min-h-[28rem];
+    }
+
+    .property-show-hero-bg {
+        @apply absolute inset-0 bg-cover bg-center;
+    }
+
+    .property-show-hero-overlay {
+        @apply pointer-events-none absolute inset-0;
+        background: linear-gradient(
+            105deg,
+            rgba(45, 74, 62, 0.94) 0%,
+            rgba(45, 74, 62, 0.82) 38%,
+            rgba(45, 74, 62, 0.55) 68%,
+            rgba(45, 74, 62, 0.35) 100%
+        );
+    }
+
+    .property-show-hero:not(.property-show-hero--has-image) .property-show-hero-overlay {
+        background: linear-gradient(
+            120deg,
+            rgba(45, 74, 62, 0.5) 0%,
+            rgba(45, 74, 62, 0.2) 50%,
+            transparent 100%
+        );
+    }
+
+    .property-show-hero-glow {
+        @apply pointer-events-none absolute -right-16 top-1/3 h-64 w-64 rounded-full bg-gold/20 blur-3xl md:h-80 md:w-80;
     }
 
     .property-show-hero-inner {
-        @apply py-8 md:py-10;
+        @apply relative z-10 py-6 md:py-8;
     }
 
     .property-show-breadcrumb {
-        @apply mb-6 flex flex-wrap items-center gap-2 text-sm text-muted;
+        @apply mb-6 flex flex-wrap items-center gap-2 text-sm;
     }
 
-    .property-show-breadcrumb a {
-        @apply transition hover:text-forest;
+    .property-show-breadcrumb-link {
+        @apply text-cream/70 transition hover:text-gold;
+    }
+
+    .property-show-breadcrumb-sep,
+    .property-show-breadcrumb-current {
+        @apply text-cream/50;
+    }
+
+    .property-show-breadcrumb-current {
+        @apply text-cream/85;
     }
 
     .property-show-hero-main {
-        @apply grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-start lg:gap-10;
+        @apply grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-start lg:gap-12;
+    }
+
+    .property-show-hero .property-show-eyebrow {
+        @apply mb-3;
     }
 
     .property-show-meta {
@@ -1599,35 +1755,82 @@
     }
 
     .property-show-chip {
-        @apply inline-flex rounded-full border border-forest/15 bg-forest/5 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-forest;
+        @apply inline-flex rounded-full border border-gold/35 bg-gold/15 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-cream;
     }
 
     .property-show-chip--muted {
-        @apply border-charcoal/10 bg-charcoal/5 font-medium normal-case tracking-normal text-charcoal;
+        @apply border-cream/25 bg-cream/10 font-medium normal-case tracking-normal text-cream/90;
     }
 
     .property-show-title {
-        @apply mt-4 font-serif text-4xl leading-tight text-charcoal md:text-5xl;
+        @apply mt-4 font-serif text-4xl leading-tight text-cream md:text-5xl lg:text-[3.25rem];
     }
 
     .property-show-location {
-        @apply mt-2 text-lg text-muted;
+        @apply mt-2 text-lg text-cream/80;
     }
 
     .property-show-lead {
-        @apply mt-4 max-w-2xl text-base leading-relaxed text-muted;
+        @apply mt-4 max-w-2xl text-base leading-relaxed text-cream/75;
     }
 
     .property-show-hero-aside {
-        @apply rounded-sm border border-charcoal/10 bg-white p-5 shadow-sm md:p-6;
+        @apply overflow-hidden rounded-sm border border-cream/15 bg-cream/[0.07] p-5 shadow-xl backdrop-blur-md md:p-6;
+        box-shadow:
+            0 0 0 1px rgba(184, 149, 107, 0.15),
+            0 20px 40px -12px rgba(0, 0, 0, 0.35);
+    }
+
+    .property-show-aside-label {
+        @apply text-xs font-semibold uppercase tracking-widest text-gold;
     }
 
     .property-show-price {
-        @apply font-serif text-3xl text-forest md:text-4xl;
+        @apply mt-1 font-serif text-3xl text-cream md:text-4xl;
+    }
+
+    .property-show-hero-availability {
+        @apply mt-4;
+    }
+
+    .property-show-hero .property-availability-stat {
+        @apply border-cream/15 bg-cream/10;
+    }
+
+    .property-show-hero .property-availability-stat-value {
+        @apply text-gold;
+    }
+
+    .property-show-hero .property-availability-stat-label {
+        @apply text-cream/70;
+    }
+
+    .property-show-hero .property-availability-stat--sold .property-availability-stat-value {
+        @apply text-cream/55;
+    }
+
+    .property-show-hero .property-availability-stat--reserved .property-availability-stat-value {
+        @apply text-cream/75;
+    }
+
+    .property-show-hero .property-availability-summary {
+        @apply text-cream/65;
+    }
+
+    .property-show-hero .property-availability-badge {
+        @apply border-gold/40 bg-gold/15 text-cream;
     }
 
     .property-show-hero-ctas {
         @apply mt-5 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap;
+    }
+
+    .property-show-hero-ctas .btn-primary {
+        @apply border-2 border-gold bg-gold text-forest shadow-md hover:border-gold hover:bg-gold/90 hover:text-forest;
+    }
+
+    .btn-outline.property-btn-on-dark {
+        @apply border-cream/40 bg-transparent text-cream shadow-none hover:border-cream hover:bg-cream/10 hover:text-cream;
     }
 
     .property-show-cta {
@@ -1635,11 +1838,11 @@
     }
 
     .property-show-jump {
-        @apply mt-8 flex flex-wrap gap-2 border-t border-charcoal/10 pt-6;
+        @apply mt-8 flex flex-wrap gap-2 border-t border-cream/15 pt-6;
     }
 
     .property-show-jump-link {
-        @apply rounded-full border border-charcoal/12 bg-white px-3.5 py-1.5 text-sm font-medium text-charcoal transition hover:border-forest hover:text-forest;
+        @apply rounded-full border border-cream/20 bg-cream/10 px-3.5 py-1.5 text-sm font-medium text-cream/90 backdrop-blur-sm transition hover:border-gold hover:bg-gold/15 hover:text-cream;
     }
 
     .property-show-body {
@@ -3300,6 +3503,18 @@
 
     .assistant-panel-close {
         @apply relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-sm border border-cream/15 text-cream/80 transition hover:border-cream/30 hover:bg-cream/10 hover:text-cream focus:outline-none focus:ring-2 focus:ring-gold/40 focus:ring-offset-2 focus:ring-offset-forest;
+    }
+
+    .assistant-panel-nav {
+        @apply shrink-0 border-b border-cream/15 bg-forest/95 px-3 py-2;
+    }
+
+    .assistant-nav-back {
+        @apply inline-flex items-center gap-1.5 rounded-sm px-2 py-1.5 text-sm font-semibold text-cream/90 transition hover:bg-cream/10 hover:text-cream focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/50;
+    }
+
+    .assistant-nav-back-icon {
+        @apply h-4 w-4 shrink-0;
     }
 
     .assistant-panel-body {

@@ -55,4 +55,52 @@ class VideoEmbed
 
         return null;
     }
+
+    public static function vimeoThumbnailUrl(?string $url): ?string
+    {
+        $id = self::vimeoId(trim((string) $url));
+
+        return $id ? 'https://vumbnail.com/'.$id.'.jpg' : null;
+    }
+
+    public static function brandVideoUrl(): string
+    {
+        return (string) config('acremann.brand_video_url', '');
+    }
+
+    /**
+     * Embed payload for a modal player (lazy-loaded; not autoplaying on the page).
+     *
+     * @return array{provider: string, embed_url: string, title: string}|null
+     */
+    public static function modalFromUrl(?string $url): ?array
+    {
+        $url = trim((string) $url);
+
+        if ($url === '') {
+            return null;
+        }
+
+        $youtubeId = self::youtubeId($url);
+
+        if ($youtubeId !== null) {
+            return [
+                'provider' => 'youtube',
+                'embed_url' => 'https://www.youtube-nocookie.com/embed/'.$youtubeId.'?autoplay=1&rel=0&modestbranding=1&playsinline=1',
+                'title' => 'Video',
+            ];
+        }
+
+        $vimeoId = self::vimeoId($url);
+
+        if ($vimeoId !== null) {
+            return [
+                'provider' => 'vimeo',
+                'embed_url' => 'https://player.vimeo.com/video/'.$vimeoId.'?autoplay=1&title=0&byline=0&portrait=0&dnt=1',
+                'title' => 'Acremann Properties video',
+            ];
+        }
+
+        return null;
+    }
 }

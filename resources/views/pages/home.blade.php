@@ -3,6 +3,7 @@
 @php
     $primaryCta = $settings->heroPrimaryCta();
     $secondaryCta = $settings->heroSecondaryCta();
+    $homeHeroVideoEmbed = \App\Support\VideoEmbed::modalFromUrl(config('acremann.brand_video_url'));
 @endphp
 <section class="section-padding bg-white">
     <div @class([
@@ -24,11 +25,22 @@
         @if($settings->heroShowsFeaturedProperties())
             <div class="grid grid-cols-2 gap-3">
                 @foreach($featuredProperties->take(4) as $i => $property)
-                    <a href="{{ route('properties.show', $property->slug) }}" class="block overflow-hidden rounded-sm {{ $i === 0 ? 'col-span-2 aspect-[2/1]' : 'aspect-square' }} bg-charcoal/5">
-                        @if($url = $property->getFirstMediaUrl('hero'))
-                            <img src="{{ $url }}" alt="{{ $property->title }}" class="h-full w-full object-cover">
-                        @endif
-                    </a>
+                    @if($i === 0 && $homeHeroVideoEmbed)
+                        <div class="home-hero-media-slot col-span-2 aspect-[2/1] overflow-hidden rounded-sm bg-charcoal/5">
+                            <a href="{{ route('properties.show', $property->slug) }}" class="block h-full">
+                                @if($url = $property->getFirstMediaUrl('hero'))
+                                    <img src="{{ $url }}" alt="{{ $property->title }}" class="h-full w-full object-cover">
+                                @endif
+                            </a>
+                            <x-home-hero-video-play :embed="$homeHeroVideoEmbed" />
+                        </div>
+                    @else
+                        <a href="{{ route('properties.show', $property->slug) }}" class="block overflow-hidden rounded-sm {{ $i === 0 ? 'col-span-2 aspect-[2/1]' : 'aspect-square' }} bg-charcoal/5">
+                            @if($url = $property->getFirstMediaUrl('hero'))
+                                <img src="{{ $url }}" alt="{{ $property->title }}" class="h-full w-full object-cover">
+                            @endif
+                        </a>
+                    @endif
                 @endforeach
             </div>
         @elseif($settings->heroShowsGallery())
