@@ -22,7 +22,7 @@
                     <x-brand-video-play
                         :embed="$brandVideoEmbed"
                         slot-class="about-hero-video"
-                        caption="Watch: Acremann Properties"
+                        caption="Welcome: Acremann Properties"
                     />
                 </div>
             @else
