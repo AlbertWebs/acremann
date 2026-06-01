@@ -1,4 +1,4 @@
-@props(['settings'])
+@props(['settings', 'brandVideoEmbed' => null])
 
 @php
     $video = $settings->heroVideoPayload();
@@ -6,12 +6,12 @@
     $imageUrls = $useVideo
         ? $settings->homepageHeroSecondaryImageUrls()
         : $settings->homepageHeroImageUrls();
-    $homeHeroVideoEmbed = \App\Support\VideoEmbed::modalFromUrl(config('acremann.brand_video_url'));
+    $homeHeroVideoEmbed = $brandVideoEmbed ?? \App\Support\VideoEmbed::modalFromUrl(config('acremann.brand_video_url'));
 @endphp
 
 @if($useVideo && $video)
     <div class="grid grid-cols-2 gap-3">
-        <div class="home-hero-video col-span-2 aspect-[2/1] overflow-hidden rounded-sm bg-charcoal/5">
+        <div class="home-hero-media-slot home-hero-video col-span-2 aspect-[2/1] overflow-hidden rounded-sm bg-charcoal/5">
             @if($video['type'] === 'file')
                 <video
                     class="home-hero-video-media"
@@ -33,6 +33,9 @@
                     loading="lazy"
                     referrerpolicy="strict-origin-when-cross-origin"
                 ></iframe>
+            @endif
+            @if($homeHeroVideoEmbed)
+                <x-home-hero-video-play :embed="$homeHeroVideoEmbed" />
             @endif
         </div>
         @foreach($imageUrls as $url)

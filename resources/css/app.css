@@ -851,7 +851,12 @@
     }
 
     .home-hero-media-slot > a {
-        @apply relative z-0;
+        @apply relative z-0 block h-full;
+    }
+
+    .home-hero-video.home-hero-media-slot,
+    .home-hero-media-slot:has(.home-hero-video-play) {
+        @apply relative isolate min-h-[12rem];
     }
 
     .home-hero-video-play {
