@@ -13,4 +13,10 @@ return [
     'gtm_container_id' => env('GTM_CONTAINER_ID'),
     'meta_pixel_id' => env('META_PIXEL_ID'),
     'lead_notification_email' => env('LEAD_NOTIFICATION_EMAIL', env('ACREMANN_EMAIL', 'info@acremannproperties.com')),
+    'brand_video_url' => env('ACREMANN_BRAND_VIDEO_URL')
+        ?: env('ACREMANN_HOMEPAGE_HERO_VIDEO_URL')
+        ?: 'https://vimeo.com/1197477405',
+    'homepage_hero_video_url' => env('ACREMANN_HOMEPAGE_HERO_VIDEO_URL')
+        ?: env('ACREMANN_BRAND_VIDEO_URL')
+        ?: 'https://vimeo.com/1197477405',
 ];

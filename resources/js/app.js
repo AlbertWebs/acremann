@@ -218,6 +218,43 @@ document.addEventListener('alpine:init', () => {
         },
     }));
 
+    Alpine.data('homeHeroVideoModal', (embed) => ({
+        isOpen: false,
+        iframeSrc: '',
+        embedUrl: embed.embed_url,
+        provider: embed.provider,
+
+        openVideo() {
+            this.iframeSrc = this.embedUrl;
+            this.isOpen = true;
+            document.body.classList.add('overflow-hidden');
+        },
+
+        closeVideo() {
+            this.isOpen = false;
+            this.iframeSrc = '';
+            document.body.classList.remove('overflow-hidden');
+        },
+
+        warmConnection() {
+            const hosts = this.provider === 'vimeo'
+                ? ['https://player.vimeo.com', 'https://i.vimeocdn.com']
+                : ['https://www.youtube-nocookie.com'];
+
+            for (const href of hosts) {
+                if (document.querySelector(`link[rel="preconnect"][href="${href}"]`)) {
+                    continue;
+                }
+
+                const link = document.createElement('link');
+                link.rel = 'preconnect';
+                link.href = href;
+                link.crossOrigin = 'anonymous';
+                document.head.appendChild(link);
+            }
+        },
+    }));
+
     Alpine.data('testimonialsCarousel', (slideCount) => ({
         active: 0,
         slideCount,

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Property;
 use App\Models\Service;
 
 class ServiceController extends Controller
@@ -26,6 +27,10 @@ class ServiceController extends Controller
             'service' => $service,
             'otherServices' => Service::published()
                 ->where('id', '!=', $service->id)
+                ->get(),
+            'featuredProperties' => Property::published()
+                ->featured()
+                ->limit(3)
                 ->get(),
         ]);
     }

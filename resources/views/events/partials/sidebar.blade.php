@@ -26,7 +26,7 @@
         $settings->instagram_url ? ['url' => $settings->instagram_url, 'label' => 'Instagram'] : null,
         $settings->linkedin_url ? ['url' => $settings->linkedin_url, 'label' => 'LinkedIn'] : null,
         $settings->youtube_url ? ['url' => $settings->youtube_url, 'label' => 'YouTube'] : null,
-        $settings->podcast_url ? ['url' => $settings->podcast_url, 'label' => 'Podcast'] : null,
+        $settings->podcast_url ? ['url' => $settings->podcast_url, 'label' => 'TikTok'] : null,
     ]));
 @endphp
 

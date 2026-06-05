@@ -93,14 +93,6 @@ class SiteSetting extends Model
         return $this->assetUrl($this->logo_footer_path) ?? $this->themeLogoUrl();
     }
 
-    /**
-     * Logo for dark hero sections (e.g. /services). Uses the white logo only — never the theme logo.
-     */
-    public function servicesHeroLogoUrl(): ?string
-    {
-        return $this->whiteLogoUrl();
-    }
-
     public function logoUrl(): ?string
     {
         return $this->themeLogoUrl();

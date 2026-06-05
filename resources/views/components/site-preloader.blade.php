@@ -1,10 +1,10 @@
 @php($preloaderSettings = $settings ?? \App\Models\SiteSetting::current())
 <div id="site-preloader" class="site-preloader" role="status" aria-live="polite" aria-label="Loading page">
     <div class="site-preloader-inner">
-        @if($preloaderSettings->whiteLogoUrl() || $preloaderSettings->themeLogoUrl())
+        @if($preloaderSettings->whiteLogoUrl())
             <x-site-logo
                 :settings="$preloaderSettings"
-                :variant="$preloaderSettings->whiteLogoUrl() ? 'white' : 'theme'"
+                variant="white"
                 class="site-preloader-logo"
             />
         @else

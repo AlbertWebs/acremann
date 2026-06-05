@@ -4,10 +4,11 @@ namespace App\Filament\Resources\Services\Schemas;
 
 use App\Filament\Support\FormComponents;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\View;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 
@@ -44,23 +45,50 @@ class ServiceForm
                 Section::make('Images')
                     ->description('Header image appears behind the title on the service page with a green overlay. Featured image is used on the services listing card.')
                     ->icon(Heroicon::OutlinedPhoto)
+                    ->extraAttributes(['class' => 'acremann-service-media-section'])
+                    ->columns([
+                        'default' => 1,
+                        'lg' => 2,
+                    ])
                     ->schema([
+                        View::make('filament.services.media-preview')
+                            ->columnSpanFull(),
                         FileUpload::make('header_image')
                             ->label('Header background image')
+                            ->id('service-header-image-upload')
                             ->image()
                             ->directory('services/headers')
                             ->disk('public')
                             ->maxSize(5120)
-                            ->helperText('Recommended: wide landscape photo (e.g. 1920×800). Darker overlay on the left keeps text readable.')
-                            ->columnSpanFull(),
+                            ->imagePreviewHeight('16rem')
+                            ->itemPanelAspectRatio('1:1')
+                            ->panelAspectRatio('1:1')
+                            ->openable()
+                            ->downloadable()
+                            ->live()
+                            ->placeholder('Drag & drop an image here')
+                            ->helperText('Square image recommended (e.g. 800×800).')
+                            ->extraAttributes(['class' => 'acremann-service-upload-drop'])
+                            ->belowContent(View::make('filament.services.upload-button-header'))
+                            ->columnSpan(1),
                         FileUpload::make('featured_image')
                             ->label('Featured image (listing card)')
+                            ->id('service-featured-image-upload')
                             ->image()
                             ->directory('services/featured')
                             ->disk('public')
                             ->maxSize(4096)
-                            ->helperText('Shown on /services grid. Falls back to the icon if empty.')
-                            ->columnSpanFull(),
+                            ->imagePreviewHeight('16rem')
+                            ->itemPanelAspectRatio('1:1')
+                            ->panelAspectRatio('1:1')
+                            ->openable()
+                            ->downloadable()
+                            ->live()
+                            ->placeholder('Drag & drop an image here')
+                            ->helperText('Square image for /services grid. Falls back to the icon if empty.')
+                            ->extraAttributes(['class' => 'acremann-service-upload-drop'])
+                            ->belowContent(View::make('filament.services.upload-button-featured'))
+                            ->columnSpan(1),
                     ])
                     ->columnSpanFull(),
                 Section::make('Service page content')

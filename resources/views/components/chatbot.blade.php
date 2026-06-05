@@ -22,6 +22,7 @@
         class="assistant-teaser"
         role="status"
     >
+        <span class="assistant-teaser-accent" aria-hidden="true"></span>
         <p class="assistant-teaser-text">{{ $assistantConfig['subheading'] }}</p>
         <button
             type="button"
@@ -30,6 +31,7 @@
             aria-label="Dismiss"
         >&times;</button>
     </div>
+
     <div class="assistant-fab-wrap" :class="{ 'assistant-fab-wrap--idle': !open }">
         <span class="assistant-fab-pulse" aria-hidden="true"></span>
         <span class="assistant-fab-pulse assistant-fab-pulse--delayed" aria-hidden="true"></span>
@@ -39,101 +41,156 @@
             class="assistant-fab"
             :class="{ 'assistant-fab--open': open }"
             :aria-expanded="open"
-            aria-label="Open Acremann Assistant"
+            :aria-label="open ? 'Close Acremann Assistant' : 'Open Acremann Assistant'"
         >
-            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+            <svg x-show="!open" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+            <svg x-show="open" x-cloak class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 18 6M6 6l12 12"/></svg>
             <span class="assistant-fab-badge" aria-hidden="true"></span>
         </button>
     </div>
-    <div x-show="open" x-cloak class="absolute bottom-14 left-0 flex w-[22rem] max-w-[calc(100vw-2rem)] min-h-[32rem] max-h-[min(42rem,calc(100dvh-3rem))] flex-col rounded-sm border border-charcoal/10 bg-white shadow-xl">
-        <div class="shrink-0 border-b border-charcoal/10 p-4">
-            <p class="font-serif text-lg">{{ $assistantConfig['heading'] }}</p>
-            <p class="text-xs text-muted">{{ $assistantConfig['subheading'] }}</p>
-        </div>
-        <div class="flex min-h-0 flex-1 flex-col overflow-hidden">
-        <div class="min-h-0 flex-1 overflow-y-auto">
-        <div class="space-y-2 p-4" x-show="step === 'menu'">
-            @forelse($menuItems as $item)
-                @if(in_array($item['action'], ['whatsapp', 'link'], true) && filled($item['url']))
-                    <a
-                        href="{{ $item['url'] }}"
-                        @if($item['open_in_new_tab']) target="_blank" rel="noopener noreferrer" @endif
-                        @click="track('{{ $item['action'] === 'whatsapp' ? 'whatsapp_click' : 'link_click' }}', { label: @js($item['label']) })"
-                        @class([
-                            'block w-full rounded-sm px-3 py-2 text-center text-sm',
-                            'bg-[#25D366] text-white' => $item['action'] === 'whatsapp',
-                            'border border-charcoal/10 hover:border-forest' => $item['action'] === 'link',
-                        ])
-                    >{{ $item['label'] }}</a>
-                @else
-                    <button
-                        type="button"
-                        @click="selectMenuItem(@js($item))"
-                        class="w-full rounded-sm border border-charcoal/10 px-3 py-2 text-left text-sm hover:border-forest"
-                    >{{ $item['label'] }}</button>
-                @endif
-            @empty
-                <p class="text-sm text-muted">No menu items published. Add buttons in the admin under Acremann Assistant → Menu buttons.</p>
-            @endforelse
-        </div>
-        <div class="p-4" x-show="step === 'faq'">
-            @forelse($assistantFaqs as $faq)
-                <details class="mb-2 text-sm" @toggle="onFaqToggle($event, @js($faq->question))">
-                    <summary class="cursor-pointer font-medium">{{ $faq->question }}</summary>
-                    <div class="mt-1 text-muted prose prose-sm max-w-none">{!! $faq->answer !!}</div>
-                </details>
-            @empty
-                <p class="text-sm text-muted">No FAQs published for the assistant yet.</p>
-            @endforelse
-            <button type="button" @click="backToMenu()" class="mt-2 text-sm text-forest">← Back to menu</button>
-        </div>
-        <div x-show="step === 'title'" class="p-4 text-sm text-muted">
-            <p>{{ $assistantConfig['title_body'] }}</p>
-            @if(filled($assistantConfig['title_link_label']) && filled($assistantConfig['title_link_url']))
-                <a href="{{ $assistantConfig['title_link_url'] }}" @click="track('link_click', { label: @js($assistantConfig['title_link_label']) })" class="mt-2 inline-block text-forest">{{ $assistantConfig['title_link_label'] }}</a>
-            @endif
-            <button type="button" @click="backToMenu()" class="mt-3 block text-sm text-forest">← Back to menu</button>
-        </div>
-        <div x-show="step === 'lead'" class="border-b border-charcoal/10 px-4 py-3">
-            <div class="flex items-center justify-between gap-2">
-                <p class="text-sm font-medium" x-text="formHeading()"></p>
-                <button type="button" @click="backToMenu()" class="shrink-0 text-sm text-forest hover:underline">← Menu</button>
+
+    <div
+        x-show="open"
+        x-cloak
+        x-transition:enter="transition ease-out duration-200"
+        x-transition:enter-start="opacity-0 translate-y-2 scale-[0.98]"
+        x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+        x-transition:leave="transition ease-in duration-150"
+        x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+        x-transition:leave-end="opacity-0 translate-y-2 scale-[0.98]"
+        class="assistant-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="assistant-panel-heading"
+    >
+        <div class="assistant-panel-header">
+            <div class="assistant-panel-header-glow" aria-hidden="true"></div>
+            <div class="assistant-panel-brand">
+                <span class="assistant-panel-icon" aria-hidden="true">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="h-5 w-5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+                </span>
+                <div>
+                    <p id="assistant-panel-heading" class="assistant-panel-title">{{ $assistantConfig['heading'] }}</p>
+                    <p class="assistant-panel-subtitle">{{ $assistantConfig['subheading'] }}</p>
+                </div>
             </div>
+            <button type="button" @click="toggleOpen()" class="assistant-panel-close" aria-label="Close assistant">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="h-4 w-4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 18 6M6 6l12 12"/></svg>
+            </button>
         </div>
-        </div>
-        <div x-show="showEnquiryForm" x-cloak class="shrink-0 border-t border-charcoal/10 bg-cream/40">
-            <form @submit.prevent="submitLead" class="acremann-form space-y-3 p-4" novalidate>
-                <p x-show="step !== 'lead'" class="text-sm font-medium text-charcoal" x-text="formHeading()"></p>
-                <p x-show="submitError" class="rounded-sm border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700" x-text="submitError"></p>
-                <div x-show="!submitted" class="space-y-3">
-                        <input type="text" x-model="form.name" @blur="trackField('name')" placeholder="Your name *" class="form-control" autocomplete="name">
-                        <input type="tel" x-model="form.phone" @blur="trackField('phone')" placeholder="Phone *" class="form-control" autocomplete="tel">
-                        <input type="email" x-model="form.email" @blur="trackField('email')" placeholder="Email (optional)" class="form-control" autocomplete="email">
-                        <select x-model="form.buyer_type" @change="trackField('buyer_type')" class="form-control">
+
+        <nav
+            x-show="canGoBack"
+            x-cloak
+            class="assistant-panel-nav"
+            aria-label="Assistant navigation"
+        >
+            <button type="button" @click="goBack()" class="assistant-nav-back">
+                <svg class="assistant-nav-back-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.75 19.5 8.25 12l7.5-7.5"/>
+                </svg>
+                <span x-text="backLabel()"></span>
+            </button>
+        </nav>
+
+        <div class="assistant-panel-body">
+            <div class="assistant-panel-scroll">
+                <div class="assistant-panel-section" x-show="step === 'menu'">
+                    <p class="assistant-panel-section-label">How can we help?</p>
+                    <div class="assistant-menu">
+                        @forelse($menuItems as $item)
+                            @if(in_array($item['action'], ['whatsapp', 'link'], true) && filled($item['url']))
+                                <a
+                                    href="{{ $item['url'] }}"
+                                    @if($item['open_in_new_tab']) target="_blank" rel="noopener noreferrer" @endif
+                                    @click="track('{{ $item['action'] === 'whatsapp' ? 'whatsapp_click' : 'link_click' }}', { label: @js($item['label']) })"
+                                    @class([
+                                        'assistant-menu-btn group',
+                                        'assistant-menu-btn--whatsapp' => $item['action'] === 'whatsapp',
+                                        'assistant-menu-btn--link' => $item['action'] === 'link',
+                                    ])
+                                >
+                                    <span>{{ $item['label'] }}</span>
+                                    <svg class="assistant-menu-btn-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+                                </a>
+                            @else
+                                <button
+                                    type="button"
+                                    @click="selectMenuItem(@js($item))"
+                                    class="assistant-menu-btn assistant-menu-btn--action group"
+                                >
+                                    <span>{{ $item['label'] }}</span>
+                                    <svg class="assistant-menu-btn-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+                                </button>
+                            @endif
+                        @empty
+                            <p class="assistant-panel-empty">No menu items published. Add buttons in the admin under Acremann Assistant → Menu buttons.</p>
+                        @endforelse
+                    </div>
+                </div>
+
+                <div class="assistant-panel-section" x-show="step === 'faq'" x-cloak>
+                    <p class="assistant-panel-section-label">Common questions</p>
+                    <div class="assistant-faq-list">
+                        @forelse($assistantFaqs as $faq)
+                            <details class="assistant-faq-item" @toggle="onFaqToggle($event, @js($faq->question))">
+                                <summary class="assistant-faq-question">{{ $faq->question }}</summary>
+                                <div class="assistant-faq-answer prose prose-sm max-w-none">{!! $faq->answer !!}</div>
+                            </details>
+                        @empty
+                            <p class="assistant-panel-empty">No FAQs published for the assistant yet.</p>
+                        @endforelse
+                    </div>
+                </div>
+
+                <div class="assistant-panel-section" x-show="step === 'title'" x-cloak>
+                    <p class="assistant-panel-section-label">Title &amp; process</p>
+                    <div class="assistant-info-card">
+                        <p>{{ $assistantConfig['title_body'] }}</p>
+                        @if(filled($assistantConfig['title_link_label']) && filled($assistantConfig['title_link_url']))
+                            <a href="{{ $assistantConfig['title_link_url'] }}" @click="track('link_click', { label: @js($assistantConfig['title_link_label']) })" class="assistant-inline-link">{{ $assistantConfig['title_link_label'] }}</a>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="assistant-panel-section assistant-panel-section--compact" x-show="step === 'lead'" x-cloak>
+                    <p class="assistant-step-title" x-text="formHeading()"></p>
+                </div>
+            </div>
+
+            <div x-show="showEnquiryForm" x-cloak class="assistant-panel-footer">
+                <form @submit.prevent="submitLead" class="assistant-form acremann-form" novalidate>
+                    <p x-show="step !== 'lead'" class="assistant-form-heading" x-text="formHeading()"></p>
+                    <p x-show="submitError" class="assistant-form-error" x-text="submitError"></p>
+                    <div x-show="!submitted" class="assistant-form-fields">
+                        <input type="text" x-model="form.name" @blur="trackField('name')" placeholder="Your name *" class="form-control assistant-form-control" autocomplete="name">
+                        <input type="tel" x-model="form.phone" @blur="trackField('phone')" placeholder="Phone *" class="form-control assistant-form-control" autocomplete="tel">
+                        <input type="email" x-model="form.email" @blur="trackField('email')" placeholder="Email (optional)" class="form-control assistant-form-control" autocomplete="email">
+                        <select x-model="form.buyer_type" @change="trackField('buyer_type')" class="form-control assistant-form-control">
                             <option value="">I am a… (optional)</option>
                             @foreach($assistantConfig['buyer_types'] as $option)
                                 <option value="{{ $option['value'] }}">{{ $option['label'] }}</option>
                             @endforeach
                         </select>
-                        <select x-model="form.budget" @change="trackField('budget')" class="form-control">
+                        <select x-model="form.budget" @change="trackField('budget')" class="form-control assistant-form-control">
                             <option value="">Budget range (optional)</option>
                             @foreach($assistantConfig['budget_ranges'] as $option)
                                 <option value="{{ $option['value'] }}">{{ $option['label'] }}</option>
                             @endforeach
                         </select>
-                        <textarea x-model="form.message" @blur="trackField('message')" placeholder="Tell us what you are looking for" class="form-control" rows="3"></textarea>
-                        <label class="form-check">
+                        <textarea x-model="form.message" @blur="trackField('message')" placeholder="Tell us what you are looking for" class="form-control assistant-form-control" rows="3"></textarea>
+                        <label class="form-check assistant-form-check">
                             <input type="checkbox" x-model="form.consent" @change="track('consent_toggle', { data: { consent: form.consent } })" class="form-check-input">
                             <span class="form-check-label">{{ $assistantConfig['consent_text'] }}</span>
                         </label>
-                        <button type="submit" class="btn btn-primary w-full" :disabled="submitting" x-text="submitting ? 'Sending…' : 'Submit'"></button>
-                </div>
-                <div x-show="submitted" class="space-y-3">
-                        <p class="text-sm text-forest" x-text="successMessage"></p>
-                        <button type="button" @click="backToMenu()" class="w-full text-sm text-forest hover:underline">← Back to menu</button>
-                </div>
-            </form>
-        </div>
+                        <button type="submit" class="assistant-submit-btn" :disabled="submitting" x-text="submitting ? 'Sending…' : 'Submit enquiry'"></button>
+                    </div>
+                    <div x-show="submitted" class="assistant-form-success">
+                        <p class="assistant-form-success-text" x-text="successMessage"></p>
+                        <button type="button" @click="goBack()" class="assistant-back-link" x-text="backLabel()"></button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
@@ -144,6 +201,8 @@ function chatbot(config) {
         open: false,
         step: 'menu',
         journey: 'general',
+        stepLabel: null,
+        history: [],
         submitted: false,
         submitting: false,
         submitError: null,
@@ -155,6 +214,9 @@ function chatbot(config) {
         },
         get showEnquiryForm() {
             return ['lead', 'faq', 'title'].includes(this.step);
+        },
+        get canGoBack() {
+            return this.step !== 'menu';
         },
         form: { name: '', phone: '', email: '', message: '', buyer_type: '', budget: '', consent: false },
         init() {
@@ -181,23 +243,84 @@ function chatbot(config) {
         selectMenuItem(item) {
             this.goTo(item.step, item.journey, item.label);
         },
-        goTo(step, journey, label) {
+        defaultStepLabel(step) {
+            if (step === 'menu') return 'Menu';
+            if (step === 'faq') return 'Common questions';
+            if (step === 'title') return 'Title & process';
+            return 'Enquiry';
+        },
+        goTo(step, journey, label, options = {}) {
+            const fromBack = options.fromBack ?? false;
+
+            if (! fromBack && this.step !== step) {
+                this.history.push({
+                    step: this.step,
+                    journey: this.journey,
+                    label: this.stepLabel ?? this.defaultStepLabel(this.step),
+                });
+            }
+
             if (this.step !== step) {
                 this.submitted = false;
                 this.submitError = null;
             }
+
             this.step = step;
+
             if (step === 'menu') {
                 this.journey = 'general';
-            } else if (journey) {
-                this.journey = journey;
+                this.stepLabel = null;
+                this.history = [];
+            } else {
+                if (journey) {
+                    this.journey = journey;
+                }
+                this.stepLabel = label ?? this.defaultStepLabel(step);
             }
-            this.track('menu_select', { step, journey: this.activeJourney(), label });
+
+            this.track('menu_select', { step, journey: this.activeJourney(), label: label ?? null });
         },
-        backToMenu() {
+        backLabel() {
+            const previous = this.history[this.history.length - 1];
+
+            if (! previous || previous.step === 'menu') {
+                return 'Back to menu';
+            }
+
+            return previous.label ? `Back to ${previous.label}` : 'Back';
+        },
+        goBack() {
+            const previous = this.history.pop();
+
+            if (! previous) {
+                this.backToMenu();
+                return;
+            }
+
+            this.step = previous.step;
+            this.journey = previous.journey ?? 'general';
+            this.stepLabel = previous.label ?? null;
             this.submitted = false;
             this.submitError = null;
-            this.goTo('menu', 'general', 'Back to menu');
+
+            if (previous.step === 'menu') {
+                this.history = [];
+            }
+
+            this.track('nav_back', {
+                step: this.step,
+                journey: this.activeJourney(),
+                label: this.backLabel(),
+            });
+        },
+        backToMenu() {
+            this.history = [];
+            this.submitted = false;
+            this.submitError = null;
+            this.step = 'menu';
+            this.journey = 'general';
+            this.stepLabel = null;
+            this.track('nav_back', { step: 'menu', journey: 'general', label: 'Back to menu' });
         },
         activeJourney() {
             if (this.step === 'faq') return 'faq';

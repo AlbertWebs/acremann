@@ -38,7 +38,11 @@
 @endphp
 @section('content')
 {{-- Hero --}}
-<section class="sustain-hero section-padding" aria-labelledby="sustain-hero-heading">
+<section class="sustain-hero sustain-hero--has-image section-padding" aria-labelledby="sustain-hero-heading">
+    <div class="sustain-hero-media" aria-hidden="true">
+        <img src="{{ asset('bg/APL105.jpg') }}" alt="" class="sustain-hero-image" fetchpriority="high">
+        <div class="sustain-hero-overlay"></div>
+    </div>
     <div class="sustain-hero-glow" aria-hidden="true"></div>
     <div class="container-site sustain-hero-inner">
         <div class="sustain-hero-grid">
@@ -189,7 +193,10 @@
     };
 @endphp
 <section class="sustain-impact-section section-padding" aria-labelledby="sustain-impact-heading">
-    <div class="sustain-impact-bg" aria-hidden="true"></div>
+    <div class="sustain-impact-bg" aria-hidden="true">
+        <img src="{{ asset('bg/ground.jpg') }}" alt="" class="sustain-impact-bg-image">
+        <div class="sustain-impact-bg-overlay"></div>
+    </div>
     <div class="container-site sustain-impact-container">
         <div class="sustain-impact-panel">
             <div class="sustain-impact-layout">
@@ -271,7 +278,7 @@
         <div class="sustain-cta-band">
             <div>
                 <h2 class="sustain-cta-title">Planning a purchase with legacy in mind?</h2>
-                <p class="sustain-cta-lead">Book a site visit or speak with advisory — we'll walk you through sustainability features plot by plot.</p>
+                <p class="sustain-cta-lead">Book a site visit or speak to advisor — we'll walk you through sustainability features plot by plot.</p>
             </div>
             <div class="sustain-cta-buttons">
                 <a href="{{ route('book-visit') }}" class="btn-primary">Book a site visit</a>

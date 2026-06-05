@@ -1,4 +1,4 @@
-@props(['settings'])
+@props(['settings', 'brandVideoEmbed' => null])
 
 @php
     $video = $settings->heroVideoPayload();
@@ -6,11 +6,12 @@
     $imageUrls = $useVideo
         ? $settings->homepageHeroSecondaryImageUrls()
         : $settings->homepageHeroImageUrls();
+    $homeHeroVideoEmbed = $brandVideoEmbed ?? \App\Support\VideoEmbed::modalFromUrl(config('acremann.brand_video_url'));
 @endphp
 
 @if($useVideo && $video)
     <div class="grid grid-cols-2 gap-3">
-        <div class="home-hero-video col-span-2 aspect-[2/1] overflow-hidden rounded-sm bg-charcoal/5">
+        <div class="home-hero-media-slot home-hero-video col-span-2 aspect-[2/1] overflow-hidden rounded-sm bg-charcoal/5">
             @if($video['type'] === 'file')
                 <video
                     class="home-hero-video-media"
@@ -33,6 +34,9 @@
                     referrerpolicy="strict-origin-when-cross-origin"
                 ></iframe>
             @endif
+            @if($homeHeroVideoEmbed)
+                <x-home-hero-video-play :embed="$homeHeroVideoEmbed" />
+            @endif
         </div>
         @foreach($imageUrls as $url)
             <div class="overflow-hidden rounded-sm bg-charcoal/5 aspect-square">
@@ -41,19 +45,29 @@
         @endforeach
     </div>
 @elseif(count($imageUrls) === 1)
-    <div class="overflow-hidden rounded-sm bg-charcoal/5 aspect-[4/3] lg:aspect-auto lg:min-h-[22rem]">
+    <div class="home-hero-media-slot overflow-hidden rounded-sm bg-charcoal/5 aspect-[4/3] lg:aspect-auto lg:min-h-[22rem]">
         <img src="{{ $imageUrls[0] }}" alt="" class="h-full w-full object-cover">
+        @if($homeHeroVideoEmbed)
+            <x-home-hero-video-play :embed="$homeHeroVideoEmbed" />
+        @endif
     </div>
 @else
     <div class="grid grid-cols-2 gap-3">
         @foreach($imageUrls as $i => $url)
-            <div @class([
-                'overflow-hidden rounded-sm bg-charcoal/5',
-                'col-span-2 aspect-[2/1]' => $i === 0,
-                'aspect-square' => $i > 0,
-            ])>
-                <img src="{{ $url }}" alt="" class="h-full w-full object-cover">
-            </div>
+            @if($i === 0 && $homeHeroVideoEmbed)
+                <div class="home-hero-media-slot col-span-2 aspect-[2/1] overflow-hidden rounded-sm bg-charcoal/5">
+                    <img src="{{ $url }}" alt="" class="h-full w-full object-cover">
+                    <x-home-hero-video-play :embed="$homeHeroVideoEmbed" />
+                </div>
+            @else
+                <div @class([
+                    'overflow-hidden rounded-sm bg-charcoal/5',
+                    'col-span-2 aspect-[2/1]' => $i === 0,
+                    'aspect-square' => $i > 0,
+                ])>
+                    <img src="{{ $url }}" alt="" class="h-full w-full object-cover">
+                </div>
+            @endif
         @endforeach
     </div>
 @endif

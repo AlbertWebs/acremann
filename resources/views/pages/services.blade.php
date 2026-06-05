@@ -7,18 +7,6 @@
 <section class="services-hero section-padding" aria-labelledby="services-hero-heading">
     <div class="container-site">
         <div class="services-hero-inner">
-            @if($settings->servicesHeroLogoUrl())
-                <a href="{{ route('home') }}" class="services-hero-brand mb-6 inline-block" aria-label="{{ $settings->company_name }}">
-                    <img
-                        src="{{ $settings->servicesHeroLogoUrl() }}"
-                        alt=""
-                        class="services-hero-logo"
-                        width="176"
-                        height="40"
-                        decoding="async"
-                    />
-                </a>
-            @endif
             <p class="services-eyebrow">{{ $settings->servicesPageEyebrow() }}</p>
             <h1 id="services-hero-heading" class="services-hero-title">{{ $settings->servicesPageHeadline() }}</h1>
             <p class="services-hero-lead">{{ $settings->servicesPageLead() }}</p>
@@ -63,7 +51,7 @@
                 <p class="services-cta-lead">Tell us your goals — residential plot, investment, or diaspora purchase — and we will point you to the right advisory path.</p>
             </div>
             <div class="services-cta-buttons">
-                <a href="{{ route('contact') }}" class="btn-primary">Speak to advisory</a>
+                <a href="{{ route('contact') }}" class="btn-primary">Speak to advisor</a>
                 <a href="{{ route('invest') }}" class="btn-outline">Invest with Acremann</a>
             </div>
         </div>

@@ -13,18 +13,44 @@
         $property->map_embed ? ['href' => '#location', 'label' => 'Location'] : null,
         $property->faqs->isNotEmpty() ? ['href' => '#faqs', 'label' => 'FAQs'] : null,
     ]));
+    $heroMedia = $property->getFirstMedia('hero') ?? $property->getFirstMedia('gallery');
+    $heroImageUrl = $heroMedia ? $property->mediaUrl($heroMedia, null) : null;
 @endphp
 @section('content')
-<section class="property-show-hero">
+<section
+    @class(['property-show-hero section-padding', 'property-show-hero--has-image' => filled($heroImageUrl)])
+    aria-labelledby="property-show-heading"
+>
+    @if(filled($heroImageUrl))
+        <div
+            class="property-show-hero-bg"
+            style="background-image: url('{{ e($heroImageUrl) }}')"
+            role="presentation"
+            aria-hidden="true"
+        ></div>
+    @endif
+    <div class="property-show-hero-overlay" aria-hidden="true"></div>
+    <div class="property-show-hero-glow" aria-hidden="true"></div>
+
     <div class="container-site property-show-hero-inner">
         <nav class="property-show-breadcrumb" aria-label="Breadcrumb">
-            <a href="{{ route('properties.index') }}">Properties</a>
-            <span aria-hidden="true">/</span>
-            <span aria-current="page">{{ $property->title }}</span>
+            <a href="{{ route('properties.index') }}" class="property-show-breadcrumb-link">Properties</a>
+            <span class="property-show-breadcrumb-sep" aria-hidden="true">/</span>
+            <span class="property-show-breadcrumb-current">{{ $property->title }}</span>
         </nav>
 
         <div class="property-show-hero-main">
             <div class="property-show-hero-copy">
+                <p class="property-show-eyebrow">
+                    @if($property->is_featured)
+                        Featured project
+                    @else
+                        Verified listing
+                    @endif
+                    @if(filled($property->project_status))
+                        <span aria-hidden="true"> · </span>{{ ucfirst(str_replace('_', ' ', $property->project_status)) }}
+                    @endif
+                </p>
                 <div class="property-show-meta">
                     <span class="property-show-chip">{{ ucfirst($property->category) }}</span>
                     <span class="property-show-chip">{{ $property->county }}</span>
@@ -33,27 +59,28 @@
                         <span class="property-show-chip property-show-chip--muted">{{ $property->plot_size }}</span>
                     @endif
                 </div>
-                <h1 class="property-show-title">{{ $property->title }}</h1>
+                <h1 id="property-show-heading" class="property-show-title">{{ $property->title }}</h1>
                 <p class="property-show-location">{{ $property->location }}</p>
                 @if($heroSummary)
                     <p class="property-show-lead">{{ $heroSummary }}</p>
                 @endif
             </div>
 
-            <div class="property-show-hero-aside">
+            <aside class="property-show-hero-aside" aria-label="Pricing and availability">
+                <p class="property-show-aside-label">From</p>
                 <p class="property-show-price">{{ $property->formattedPrice() }}</p>
-                <x-property-availability :property="$property" class="mt-4" />
+                <x-property-availability :property="$property" class="property-show-hero-availability" />
                 <div class="property-show-hero-ctas">
                     <a href="{{ route('book-visit') }}" class="btn-primary property-show-cta">Book a site visit</a>
                     <a
                         href="{{ $settings->whatsappUrl($waMessage) }}"
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="btn-outline property-show-cta"
+                        class="btn-outline property-show-cta property-btn-on-dark"
                         data-track="whatsapp_click"
                     >WhatsApp us</a>
                 </div>
-            </div>
+            </aside>
         </div>
 
         @if($jumpLinks !== [])

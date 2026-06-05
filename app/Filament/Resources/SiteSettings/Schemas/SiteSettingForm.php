@@ -46,7 +46,7 @@ class SiteSettingForm
     {
         return [
             Section::make('Logos & icon')
-                ->description('Theme logo for the header and admin; footer logo for the site footer; white logo for dark hero sections.')
+                ->description('Theme logo for the header and admin; footer logo for the site footer; white logo for the preloader and CMS sign-in.')
                 ->icon(Heroicon::OutlinedPhoto)
                 ->compact()
                 ->schema([
@@ -70,7 +70,7 @@ class SiteSettingForm
                         ->directory('branding')
                         ->disk('public')
                         ->maxSize(2048)
-                        ->helperText('For dark backgrounds (e.g. /services hero). Upload cream or white artwork on a transparent PNG — not the green theme logo.'),
+                        ->helperText('For the site preloader and CMS sign-in panel. Upload cream or white artwork on a transparent PNG — not the green theme logo.'),
                     FileUpload::make('favicon_path')
                         ->label('Favicon')
                         ->image()
@@ -139,7 +139,7 @@ class SiteSettingForm
                 ->collapsed()
                 ->schema([
                     TextInput::make('youtube_url')->label('YouTube')->url()->placeholder('https://'),
-                    TextInput::make('podcast_url')->label('Podcast')->url()->placeholder('https://'),
+                    TextInput::make('podcast_url')->label('TikTok')->url()->placeholder('https://www.tiktok.com/@…'),
                     TextInput::make('facebook_url')->label('Facebook')->url()->placeholder('https://'),
                     TextInput::make('instagram_url')->label('Instagram')->url()->placeholder('https://'),
                     TextInput::make('linkedin_url')->label('LinkedIn')->url()->placeholder('https://'),
