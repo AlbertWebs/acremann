@@ -19,16 +19,20 @@ class TeamController extends Controller
         $member = TeamMember::query()
             ->where('slug', $slug)
             ->published()
-            ->leadership()
             ->firstOrFail();
+
+        $otherMembersQuery = TeamMember::published()->whereKeyNot($member->id);
+
+        if ($member->is_leadership) {
+            $otherMembersQuery->leadership();
+        } else {
+            $otherMembersQuery->where('is_leadership', false);
+        }
 
         return view('team.show', [
             'settings' => $this->settings(),
             'member' => $member,
-            'otherLeaders' => TeamMember::published()
-                ->leadership()
-                ->whereKeyNot($member->id)
-                ->get(),
+            'otherMembers' => $otherMembersQuery->get(),
         ]);
     }
 }

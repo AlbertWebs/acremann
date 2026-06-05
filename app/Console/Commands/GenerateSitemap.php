@@ -37,7 +37,7 @@ class GenerateSitemap extends Command
             Url::create(route('events.show', $e->slug))->setChangeFrequency(Url::CHANGE_FREQUENCY_MONTHLY)
         ));
 
-        TeamMember::published()->leadership()->each(fn ($m) => $sitemap->add(
+        TeamMember::published()->each(fn ($m) => $sitemap->add(
             Url::create(route('leadership.show', $m))->setChangeFrequency(Url::CHANGE_FREQUENCY_MONTHLY)
         ));
 

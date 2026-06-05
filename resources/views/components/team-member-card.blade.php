@@ -47,7 +47,7 @@
         @if($member->plainBio() && ! $isCompact)
             <p class="team-card-bio">{{ $member->plainBio() }}</p>
         @endif
-        @if($isLeadership && $member->slug)
+        @if($member->slug)
             <a href="{{ route('leadership.show', $member) }}" class="team-card-profile-link">View profile →</a>
         @endif
     </div>

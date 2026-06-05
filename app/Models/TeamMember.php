@@ -80,7 +80,9 @@ class TeamMember extends Model
 
         $bio = $this->plainBio();
         if ($bio === '') {
-            return Str::limit("{$lead} Leadership profile at Acremann Properties — verified land and real estate advisory in Kenya.", 160, '');
+            $profileType = $this->is_leadership ? 'Leadership profile' : 'Team profile';
+
+            return Str::limit("{$lead} {$profileType} at Acremann Properties — verified land and real estate advisory in Kenya.", 160, '');
         }
 
         return Str::limit("{$lead} {$bio}", 160, '');
