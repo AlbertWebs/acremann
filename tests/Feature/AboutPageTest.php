@@ -40,7 +40,7 @@ class AboutPageTest extends TestCase
         $response->assertSee('View profile →', false);
     }
 
-    public function test_about_page_shows_brand_video_play_button(): void
+    public function test_about_page_shows_autoplaying_brand_video(): void
     {
         $this->seed(\Database\Seeders\AcremannSeeder::class);
 
@@ -50,8 +50,9 @@ class AboutPageTest extends TestCase
 
         $response->assertOk();
         $response->assertSee('about-hero-video', false);
-        $response->assertSee('Play Acremann Properties video', false);
+        $response->assertSee('player.vimeo.com/video/1197477405', false);
+        $response->assertSee('background=1', false);
         $response->assertSee('Welcome: Acremann Properties', false);
-        $response->assertDontSee('player.vimeo.com/video/1197477405', false);
+        $response->assertDontSee('home-hero-play-btn', false);
     }
 }

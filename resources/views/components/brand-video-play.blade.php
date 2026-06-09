@@ -4,20 +4,40 @@
     'caption' => null,
     'slotClass' => '',
     'showPoster' => true,
+    'autoplay' => false,
 ])
 
 @php
     $videoUrl = \App\Support\VideoEmbed::brandVideoUrl();
+    $backgroundEmbed = $autoplay ? \App\Support\VideoEmbed::fromUrl($videoUrl) : null;
     $embed ??= \App\Support\VideoEmbed::modalFromUrl($videoUrl);
 
-    if ($showPoster) {
+    if ($showPoster && ! $autoplay) {
         $posterUrl ??= \App\Support\VideoEmbed::vimeoThumbnailUrl($videoUrl) ?? asset('bg/APL105.jpg');
     } else {
         $posterUrl = null;
     }
+
+    $videoTitle = $embed['title'] ?? 'Acremann Properties video';
 @endphp
 
-@if($embed)
+@if($autoplay && $backgroundEmbed)
+    <div {{ $attributes->class(['brand-video-slot', $slotClass]) }}>
+        <iframe
+            class="brand-video-iframe home-hero-video-media"
+            src="{{ $backgroundEmbed['embed_url'] }}"
+            title="{{ $videoTitle }}"
+            allow="autoplay; fullscreen; picture-in-picture"
+            allowfullscreen
+            loading="eager"
+            referrerpolicy="strict-origin-when-cross-origin"
+        ></iframe>
+        <div class="brand-video-poster-overlay" aria-hidden="true"></div>
+        @if($caption)
+            <p class="brand-video-caption">{{ $caption }}</p>
+        @endif
+    </div>
+@elseif($embed)
     <div {{ $attributes->class(['brand-video-slot', $slotClass]) }}>
         @if($posterUrl)
             <div

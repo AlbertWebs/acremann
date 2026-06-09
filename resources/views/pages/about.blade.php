@@ -2,7 +2,7 @@
 @php
     $metaTitle = 'About Acremann | Legacy-minded real estate advisory Kenya';
     $metaDescription = 'Professional property advisory in Nairobi, Kiambu, Kikuyu and Nachu — clean title deeds, transparent conveyancing, and diaspora-friendly land investment.';
-    $brandVideoEmbed = \App\Support\VideoEmbed::modalFromUrl(config('acremann.brand_video_url'));
+    $brandVideoEmbed = \App\Support\VideoEmbed::fromUrl(config('acremann.brand_video_url'));
 @endphp
 @section('content')
 <section class="about-hero section-padding" aria-labelledby="about-hero-heading">
@@ -20,7 +20,7 @@
             @if($brandVideoEmbed)
                 <div class="about-hero-aside" aria-label="Watch our story">
                     <x-brand-video-play
-                        :embed="$brandVideoEmbed"
+                        autoplay
                         slot-class="about-hero-video"
                         caption="Welcome: Acremann Properties"
                     />

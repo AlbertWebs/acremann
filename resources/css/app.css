@@ -843,7 +843,22 @@
     }
 
     .about-hero-video .brand-video-caption {
-        @apply absolute bottom-0 left-0 right-0 m-0 bg-gradient-to-t from-forest/90 to-transparent px-4 pb-4 pt-10 text-left text-cream;
+        @apply absolute bottom-0 left-0 right-0 z-10 m-0 bg-gradient-to-t from-forest/90 to-transparent px-4 pb-4 pt-10 text-left text-cream;
+    }
+
+    .about-hero-video iframe.brand-video-iframe {
+        @apply scale-[1.35];
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .about-hero-video iframe.brand-video-iframe {
+            display: none;
+        }
+
+        .about-hero-video:has(iframe.brand-video-iframe) {
+            background-image: url('/bg/APL105.jpg');
+            @apply bg-cover bg-center;
+        }
     }
 
     .home-hero-media-slot {
