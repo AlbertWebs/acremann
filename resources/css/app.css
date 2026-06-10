@@ -861,6 +861,81 @@
         }
     }
 
+    .home-hero-full-width {
+        @apply relative isolate w-full overflow-hidden bg-forest;
+        min-height: clamp(28rem, 75vh, 42rem);
+    }
+
+    .home-hero-full-width-video {
+        @apply absolute inset-0 h-full w-full overflow-hidden rounded-none;
+    }
+
+    .home-hero-full-width .home-hero-full-width-video.brand-video-slot {
+        @apply rounded-none;
+    }
+
+    .home-hero-full-width-video iframe.brand-video-iframe {
+        inset: auto;
+        @apply absolute left-1/2 top-1/2 border-0;
+        width: 177.78vh;
+        height: 56.25vw;
+        min-width: 100%;
+        min-height: 100%;
+        max-width: none;
+        transform: translate(-50%, -50%);
+    }
+
+    main:has(.home-hero-full-width) {
+        overflow-x: clip;
+    }
+
+    .home-hero-full-width-overlay {
+        @apply pointer-events-none absolute inset-0 z-[1] bg-gradient-to-t from-forest via-forest/55 to-forest/20;
+    }
+
+    .home-hero-full-width-copy {
+        @apply relative z-10 flex w-full min-h-[clamp(28rem,75vh,42rem)] flex-col justify-end py-16 pt-28 md:py-20 md:pt-32;
+    }
+
+    .home-hero-full-width-copy-grid {
+        @apply w-full;
+    }
+
+    .home-hero-full-width-copy-inner {
+        @apply max-w-3xl;
+    }
+
+    .home-hero-full-width-copy--fallback {
+        @apply min-h-0 text-forest;
+    }
+
+    .home-hero-full-width-eyebrow {
+        @apply text-sm font-semibold uppercase tracking-widest text-gold;
+    }
+
+    .home-hero-full-width-title {
+        @apply mt-4 max-w-2xl text-4xl leading-tight text-cream md:text-5xl lg:text-6xl;
+    }
+
+    .home-hero-full-width-lead {
+        @apply mt-6 max-w-xl text-base leading-relaxed text-cream/85 md:text-lg;
+    }
+
+    .home-hero-full-width-ctas {
+        @apply mt-8 flex flex-wrap gap-4;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .home-hero-full-width iframe.brand-video-iframe {
+            display: none;
+        }
+
+        .home-hero-full-width:has(iframe.brand-video-iframe) {
+            background-image: url('/bg/APL105.jpg');
+            @apply bg-cover bg-center;
+        }
+    }
+
     .home-hero-media-slot {
         @apply relative isolate;
     }

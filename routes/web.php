@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 use Spatie\Honeypot\ProtectAgainstSpam;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/full-width', [HomeController::class, 'fullWidth'])->name('home.full-width');
 
 Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/leadership', [TeamController::class, 'leadership'])->name('leadership.index');
