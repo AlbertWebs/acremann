@@ -3,9 +3,11 @@
 namespace App\Filament\Resources\Properties\RelationManagers;
 
 use App\Support\PropertyFormOptions;
+use Filament\Actions\Action;
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
+use Filament\Notifications\Notification;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -52,6 +54,29 @@ class PlotsRelationManager extends RelationManager
             ])
             ->headerActions([
                 CreateAction::make(),
+                Action::make('deleteAllPlots')
+                    ->label('Delete all plots')
+                    ->icon(Heroicon::OutlinedTrash)
+                    ->color('danger')
+                    ->requiresConfirmation()
+                    ->modalHeading('Delete all plots?')
+                    ->modalDescription('This permanently removes every plot for this property. The public inventory will be empty until you generate or add plots again.')
+                    ->modalSubmitActionLabel('Delete all')
+                    ->visible(fn (): bool => $this->getOwnerRecord()->plots()->exists())
+                    ->action(function (): void {
+                        $property = $this->getOwnerRecord();
+                        $count = $property->plots()->count();
+
+                        $property->plots()->delete();
+
+                        Notification::make()
+                            ->title('All plots deleted')
+                            ->body($count > 0
+                                ? "Removed {$count} plots from this property."
+                                : 'No plots to remove.')
+                            ->success()
+                            ->send();
+                    }),
             ])
             ->recordActions([
                 EditAction::make(),

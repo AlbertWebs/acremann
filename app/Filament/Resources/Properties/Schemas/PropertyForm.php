@@ -286,6 +286,25 @@ class PropertyForm
                                 ->success()
                                 ->send();
                         }),
+                    Action::make('deleteAllPlots')
+                        ->label('Delete all plots')
+                        ->icon(Heroicon::OutlinedTrash)
+                        ->color('danger')
+                        ->visible(fn (?Property $record): bool => $record?->plots()->exists() ?? false)
+                        ->requiresConfirmation()
+                        ->modalHeading('Delete all plots?')
+                        ->modalDescription('This permanently removes every plot for this property. The public inventory will be empty until you generate or add plots again.')
+                        ->modalSubmitActionLabel('Delete all')
+                        ->action(function (Property $record): void {
+                            $count = $record->plots()->count();
+                            $record->plots()->delete();
+
+                            Notification::make()
+                                ->title('All plots deleted')
+                                ->body("Removed {$count} plots from this property.")
+                                ->success()
+                                ->send();
+                        }),
                 ])
                 ->columnSpanFull(),
             View::make('filament.properties.plots-summary')
