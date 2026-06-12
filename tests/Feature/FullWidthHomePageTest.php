@@ -14,7 +14,7 @@ class FullWidthHomePageTest extends TestCase
     {
         $this->seed(AcremannSeeder::class);
 
-        $response = $this->get('/full-width');
+        $response = $this->get('/');
 
         $response->assertOk();
         $response->assertSee('Featured properties', false);
@@ -27,7 +27,7 @@ class FullWidthHomePageTest extends TestCase
 
         config(['acremann.brand_video_url' => 'https://vimeo.com/1197477405']);
 
-        $response = $this->get('/full-width');
+        $response = $this->get('/');
 
         $response->assertOk();
         $response->assertSee('home-hero-full-width', false);

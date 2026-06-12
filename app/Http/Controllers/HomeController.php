@@ -12,12 +12,12 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return view('pages.home', $this->homeData());
+        return view('pages.home-full-width', $this->homeData());
     }
 
-    public function fullWidth()
+    public function classic()
     {
-        return view('pages.home-full-width', $this->homeData());
+        return view('pages.home', $this->homeData());
     }
 
     /**

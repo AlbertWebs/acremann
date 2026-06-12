@@ -1335,6 +1335,46 @@
         @apply mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-gold transition hover:text-cream;
     }
 
+    /* Shared interior page hero (services, insights, events, sustainability) */
+    .page-hero {
+        @apply relative z-0 overflow-hidden bg-forest text-cream pt-24 md:pt-28;
+        background-image:
+            radial-gradient(ellipse 65% 50% at 0% 0%, rgba(184, 149, 107, 0.16), transparent 55%),
+            radial-gradient(ellipse 55% 45% at 100% 100%, rgba(255, 255, 255, 0.07), transparent 50%);
+    }
+
+    .page-hero-inner {
+        @apply max-w-3xl;
+    }
+
+    .page-hero-eyebrow {
+        @apply text-sm font-semibold uppercase tracking-widest text-gold;
+    }
+
+    .page-hero-title {
+        @apply mt-3 font-serif text-4xl leading-tight md:text-5xl;
+    }
+
+    .page-hero-lead {
+        @apply mt-4 max-w-2xl text-base leading-relaxed text-cream/85 md:mt-5 md:text-lg;
+    }
+
+    .page-hero-slot {
+        @apply mt-8;
+    }
+
+    .page-hero-actions {
+        @apply flex flex-wrap gap-3;
+    }
+
+    .page-hero-btn-primary {
+        @apply border-2 border-gold bg-transparent px-6 py-3 text-cream shadow-none hover:border-gold hover:bg-gold/15 hover:text-cream focus:ring-gold/40 focus:ring-offset-forest;
+    }
+
+    .page-hero-btn-outline {
+        @apply border-cream/45 bg-transparent px-6 py-3 text-cream shadow-none hover:border-cream hover:bg-cream/10 hover:text-cream focus:ring-cream/35 focus:ring-offset-forest;
+    }
+
     /* Services pages */
     .services-hero {
         @apply relative overflow-hidden bg-forest text-cream;
@@ -2672,133 +2712,8 @@
     }
 
     /* Sustainability page */
-    .sustain-hero {
-        @apply relative z-0 overflow-hidden border-b border-charcoal/10 bg-forest text-cream;
-        background-image:
-            radial-gradient(ellipse 70% 55% at 0% 0%, rgba(184, 149, 107, 0.18), transparent 58%),
-            radial-gradient(ellipse 60% 50% at 100% 100%, rgba(255, 255, 255, 0.08), transparent 52%),
-            linear-gradient(165deg, rgba(45, 74, 62, 1) 0%, rgba(38, 62, 52, 1) 100%);
-    }
-
-    .sustain-hero--has-image {
-        @apply min-h-[22rem] md:min-h-[26rem] lg:min-h-[28rem];
-        background-image: none;
-    }
-
-    .sustain-hero-media {
-        @apply pointer-events-none absolute inset-0;
-    }
-
-    .sustain-hero-image {
-        @apply h-full w-full object-cover object-center;
-    }
-
-    .sustain-hero-overlay {
-        @apply absolute inset-0;
-        background:
-            linear-gradient(
-                100deg,
-                rgba(45, 74, 62, 0.96) 0%,
-                rgba(45, 74, 62, 0.9) 22%,
-                rgba(45, 74, 62, 0.72) 45%,
-                rgba(45, 74, 62, 0.45) 68%,
-                rgba(45, 74, 62, 0.22) 100%
-            ),
-            radial-gradient(ellipse 80% 70% at 0% 50%, rgba(45, 74, 62, 0.35), transparent 70%);
-    }
-
-    .sustain-hero-glow {
-        @apply pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-gold/70 to-transparent md:inset-x-16;
-    }
-
-    .sustain-hero-inner {
-        @apply relative z-10 flex min-h-[12rem] flex-col justify-center py-2 md:min-h-[14rem] md:py-6 lg:py-8;
-    }
-
-    .sustain-hero-grid {
-        @apply grid items-center gap-10 md:gap-12 lg:grid-cols-2 lg:gap-14 xl:gap-20;
-    }
-
-    .sustain-hero-copy {
-        @apply flex flex-col justify-center lg:max-w-[34rem] lg:pr-6;
-    }
-
-    .sustain-hero-aside {
-        @apply w-full lg:max-w-md lg:justify-self-end xl:max-w-lg;
-    }
-
-    .sustain-eyebrow {
-        @apply text-sm font-semibold uppercase tracking-widest text-gold;
-    }
-
     .sustain-eyebrow-dark {
         @apply text-sm font-semibold uppercase tracking-widest text-gold;
-    }
-
-    .sustain-hero-title {
-        @apply mt-3 font-serif text-4xl leading-[1.1] md:text-5xl lg:text-[3.25rem];
-    }
-
-    .sustain-hero-lead {
-        @apply mt-5 max-w-xl text-base leading-relaxed text-cream/88 md:mt-6 md:text-lg md:leading-relaxed;
-    }
-
-    .sustain-hero-ctas {
-        @apply mt-8 flex flex-wrap items-center gap-3 md:mt-10;
-    }
-
-    .sustain-hero-ctas .btn-primary {
-        @apply border-2 border-gold bg-transparent px-6 py-3 text-cream shadow-none hover:border-gold hover:bg-gold/15 hover:text-cream focus:ring-gold/40 focus:ring-offset-forest;
-    }
-
-    .btn-outline.sustain-btn-on-dark {
-        @apply border-cream/45 bg-transparent px-6 py-3 text-cream shadow-none hover:border-cream hover:bg-cream/10 hover:text-cream focus:ring-cream/35 focus:ring-offset-forest;
-    }
-
-    .sustain-hero-card {
-        @apply rounded-sm border border-cream/15 border-t-[3px] border-t-gold bg-cream/[0.08] p-6 shadow-[0_24px_48px_rgba(0,0,0,0.18)] backdrop-blur-md md:p-8;
-    }
-
-    .sustain-hero-card-eyebrow {
-        @apply text-xs font-semibold uppercase tracking-widest text-gold/90;
-    }
-
-    .sustain-hero-card-title {
-        @apply mt-2 font-serif text-xl leading-snug text-cream md:text-2xl;
-    }
-
-    .sustain-hero-stats {
-        @apply mt-7 grid gap-4 sm:grid-cols-3 sm:gap-3;
-    }
-
-    .sustain-hero-stat {
-        @apply flex flex-col items-start gap-3 rounded-sm border border-cream/10 bg-cream/[0.04] p-4 sm:items-center sm:p-3 sm:text-center;
-    }
-
-    .sustain-hero-stat-icon {
-        @apply flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-gold/30 bg-gold/10 text-gold;
-    }
-
-    .sustain-hero-stat-icon svg {
-        @apply h-5 w-5;
-    }
-
-    .sustain-hero-stat-text {
-        @apply flex min-w-0 flex-col gap-0.5;
-    }
-
-    .sustain-hero-stat-value {
-        @apply text-sm font-semibold text-cream;
-    }
-
-    .sustain-hero-stat-label {
-        @apply text-xs leading-snug text-cream/70;
-    }
-
-    @media (min-width: 640px) {
-        .sustain-hero-stat-text {
-            @apply items-center;
-        }
     }
 
     .sustain-section-header {

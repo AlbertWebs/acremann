@@ -33,13 +33,13 @@ class HomePageTest extends TestCase
         $response->assertSee('Nachu');
     }
 
-    public function test_home_page_shows_hero_video_play_button_without_vimeo_iframe(): void
+    public function test_classic_home_page_shows_hero_video_play_button_without_vimeo_iframe(): void
     {
         $this->seed(AcremannSeeder::class);
 
         config(['acremann.brand_video_url' => 'https://vimeo.com/1197477405']);
 
-        $response = $this->get('/');
+        $response = $this->get('/home-classic');
 
         $response->assertStatus(200);
         $response->assertSee('home-hero-play-btn', false);
@@ -47,7 +47,7 @@ class HomePageTest extends TestCase
         $response->assertDontSee('player.vimeo.com/video/1197477405', false);
     }
 
-    public function test_home_page_shows_hero_youtube_video_when_configured(): void
+    public function test_classic_home_page_shows_hero_youtube_video_when_configured(): void
     {
         $this->seed(AcremannSeeder::class);
 
@@ -60,11 +60,22 @@ class HomePageTest extends TestCase
             'hero_video_url' => 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
         ]);
 
-        $response = $this->get('/');
+        $response = $this->get('/home-classic');
 
         $response->assertStatus(200);
         $response->assertSee('youtube-nocookie.com/embed/dQw4w9WgXcQ', false);
         $response->assertSee('home-hero-video', false);
+    }
+
+    public function test_classic_home_page_loads_at_alternate_route(): void
+    {
+        $this->seed(AcremannSeeder::class);
+
+        $response = $this->get('/home-classic');
+
+        $response->assertOk();
+        $response->assertSee('Insights', false);
+        $response->assertDontSee('home-hero-full-width', false);
     }
 
     public function test_lead_form_submission(): void
