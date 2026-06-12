@@ -2,11 +2,15 @@
 
 namespace Tests\Unit;
 
+use App\Models\Plot;
+use App\Models\Property;
 use App\Support\PlotInventoryGenerator;
-use PHPUnit\Framework\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class PlotInventoryGeneratorTest extends TestCase
 {
+    use RefreshDatabase;
     public function test_generates_plots_with_status_counts_and_numbering(): void
     {
         $plots = PlotInventoryGenerator::generate(
@@ -71,5 +75,47 @@ class PlotInventoryGeneratorTest extends TestCase
         $this->assertSame('A-35', $plots[34]['plot_number']);
         $this->assertSame('A-38', $plots[37]['plot_number']);
         $this->assertSame('available', $plots[37]['status']);
+    }
+
+    public function test_replace_for_property_deletes_excess_plots(): void
+    {
+        $property = Property::create([
+            'title' => 'Test Estate',
+            'slug' => 'test-estate',
+            'status' => 'available',
+            'project_status' => 'selling',
+            'category' => 'residential',
+            'title_type' => 'freehold',
+            'listing_type' => 'sale',
+            'location' => 'Test',
+            'is_featured' => false,
+            'is_published' => true,
+            'sort_order' => 0,
+        ]);
+
+        foreach (range(1, 73) as $number) {
+            Plot::create([
+                'property_id' => $property->id,
+                'plot_number' => 'A'.str_pad((string) $number, 2, '0', STR_PAD_LEFT),
+                'status' => $number <= 38 ? 'sold' : 'available',
+                'size' => '50 x 100 ft',
+                'price' => 400000,
+            ]);
+        }
+
+        $counts = PlotInventoryGenerator::replaceForProperty(
+            property: $property,
+            total: 38,
+            sold: 35,
+            prefix: 'A',
+            defaultSize: '50 x 100 ft',
+            defaultPrice: '400000',
+        );
+
+        $this->assertNotNull($counts);
+        $this->assertSame(38, $property->plots()->count());
+        $this->assertSame(35, $property->plots()->where('status', 'sold')->count());
+        $this->assertSame(3, $property->plots()->where('status', 'available')->count());
+        $this->assertSame('A38', $property->plots()->orderByDesc('id')->value('plot_number'));
     }
 }

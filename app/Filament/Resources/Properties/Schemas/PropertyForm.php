@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Properties\Schemas;
 
 use App\Filament\Support\FormComponents;
+use App\Models\Property;
 use App\Support\PlotInventoryGenerator;
 use App\Support\PropertyFormData;
 use App\Support\PropertyFormOptions;
@@ -194,8 +195,10 @@ class PropertyForm
                         ->dehydrated(false),
                     TextInput::make('plot_generator_prefix')
                         ->label('Plot number prefix')
-                        ->placeholder('A-')
+                        ->placeholder('A')
+                        ->default('A')
                         ->maxLength(20)
+                        ->helperText('e.g. A gives A01, A02 on the website.')
                         ->dehydrated(false),
                     TextInput::make('plot_generator_start')
                         ->label('Start at')
@@ -222,15 +225,25 @@ class PropertyForm
                     Action::make('generatePlotInventory')
                         ->label('Generate plot inventory')
                         ->icon(Heroicon::OutlinedSquaresPlus)
+                        ->visible(fn (?Property $record): bool => $record?->exists ?? false)
                         ->requiresConfirmation(fn (Get $get): bool => count($get('plots') ?? []) > 0)
                         ->modalHeading('Replace plot inventory?')
-                        ->modalDescription('This replaces every plot in the list below with a freshly generated inventory. Existing plot rows are removed when you save.')
+                        ->modalDescription('This deletes all existing plots for this property and creates a new inventory immediately on the live website.')
                         ->modalSubmitActionLabel('Generate')
-                        ->action(function (Get $get, Set $set): void {
+                        ->action(function (Get $get, Set $set, Property $record): void {
                             $total = max(0, (int) ($get('plot_generator_total') ?? 0));
                             $sold = max(0, (int) ($get('plot_generator_sold') ?? 0));
                             $reserved = max(0, (int) ($get('plot_generator_reserved') ?? 0));
-                            $counts = PlotInventoryGenerator::resolveCounts($total, $sold, $reserved);
+                            $counts = PlotInventoryGenerator::replaceForProperty(
+                                property: $record,
+                                total: $total,
+                                sold: $sold,
+                                reserved: $reserved,
+                                prefix: (string) ($get('plot_generator_prefix') ?? 'A'),
+                                startNumber: max(1, (int) ($get('plot_generator_start') ?? 1)),
+                                defaultSize: filled($get('plot_generator_size')) ? (string) $get('plot_generator_size') : null,
+                                defaultPrice: filled($get('plot_generator_price')) ? (string) $get('plot_generator_price') : null,
+                            );
 
                             if ($counts === null) {
                                 Notification::make()
@@ -244,27 +257,12 @@ class PropertyForm
                                 return;
                             }
 
-                            $prefix = (string) ($get('plot_generator_prefix') ?? '');
-                            $startNumber = max(1, (int) ($get('plot_generator_start') ?? 1));
-                            $padLength = PlotInventoryGenerator::padLengthForTotal($counts['total'], $startNumber, $prefix);
-
-                            $plots = PlotInventoryGenerator::generate(
-                                available: $counts['available'],
-                                sold: $counts['sold'],
-                                reserved: $counts['reserved'],
-                                prefix: $prefix,
-                                startNumber: $startNumber,
-                                padLength: $padLength,
-                                defaultSize: filled($get('plot_generator_size')) ? (string) $get('plot_generator_size') : null,
-                                defaultPrice: filled($get('plot_generator_price')) ? (string) $get('plot_generator_price') : null,
-                            );
-
-                            $set('plots', $plots);
+                            $set('plots', PlotInventoryGenerator::formStateForProperty($record));
 
                             Notification::make()
-                                ->title('Plot inventory generated')
+                                ->title('Plot inventory saved')
                                 ->body(sprintf(
-                                    'Created %d plots (%d sold, %d reserved, %d available). Review the list below, then save.',
+                                    'Replaced with %d plots (%d sold, %d reserved, %d available). The public page is updated.',
                                     $counts['total'],
                                     $counts['sold'],
                                     $counts['reserved'],
