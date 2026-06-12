@@ -4,19 +4,17 @@
     $metaDescription = 'Practical guides on buying land in Kenya, clean title deeds, diaspora purchases, and investment perspective from the Acremann team.';
 @endphp
 @section('content')
-<section class="insights-index-hero section-padding">
-    <div class="container-site">
-        <p class="events-eyebrow">Land &amp; Legacy Fridays</p>
-        <h1 class="events-index-title">Insights &amp; blog</h1>
-        <p class="events-index-lead">
-            Practical guides on buying land in Kenya, title diligence, diaspora purchases, and investment perspective from the Acremann team.
-        </p>
-        <nav class="insights-index-nav" aria-label="Insights and events">
-            <a href="{{ route('posts.index') }}" class="insights-index-nav-link insights-index-nav-link--active" aria-current="page">Insights</a>
-            <a href="{{ route('events.index') }}" class="insights-index-nav-link">Events</a>
-        </nav>
-    </div>
-</section>
+<x-page-hero-image
+    eyebrow="Land &amp; Legacy Fridays"
+    title="Insights &amp; blog"
+    lead="Practical guides on buying land in Kenya, title diligence, diaspora purchases, and investment perspective from the Acremann team."
+    heading-id="insights-hero-heading"
+>
+    <nav class="insights-index-nav" aria-label="Insights and events">
+        <a href="{{ route('posts.index') }}" class="insights-index-nav-link insights-index-nav-link--active" aria-current="page">Insights</a>
+        <a href="{{ route('events.index') }}" class="insights-index-nav-link">Events</a>
+    </nav>
+</x-page-hero-image>
 
 <section class="insights-index-list section-padding" aria-label="Articles">
     <div class="container-site">

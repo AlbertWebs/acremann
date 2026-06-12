@@ -50,77 +50,73 @@
     ];
 @endphp
 @section('content')
-{{-- Hero --}}
-<section class="invest-hero section-padding" aria-labelledby="invest-hero-heading">
-    <div class="container-site">
-        <div class="invest-hero-grid">
-            <div class="invest-hero-copy">
-                <p class="invest-eyebrow">{{ $page?->subtitle ?? 'Investment advisory' }}</p>
-                <h1 id="invest-hero-heading" class="invest-hero-title">{{ $page?->title ?? 'Invest in Kenya land with confidence' }}</h1>
-                <p class="invest-hero-lead">{{ $settings->investmentIntro() }}</p>
-
-                <div class="invest-hero-ctas">
-                    <a href="{{ route('properties.index') }}" class="btn-primary">Explore properties</a>
-                    <a href="#advisory" class="btn-outline invest-btn-on-dark">Speak to an advisor</a>
-                    <a href="{{ $settings->whatsappUrl($waInvest) }}" target="_blank" rel="noopener noreferrer" class="btn-outline invest-btn-on-dark inline-flex items-center gap-2" data-track="whatsapp_click">
-                        <x-icon-whatsapp class="h-5 w-5 shrink-0" />
-                        WhatsApp
-                    </a>
-                </div>
-
-                <ul class="invest-trust-list" role="list">
-                    @foreach($trustSignals as $signal)
-                        <li class="invest-trust-item">
-                            <span class="invest-trust-label">{{ $signal['label'] }}</span>
-                            <span class="invest-trust-detail">{{ $signal['detail'] }}</span>
-                        </li>
-                    @endforeach
-                </ul>
-            </div>
-
-            <div class="invest-hero-panel" aria-label="Quick actions">
-                <div class="invest-hero-panel-card">
-                    <h2 class="invest-panel-title">Start your investment journey</h2>
-                    <p class="invest-panel-lead">Typical buyers hear back within one business day.</p>
-                    <ul class="invest-panel-actions">
-                        <li>
-                            <a href="{{ route('book-visit') }}" class="invest-panel-link group">
-                                <span class="invest-panel-link-text">
-                                    <span class="invest-panel-link-label">Book a site visit</span>
-                                    <span class="invest-panel-link-hint">On-ground or virtual walkthrough</span>
-                                </span>
-                                <svg class="invest-panel-link-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#advisory" class="invest-panel-link group">
-                                <span class="invest-panel-link-text">
-                                    <span class="invest-panel-link-label">Request investment brief</span>
-                                    <span class="invest-panel-link-hint">Shortlist aligned to your budget</span>
-                                </span>
-                                <svg class="invest-panel-link-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('certifications') }}" class="invest-panel-link group">
-                                <span class="invest-panel-link-text">
-                                    <span class="invest-panel-link-label">Review our credentials</span>
-                                    <span class="invest-panel-link-hint">Legal precision & affiliations</span>
-                                </span>
-                                <svg class="invest-panel-link-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
-                            </a>
-                        </li>
-                    </ul>
-                    @if($settings->phone)
-                        <p class="invest-panel-phone">
-                            Or call <a href="tel:{{ $settings->phone }}" class="invest-panel-phone-link" data-track="call_click">{{ $settings->phone }}</a>
-                        </p>
-                    @endif
-                </div>
-            </div>
-        </div>
+<x-page-hero-image
+    class="page-hero-image--overlay-dark"
+    :eyebrow="$page?->subtitle ?? 'Investment advisory'"
+    :title="$page?->title ?? 'Invest in Kenya land with confidence'"
+    :lead="$settings->investmentIntro()"
+    heading-id="invest-hero-heading"
+    aside-label="Quick actions"
+>
+    <div class="page-hero-actions">
+        <a href="{{ route('properties.index') }}" class="btn-primary page-hero-btn-primary">Explore properties</a>
+        <a href="#advisory" class="btn-outline page-hero-btn-outline">Speak to an advisor</a>
+        <a href="{{ $settings->whatsappUrl($waInvest) }}" target="_blank" rel="noopener noreferrer" class="btn-outline page-hero-btn-outline inline-flex items-center gap-2" data-track="whatsapp_click">
+            <x-icon-whatsapp class="h-5 w-5 shrink-0" />
+            WhatsApp
+        </a>
     </div>
-</section>
+
+    <ul class="invest-trust-list" role="list">
+        @foreach($trustSignals as $signal)
+            <li class="invest-trust-item">
+                <span class="invest-trust-label">{{ $signal['label'] }}</span>
+                <span class="invest-trust-detail">{{ $signal['detail'] }}</span>
+            </li>
+        @endforeach
+    </ul>
+
+    <x-slot:aside>
+        <div class="invest-hero-panel-card">
+            <h2 class="invest-panel-title">Start your investment journey</h2>
+            <p class="invest-panel-lead">Typical buyers hear back within one business day.</p>
+            <ul class="invest-panel-actions">
+                <li>
+                    <a href="{{ route('book-visit') }}" class="invest-panel-link group">
+                        <span class="invest-panel-link-text">
+                            <span class="invest-panel-link-label">Book a site visit</span>
+                            <span class="invest-panel-link-hint">On-ground or virtual walkthrough</span>
+                        </span>
+                        <svg class="invest-panel-link-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="#advisory" class="invest-panel-link group">
+                        <span class="invest-panel-link-text">
+                            <span class="invest-panel-link-label">Request investment brief</span>
+                            <span class="invest-panel-link-hint">Shortlist aligned to your budget</span>
+                        </span>
+                        <svg class="invest-panel-link-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('certifications') }}" class="invest-panel-link group">
+                        <span class="invest-panel-link-text">
+                            <span class="invest-panel-link-label">Review our credentials</span>
+                            <span class="invest-panel-link-hint">Legal precision & affiliations</span>
+                        </span>
+                        <svg class="invest-panel-link-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+                    </a>
+                </li>
+            </ul>
+            @if($settings->phone)
+                <p class="invest-panel-phone">
+                    Or call <a href="tel:{{ $settings->phone }}" class="invest-panel-phone-link" data-track="call_click">{{ $settings->phone }}</a>
+                </p>
+            @endif
+        </div>
+    </x-slot:aside>
+</x-page-hero-image>
 
 {{-- Who we serve --}}
 <section class="invest-audiences-section section-padding" aria-labelledby="invest-audiences-heading">

@@ -16,12 +16,12 @@ class SustainabilityPageTest extends TestCase
         $response = $this->get('/sustainability');
 
         $response->assertStatus(200);
-        $response->assertSee('page-hero', false);
+        $response->assertSee('page-hero-image', false);
+        $response->assertSee('APL105.jpg', false);
         $response->assertSee('Land investment for future generations', false);
         $response->assertSee('Responsible land use, green open spaces', false);
         $response->assertSee('community tree planting', false);
-        $response->assertDontSee('sustain-hero-image', false);
-        $response->assertDontSee('APL105.jpg', false);
+        $response->assertSee('Built into every project', false);
         $response->assertDontSee('<p>Responsible land use', false);
         $response->assertDontSee('<p>We invest in community', false);
     }

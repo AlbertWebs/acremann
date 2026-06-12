@@ -4,13 +4,12 @@
     $metaDescription = 'Photo galleries from Acremann open days, site visits, and community events across Nairobi, Kiambu, Kikuyu and Nachu.';
 @endphp
 @section('content')
-<section class="events-index-hero section-padding">
-    <div class="container-site">
-        <p class="events-eyebrow">Insights &amp; events</p>
-        <h1 class="events-index-title">Events</h1>
-        <p class="events-index-lead">Browse photo galleries from site visits, launches, and community moments with Acremann.</p>
-    </div>
-</section>
+<x-page-hero-image
+    eyebrow="Insights &amp; events"
+    title="Events"
+    lead="Browse photo galleries from site visits, launches, and community moments with Acremann."
+    heading-id="events-hero-heading"
+/>
 
 <section class="events-list-section section-padding" aria-label="Event galleries">
     <div class="container-site">

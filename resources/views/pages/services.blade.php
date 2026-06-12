@@ -4,15 +4,12 @@
     $metaDescription = 'Professional real estate services in Nairobi, Kiambu, Kikuyu and Nachu — land sales, investment advisory, conveyancing, and diaspora-friendly remote purchase support.';
 @endphp
 @section('content')
-<section class="services-hero section-padding" aria-labelledby="services-hero-heading">
-    <div class="container-site">
-        <div class="services-hero-inner">
-            <p class="services-eyebrow">{{ $settings->servicesPageEyebrow() }}</p>
-            <h1 id="services-hero-heading" class="services-hero-title">{{ $settings->servicesPageHeadline() }}</h1>
-            <p class="services-hero-lead">{{ $settings->servicesPageLead() }}</p>
-        </div>
-    </div>
-</section>
+<x-page-hero-image
+    :eyebrow="$settings->servicesPageEyebrow()"
+    :title="$settings->servicesPageHeadline()"
+    :lead="$settings->servicesPageLead()"
+    heading-id="services-hero-heading"
+/>
 
 <section class="services-list-section section-padding bg-white" aria-labelledby="services-list-heading">
     <div class="container-site">

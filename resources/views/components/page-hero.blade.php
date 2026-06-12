@@ -6,7 +6,7 @@
 ])
 
 <section
-    {{ $attributes->class(['page-hero section-padding']) }}
+    {{ $attributes->class(['page-hero page-hero--solid section-padding']) }}
     @if($headingId) aria-labelledby="{{ $headingId }}" @endif
 >
     <div class="container-site">

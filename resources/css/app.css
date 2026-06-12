@@ -1335,8 +1335,8 @@
         @apply mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-gold transition hover:text-cream;
     }
 
-    /* Shared interior page hero (services, insights, events, sustainability) */
-    .page-hero {
+    /* Shared interior page hero copy (solid + image variants) */
+    .page-hero--solid {
         @apply relative z-0 overflow-hidden bg-forest text-cream pt-24 md:pt-28;
         background-image:
             radial-gradient(ellipse 65% 50% at 0% 0%, rgba(184, 149, 107, 0.16), transparent 55%),
@@ -1373,6 +1373,116 @@
 
     .page-hero-btn-outline {
         @apply border-cream/45 bg-transparent px-6 py-3 text-cream shadow-none hover:border-cream hover:bg-cream/10 hover:text-cream focus:ring-cream/35 focus:ring-offset-forest;
+    }
+
+    /* Photo background hero (sustainability, services, insights, events) */
+    .page-hero-image {
+        @apply relative z-0 overflow-hidden border-b border-charcoal/10 bg-forest text-cream;
+    }
+
+    .page-hero-image-media {
+        @apply pointer-events-none absolute inset-0;
+    }
+
+    .page-hero-image-photo {
+        @apply h-full w-full object-cover object-center;
+    }
+
+    .page-hero-image-overlay {
+        @apply absolute inset-0;
+        background:
+            linear-gradient(
+                100deg,
+                rgba(45, 74, 62, 0.96) 0%,
+                rgba(45, 74, 62, 0.9) 22%,
+                rgba(45, 74, 62, 0.72) 45%,
+                rgba(45, 74, 62, 0.45) 68%,
+                rgba(45, 74, 62, 0.22) 100%
+            ),
+            radial-gradient(ellipse 80% 70% at 0% 50%, rgba(45, 74, 62, 0.35), transparent 70%);
+    }
+
+    .page-hero-image--overlay-dark .page-hero-image-overlay {
+        background:
+            linear-gradient(
+                100deg,
+                rgba(30, 52, 43, 0.98) 0%,
+                rgba(30, 52, 43, 0.94) 22%,
+                rgba(30, 52, 43, 0.82) 45%,
+                rgba(30, 52, 43, 0.58) 68%,
+                rgba(30, 52, 43, 0.34) 100%
+            ),
+            radial-gradient(ellipse 80% 70% at 0% 50%, rgba(30, 52, 43, 0.48), transparent 70%);
+    }
+
+    .page-hero-image-glow {
+        @apply pointer-events-none absolute inset-x-8 top-0 z-10 h-px bg-gradient-to-r from-transparent via-gold/70 to-transparent md:inset-x-16;
+    }
+
+    .page-hero-image-inner {
+        @apply relative z-10 flex min-h-[18rem] flex-col justify-center py-2 md:min-h-[22rem] md:py-6 lg:min-h-[24rem] lg:py-8;
+    }
+
+    .page-hero-image-layout {
+        @apply max-w-3xl;
+    }
+
+    .page-hero-image-layout--with-aside {
+        @apply grid max-w-none items-center gap-10 md:gap-12 lg:grid-cols-2 lg:gap-14 xl:gap-20;
+    }
+
+    .page-hero-image-copy {
+        @apply flex flex-col justify-center lg:max-w-[34rem] lg:pr-6;
+    }
+
+    .page-hero-image-aside {
+        @apply w-full lg:max-w-md lg:justify-self-end xl:max-w-lg;
+    }
+
+    .page-hero-image-card {
+        @apply rounded-sm border border-cream/15 border-t-[3px] border-t-gold bg-cream/[0.08] p-6 shadow-[0_24px_48px_rgba(0,0,0,0.18)] backdrop-blur-md md:p-8;
+    }
+
+    .page-hero-image-card-eyebrow {
+        @apply text-xs font-semibold uppercase tracking-widest text-gold/90;
+    }
+
+    .page-hero-image-card-title {
+        @apply mt-2 font-serif text-xl leading-snug text-cream md:text-2xl;
+    }
+
+    .page-hero-image-stats {
+        @apply mt-7 grid gap-4 sm:grid-cols-3 sm:gap-3;
+    }
+
+    .page-hero-image-stat {
+        @apply flex flex-col items-start gap-3 rounded-sm border border-cream/10 bg-cream/[0.04] p-4 sm:items-center sm:p-3 sm:text-center;
+    }
+
+    .page-hero-image-stat-icon {
+        @apply flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-gold/30 bg-gold/10 text-gold;
+    }
+
+    .page-hero-image-stat-icon svg {
+        @apply h-5 w-5;
+    }
+
+    .page-hero-image-stat-text {
+        @apply flex min-w-0 flex-col gap-0.5;
+    }
+
+    .page-hero-image-stat-value {
+        @apply text-sm font-semibold text-cream;
+    }
+
+    .page-hero-image-stat-label {
+        @apply text-xs leading-snug text-cream/70;
+    }
+
+    @media (min-width: 640px) {
+        .page-hero-image-stat-text {
+            @apply items-center;
+        }
     }
 
     /* Services pages */
