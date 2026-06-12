@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Properties;
 
 use App\Filament\Resources\Properties\Pages\CreateProperty;
 use App\Filament\Resources\Properties\Pages\EditProperty;
+use App\Filament\Resources\Properties\RelationManagers\PlotsRelationManager;
 use App\Filament\Resources\Properties\Pages\ListFeaturedProperties;
 use App\Filament\Resources\Properties\Pages\ListProperties;
 use App\Filament\Resources\Properties\Pages\ViewProperty;
@@ -43,7 +44,7 @@ class PropertyResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            PlotsRelationManager::class,
         ];
     }
 

@@ -10,7 +10,6 @@ use App\Support\PropertyFormOptions;
 use Filament\Actions\Action;
 use Filament\Notifications\Notification;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -233,11 +232,11 @@ class PropertyForm
                         ->label('Generate plot inventory')
                         ->icon(Heroicon::OutlinedSquaresPlus)
                         ->visible(fn (?Property $record): bool => $record?->exists ?? false)
-                        ->requiresConfirmation(fn (Get $get): bool => count($get('plots') ?? []) > 0)
+                        ->requiresConfirmation(fn (Property $record): bool => $record->plots()->exists())
                         ->modalHeading('Replace plot inventory?')
                         ->modalDescription('This deletes all existing plots for this property and creates a new inventory immediately on the live website.')
                         ->modalSubmitActionLabel('Generate')
-                        ->action(function (Get $get, Set $set, Property $record): void {
+                        ->action(function (Get $get, Property $record): void {
                             $total = max(0, (int) ($get('plot_generator_total') ?? 0));
                             $sold = max(0, (int) ($get('plot_generator_sold') ?? 0));
                             $reserved = max(0, (int) ($get('plot_generator_reserved') ?? 0));
@@ -275,8 +274,6 @@ class PropertyForm
                                 return;
                             }
 
-                            $set('plots', PlotInventoryGenerator::formStateForProperty($record));
-
                             Notification::make()
                                 ->title('Plot inventory saved')
                                 ->body(sprintf(
@@ -291,40 +288,7 @@ class PropertyForm
                         }),
                 ])
                 ->columnSpanFull(),
-            Section::make('Plot inventory')
-                ->description('Add each plot and set its status. The public property page shows how many are sold and how many remain. When every plot is sold, visitors see “Sold out”.')
-                ->schema([
-                    Repeater::make('plots')
-                        ->relationship('plots')
-                        ->schema([
-                            TextInput::make('plot_number')
-                                ->label('Plot #')
-                                ->required()
-                                ->maxLength(50)
-                                ->placeholder('A-01'),
-                            Select::make('status')
-                                ->options(PropertyFormOptions::plotStatuses())
-                                ->required()
-                                ->default('available')
-                                ->native(false),
-                            TextInput::make('size')
-                                ->label('Size')
-                                ->placeholder('50 x 100 ft')
-                                ->maxLength(120),
-                            TextInput::make('price')
-                                ->numeric()
-                                ->prefix('KES')
-                                ->placeholder('850000'),
-                        ])
-                        ->columns(4)
-                        ->addActionLabel('Add plot')
-                        ->reorderable()
-                        ->collapsible()
-                        ->itemLabel(fn (array $state): ?string => filled($state['plot_number'] ?? null)
-                            ? ($state['plot_number'].' · '.ucfirst((string) ($state['status'] ?? 'available')))
-                            : null)
-                        ->columnSpanFull(),
-                ])
+            View::make('filament.properties.plots-summary')
                 ->columnSpanFull(),
         ];
     }
