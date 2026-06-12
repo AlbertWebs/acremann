@@ -193,6 +193,13 @@ class PropertyForm
                         ->default(0)
                         ->helperText('Optional. The rest are marked available.')
                         ->dehydrated(false),
+                    TextInput::make('plot_generator_only_available')
+                        ->label('Only this plot available')
+                        ->placeholder('A04')
+                        ->maxLength(50)
+                        ->helperText('Optional. Marks one plot available and all others sold — e.g. A04 when only Plot 4 is left.')
+                        ->dehydrated(false)
+                        ->columnSpanFull(),
                     TextInput::make('plot_generator_prefix')
                         ->label('Plot number prefix')
                         ->placeholder('A')
@@ -234,6 +241,10 @@ class PropertyForm
                             $total = max(0, (int) ($get('plot_generator_total') ?? 0));
                             $sold = max(0, (int) ($get('plot_generator_sold') ?? 0));
                             $reserved = max(0, (int) ($get('plot_generator_reserved') ?? 0));
+                            $onlyAvailable = filled($get('plot_generator_only_available'))
+                                ? (string) $get('plot_generator_only_available')
+                                : null;
+
                             $counts = PlotInventoryGenerator::replaceForProperty(
                                 property: $record,
                                 total: $total,
@@ -243,14 +254,21 @@ class PropertyForm
                                 startNumber: max(1, (int) ($get('plot_generator_start') ?? 1)),
                                 defaultSize: filled($get('plot_generator_size')) ? (string) $get('plot_generator_size') : null,
                                 defaultPrice: filled($get('plot_generator_price')) ? (string) $get('plot_generator_price') : null,
+                                onlyAvailablePlot: $onlyAvailable,
                             );
 
                             if ($counts === null) {
                                 Notification::make()
-                                    ->title($total === 0 ? 'Enter total plots' : 'Counts do not add up')
-                                    ->body($total === 0
-                                        ? 'Set the total number of plots — for example 38 total with 35 sold.'
-                                        : sprintf('Sold (%d) and reserved (%d) cannot exceed total plots (%d).', $sold, $reserved, $total))
+                                    ->title(match (true) {
+                                        $total === 0 => 'Enter total plots',
+                                        $onlyAvailable !== null => 'Could not set only-available plot',
+                                        default => 'Counts do not add up',
+                                    })
+                                    ->body(match (true) {
+                                        $total === 0 => 'Set the total number of plots — for example 38 total with 35 sold.',
+                                        $onlyAvailable !== null => sprintf('Plot "%s" was not found. Check the prefix and total — e.g. total 38, prefix A, only available A04.', $onlyAvailable),
+                                        default => sprintf('Sold (%d) and reserved (%d) cannot exceed total plots (%d).', $sold, $reserved, $total),
+                                    })
                                     ->warning()
                                     ->send();
 
