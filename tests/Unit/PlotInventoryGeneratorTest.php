@@ -31,9 +31,45 @@ class PlotInventoryGeneratorTest extends TestCase
         ], $plots);
     }
 
-    public function test_total_sums_status_counts(): void
+    public function test_resolve_counts_from_total_sold_and_reserved(): void
     {
-        $this->assertSame(73, PlotInventoryGenerator::total(38, 35));
-        $this->assertSame(75, PlotInventoryGenerator::total(38, 35, 2));
+        $this->assertSame([
+            'total' => 38,
+            'sold' => 35,
+            'reserved' => 0,
+            'available' => 3,
+        ], PlotInventoryGenerator::resolveCounts(38, 35));
+
+        $this->assertSame([
+            'total' => 38,
+            'sold' => 35,
+            'reserved' => 2,
+            'available' => 1,
+        ], PlotInventoryGenerator::resolveCounts(38, 35, 2));
+
+        $this->assertNull(PlotInventoryGenerator::resolveCounts(0, 0));
+        $this->assertNull(PlotInventoryGenerator::resolveCounts(38, 30, 10));
+    }
+
+    public function test_generates_thirty_eight_plots_for_thirty_five_sold_out_of_thirty_eight(): void
+    {
+        $counts = PlotInventoryGenerator::resolveCounts(38, 35);
+        $this->assertNotNull($counts);
+
+        $plots = PlotInventoryGenerator::generate(
+            available: $counts['available'],
+            sold: $counts['sold'],
+            reserved: $counts['reserved'],
+            prefix: 'A-',
+            startNumber: 1,
+            padLength: PlotInventoryGenerator::padLengthForTotal($counts['total'], 1, 'A-'),
+        );
+
+        $this->assertCount(38, $plots);
+        $this->assertSame('A-01', $plots[0]['plot_number']);
+        $this->assertSame('sold', $plots[34]['status']);
+        $this->assertSame('A-35', $plots[34]['plot_number']);
+        $this->assertSame('A-38', $plots[37]['plot_number']);
+        $this->assertSame('available', $plots[37]['status']);
     }
 }

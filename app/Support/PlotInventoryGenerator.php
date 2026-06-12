@@ -46,8 +46,39 @@ class PlotInventoryGenerator
         return $prefix.$formatted;
     }
 
-    public static function total(int $available, int $sold, int $reserved = 0): int
+    /**
+     * @return array{total: int, sold: int, reserved: int, available: int}|null
+     */
+    public static function resolveCounts(int $total, int $sold, int $reserved = 0): ?array
     {
-        return max(0, $available) + max(0, $sold) + max(0, $reserved);
+        $total = max(0, $total);
+        $sold = max(0, $sold);
+        $reserved = max(0, $reserved);
+
+        if ($total === 0) {
+            return null;
+        }
+
+        if ($sold + $reserved > $total) {
+            return null;
+        }
+
+        return [
+            'total' => $total,
+            'sold' => $sold,
+            'reserved' => $reserved,
+            'available' => $total - $sold - $reserved,
+        ];
+    }
+
+    public static function padLengthForTotal(int $total, int $startNumber, string $prefix): int
+    {
+        if ($prefix === '') {
+            return 0;
+        }
+
+        $highestNumber = max(1, $startNumber + max(0, $total) - 1);
+
+        return max(2, strlen((string) $highestNumber));
     }
 }

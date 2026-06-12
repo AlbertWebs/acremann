@@ -166,27 +166,31 @@ class PropertyForm
     {
         return [
             Section::make('Quick generate')
-                ->description('Enter how many plots are available, sold, and optionally reserved. We number them sequentially (sold first, then reserved, then available) and fill the inventory below. Save the property to persist.')
+                ->description('Enter the total number of plots in the development, then how many are sold or reserved. Remaining plots are marked available automatically — e.g. 38 total with 35 sold creates 38 plots (A-01 to A-38), not 73.')
                 ->icon(Heroicon::OutlinedSparkles)
                 ->collapsed()
                 ->schema([
-                    TextInput::make('plot_generator_available')
-                        ->label('Available')
+                    TextInput::make('plot_generator_total')
+                        ->label('Total plots')
                         ->numeric()
-                        ->minValue(0)
-                        ->default(0)
+                        ->minValue(1)
+                        ->placeholder('38')
+                        ->helperText('Total plots in this development.')
                         ->dehydrated(false),
                     TextInput::make('plot_generator_sold')
                         ->label('Sold')
                         ->numeric()
                         ->minValue(0)
                         ->default(0)
+                        ->placeholder('35')
+                        ->helperText('How many of those are already sold.')
                         ->dehydrated(false),
                     TextInput::make('plot_generator_reserved')
                         ->label('Reserved')
                         ->numeric()
                         ->minValue(0)
                         ->default(0)
+                        ->helperText('Optional. The rest are marked available.')
                         ->dehydrated(false),
                     TextInput::make('plot_generator_prefix')
                         ->label('Plot number prefix')
@@ -223,15 +227,17 @@ class PropertyForm
                         ->modalDescription('This replaces every plot in the list below with a freshly generated inventory. Existing plot rows are removed when you save.')
                         ->modalSubmitActionLabel('Generate')
                         ->action(function (Get $get, Set $set): void {
-                            $available = max(0, (int) ($get('plot_generator_available') ?? 0));
+                            $total = max(0, (int) ($get('plot_generator_total') ?? 0));
                             $sold = max(0, (int) ($get('plot_generator_sold') ?? 0));
                             $reserved = max(0, (int) ($get('plot_generator_reserved') ?? 0));
-                            $total = PlotInventoryGenerator::total($available, $sold, $reserved);
+                            $counts = PlotInventoryGenerator::resolveCounts($total, $sold, $reserved);
 
-                            if ($total === 0) {
+                            if ($counts === null) {
                                 Notification::make()
-                                    ->title('Enter at least one plot')
-                                    ->body('Set available, sold, or reserved counts above — for example 38 available and 35 sold.')
+                                    ->title($total === 0 ? 'Enter total plots' : 'Counts do not add up')
+                                    ->body($total === 0
+                                        ? 'Set the total number of plots — for example 38 total with 35 sold.'
+                                        : sprintf('Sold (%d) and reserved (%d) cannot exceed total plots (%d).', $sold, $reserved, $total))
                                     ->warning()
                                     ->send();
 
@@ -239,14 +245,15 @@ class PropertyForm
                             }
 
                             $prefix = (string) ($get('plot_generator_prefix') ?? '');
-                            $padLength = $prefix !== '' ? 2 : 0;
+                            $startNumber = max(1, (int) ($get('plot_generator_start') ?? 1));
+                            $padLength = PlotInventoryGenerator::padLengthForTotal($counts['total'], $startNumber, $prefix);
 
                             $plots = PlotInventoryGenerator::generate(
-                                available: $available,
-                                sold: $sold,
-                                reserved: $reserved,
+                                available: $counts['available'],
+                                sold: $counts['sold'],
+                                reserved: $counts['reserved'],
                                 prefix: $prefix,
-                                startNumber: max(1, (int) ($get('plot_generator_start') ?? 1)),
+                                startNumber: $startNumber,
                                 padLength: $padLength,
                                 defaultSize: filled($get('plot_generator_size')) ? (string) $get('plot_generator_size') : null,
                                 defaultPrice: filled($get('plot_generator_price')) ? (string) $get('plot_generator_price') : null,
@@ -258,10 +265,10 @@ class PropertyForm
                                 ->title('Plot inventory generated')
                                 ->body(sprintf(
                                     'Created %d plots (%d sold, %d reserved, %d available). Review the list below, then save.',
-                                    $total,
-                                    $sold,
-                                    $reserved,
-                                    $available,
+                                    $counts['total'],
+                                    $counts['sold'],
+                                    $counts['reserved'],
+                                    $counts['available'],
                                 ))
                                 ->success()
                                 ->send();
