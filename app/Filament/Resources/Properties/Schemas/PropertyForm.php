@@ -3,9 +3,11 @@
 namespace App\Filament\Resources\Properties\Schemas;
 
 use App\Filament\Support\FormComponents;
+use App\Support\PlotInventoryGenerator;
 use App\Support\PropertyFormData;
 use App\Support\PropertyFormOptions;
 use Filament\Actions\Action;
+use Filament\Notifications\Notification;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
@@ -163,6 +165,109 @@ class PropertyForm
     protected static function plotsTab(): array
     {
         return [
+            Section::make('Quick generate')
+                ->description('Enter how many plots are available, sold, and optionally reserved. We number them sequentially (sold first, then reserved, then available) and fill the inventory below. Save the property to persist.')
+                ->icon(Heroicon::OutlinedSparkles)
+                ->collapsed()
+                ->schema([
+                    TextInput::make('plot_generator_available')
+                        ->label('Available')
+                        ->numeric()
+                        ->minValue(0)
+                        ->default(0)
+                        ->dehydrated(false),
+                    TextInput::make('plot_generator_sold')
+                        ->label('Sold')
+                        ->numeric()
+                        ->minValue(0)
+                        ->default(0)
+                        ->dehydrated(false),
+                    TextInput::make('plot_generator_reserved')
+                        ->label('Reserved')
+                        ->numeric()
+                        ->minValue(0)
+                        ->default(0)
+                        ->dehydrated(false),
+                    TextInput::make('plot_generator_prefix')
+                        ->label('Plot number prefix')
+                        ->placeholder('A-')
+                        ->maxLength(20)
+                        ->dehydrated(false),
+                    TextInput::make('plot_generator_start')
+                        ->label('Start at')
+                        ->numeric()
+                        ->minValue(1)
+                        ->default(1)
+                        ->dehydrated(false),
+                    TextInput::make('plot_generator_size')
+                        ->label('Default size')
+                        ->placeholder('50 x 100 ft')
+                        ->maxLength(120)
+                        ->default(fn (Get $get): ?string => filled($get('plot_size')) ? (string) $get('plot_size') : null)
+                        ->dehydrated(false),
+                    TextInput::make('plot_generator_price')
+                        ->label('Default price')
+                        ->numeric()
+                        ->prefix('KES')
+                        ->default(fn (Get $get): mixed => $get('price_from'))
+                        ->dehydrated(false)
+                        ->columnSpanFull(),
+                ])
+                ->columns(3)
+                ->footerActions([
+                    Action::make('generatePlotInventory')
+                        ->label('Generate plot inventory')
+                        ->icon(Heroicon::OutlinedSquaresPlus)
+                        ->requiresConfirmation(fn (Get $get): bool => count($get('plots') ?? []) > 0)
+                        ->modalHeading('Replace plot inventory?')
+                        ->modalDescription('This replaces every plot in the list below with a freshly generated inventory. Existing plot rows are removed when you save.')
+                        ->modalSubmitActionLabel('Generate')
+                        ->action(function (Get $get, Set $set): void {
+                            $available = max(0, (int) ($get('plot_generator_available') ?? 0));
+                            $sold = max(0, (int) ($get('plot_generator_sold') ?? 0));
+                            $reserved = max(0, (int) ($get('plot_generator_reserved') ?? 0));
+                            $total = PlotInventoryGenerator::total($available, $sold, $reserved);
+
+                            if ($total === 0) {
+                                Notification::make()
+                                    ->title('Enter at least one plot')
+                                    ->body('Set available, sold, or reserved counts above — for example 38 available and 35 sold.')
+                                    ->warning()
+                                    ->send();
+
+                                return;
+                            }
+
+                            $prefix = (string) ($get('plot_generator_prefix') ?? '');
+                            $padLength = $prefix !== '' ? 2 : 0;
+
+                            $plots = PlotInventoryGenerator::generate(
+                                available: $available,
+                                sold: $sold,
+                                reserved: $reserved,
+                                prefix: $prefix,
+                                startNumber: max(1, (int) ($get('plot_generator_start') ?? 1)),
+                                padLength: $padLength,
+                                defaultSize: filled($get('plot_generator_size')) ? (string) $get('plot_generator_size') : null,
+                                defaultPrice: filled($get('plot_generator_price')) ? (string) $get('plot_generator_price') : null,
+                            );
+
+                            $set('plots', $plots);
+
+                            Notification::make()
+                                ->title('Plot inventory generated')
+                                ->body(sprintf(
+                                    'Created %d plots (%d sold, %d reserved, %d available). Review the list below, then save.',
+                                    $total,
+                                    $sold,
+                                    $reserved,
+                                    $available,
+                                ))
+                                ->success()
+                                ->send();
+                        }),
+                ])
+                ->columnSpanFull(),
             Section::make('Plot inventory')
                 ->description('Add each plot and set its status. The public property page shows how many are sold and how many remain. When every plot is sold, visitors see “Sold out”.')
                 ->schema([
