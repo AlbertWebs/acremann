@@ -118,4 +118,39 @@ class PlotInventoryGeneratorTest extends TestCase
         $this->assertSame(3, $property->plots()->where('status', 'available')->count());
         $this->assertSame('A38', $property->plots()->orderByDesc('id')->value('plot_number'));
     }
+
+    public function test_replace_for_property_can_mark_one_plot_as_only_available(): void
+    {
+        $property = Property::create([
+            'title' => 'Sunset Estate',
+            'slug' => 'sunset-estate',
+            'status' => 'available',
+            'project_status' => 'selling',
+            'category' => 'residential',
+            'title_type' => 'freehold',
+            'listing_type' => 'sale',
+            'location' => 'Nachu',
+            'plot_size' => '50 x 100 ft',
+            'price_from' => 400000,
+            'is_featured' => false,
+            'is_published' => true,
+            'sort_order' => 0,
+        ]);
+
+        $counts = PlotInventoryGenerator::replaceForProperty(
+            property: $property,
+            total: 38,
+            sold: 0,
+            prefix: 'A',
+            defaultSize: '50 x 100 ft',
+            defaultPrice: '400000',
+            onlyAvailablePlot: 'A04',
+        );
+
+        $this->assertNotNull($counts);
+        $this->assertSame(38, $property->plots()->count());
+        $this->assertSame(37, $property->plots()->where('status', 'sold')->count());
+        $this->assertSame(1, $property->plots()->where('status', 'available')->count());
+        $this->assertSame('available', $property->plots()->where('plot_number', 'A04')->value('status'));
+    }
 }

@@ -99,7 +99,12 @@ class PlotInventoryGenerator
         int $startNumber = 1,
         ?string $defaultSize = null,
         ?string $defaultPrice = null,
+        ?string $onlyAvailablePlot = null,
     ): ?array {
+        if ($onlyAvailablePlot !== null) {
+            $sold = max(0, $total - $reserved - 1);
+        }
+
         $counts = static::resolveCounts($total, $sold, $reserved);
 
         if ($counts === null) {
@@ -108,8 +113,8 @@ class PlotInventoryGenerator
 
         $padLength = static::padLengthForTotal($counts['total'], $startNumber, $prefix);
         $plotRows = static::generate(
-            available: $counts['available'],
-            sold: $counts['sold'],
+            available: $onlyAvailablePlot !== null ? 0 : $counts['available'],
+            sold: $onlyAvailablePlot !== null ? $counts['total'] - $counts['reserved'] : $counts['sold'],
             reserved: $counts['reserved'],
             prefix: $prefix,
             startNumber: $startNumber,
@@ -117,6 +122,15 @@ class PlotInventoryGenerator
             defaultSize: $defaultSize,
             defaultPrice: $defaultPrice,
         );
+
+        if ($onlyAvailablePlot !== null && ! static::markOnlyPlotAvailable($plotRows, $onlyAvailablePlot)) {
+            return null;
+        }
+
+        if ($onlyAvailablePlot !== null) {
+            $counts['available'] = 1;
+            $counts['sold'] = $counts['total'] - $counts['reserved'] - 1;
+        }
 
         DB::transaction(function () use ($property, $plotRows): void {
             $property->plots()->delete();
@@ -129,6 +143,37 @@ class PlotInventoryGenerator
         $property->unsetRelation('plots');
 
         return $counts;
+    }
+
+    /**
+     * @param  array<int, array{plot_number: string, status: string, size: ?string, price: ?string}>  $plotRows
+     */
+    public static function markOnlyPlotAvailable(array &$plotRows, string $plotNumber): bool
+    {
+        $target = static::normalizePlotNumber($plotNumber);
+        $found = false;
+
+        foreach ($plotRows as &$row) {
+            if (static::normalizePlotNumber($row['plot_number']) === $target) {
+                $row['status'] = 'available';
+                $found = true;
+
+                continue;
+            }
+
+            if ($row['status'] !== 'reserved') {
+                $row['status'] = 'sold';
+            }
+        }
+
+        unset($row);
+
+        return $found;
+    }
+
+    public static function normalizePlotNumber(string $plotNumber): string
+    {
+        return strtoupper(preg_replace('/[^A-Za-z0-9]/', '', $plotNumber) ?? '');
     }
 
     /**
