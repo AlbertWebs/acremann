@@ -1,4 +1,14 @@
 @extends('layouts.app')
+@php
+    $metaTitle = 'FAQs | Buying land in Kenya — title deeds, diaspora & plots';
+    $metaDescription = 'Answers on clean title deeds, plot purchase steps, diaspora buying, payment plans, and conveyancing for Acremann properties in Nairobi, Kiambu, Kikuyu and Nachu.';
+    $allFaqs = $faqs->flatten();
+@endphp
+@push('schema')
+@if($faqSchema = \App\Support\Seo::faqPageSchema($allFaqs))
+<script type="application/ld+json">{!! \App\Support\Seo::jsonLd($faqSchema) !!}</script>
+@endif
+@endpush
 @section('content')
 <section class="section-padding">
     <div class="container-site max-w-3xl">

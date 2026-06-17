@@ -1,10 +1,12 @@
 @extends('layouts.app')
-@section('content')
 @php
+    $metaTitle = $settings->company_name.' | Verified plots & land for sale in Kenya';
+    $metaDescription = 'Acremann Properties — clean title deeds, verified plots in Nairobi, Kiambu, Kikuyu & Nachu. Diaspora-friendly land investment with transparent conveyancing.';
     $primaryCta = $settings->heroPrimaryCta();
     $secondaryCta = $settings->heroSecondaryCta();
     $homeHeroVideoEmbed = \App\Support\VideoEmbed::modalFromUrl(config('acremann.brand_video_url'));
 @endphp
+@section('content')
 <section class="section-padding bg-white">
     <div @class([
         'container-site grid items-center gap-12',

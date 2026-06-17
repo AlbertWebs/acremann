@@ -1,4 +1,8 @@
 @extends('layouts.app')
+@php
+    $metaTitle = 'Certifications & affiliations | '.$settings->company_name;
+    $metaDescription = 'Professional credentials, legal standards, and industry affiliations behind Acremann Properties — trusted land sales and development across Kenya.';
+@endphp
 @section('content')
 <section class="certifications-page-hero section-padding" aria-labelledby="certifications-page-heading">
     <div class="container-site certifications-page-hero-inner">

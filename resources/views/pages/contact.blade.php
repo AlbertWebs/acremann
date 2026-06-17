@@ -1,4 +1,9 @@
 @extends('layouts.app')
+@php
+    $metaTitle = 'Contact Acremann | Plots, land sales & diaspora support Kenya';
+    $metaDescription = 'Call, email, or WhatsApp Acremann Properties in Nairobi. Expert help with verified plots in Kiambu, Kikuyu, Nachu — clean title deeds and diaspora-friendly purchases.';
+    $metaKeywords = 'contact Acremann Properties, real estate Nairobi, land enquiry Kenya, diaspora land purchase contact';
+@endphp
 @section('content')
 <section class="section-padding">
     <div class="container-site grid gap-12 lg:grid-cols-2">

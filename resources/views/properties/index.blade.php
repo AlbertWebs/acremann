@@ -1,4 +1,14 @@
 @extends('layouts.app')
+@php
+    $metaTitle = 'Plots & land for sale Kenya | Nairobi, Kiambu, Kikuyu, Nachu';
+    $metaDescription = 'Browse verified Acremann properties — clean freehold title deeds, transparent pricing, and diaspora-friendly purchase support across Kenya.';
+@endphp
+@push('schema')
+<script type="application/ld+json">{!! \App\Support\Seo::jsonLd(\App\Support\Seo::breadcrumbSchema([
+    ['name' => 'Home', 'url' => route('home')],
+    ['name' => 'Properties', 'url' => route('properties.index')],
+])) !!}</script>
+@endpush
 @section('content')
 <section class="section-padding">
     <div class="container-site">

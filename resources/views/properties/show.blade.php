@@ -15,7 +15,17 @@
     ]));
     $heroMedia = $property->getFirstMedia('hero') ?? $property->getFirstMedia('gallery');
     $heroImageUrl = $heroMedia ? $property->mediaUrl($heroMedia, null) : null;
+    $metaImage = $heroImageUrl;
+    $propertyUrl = route('properties.show', $property);
 @endphp
+@push('schema')
+<script type="application/ld+json">{!! \App\Support\Seo::jsonLd(\App\Support\Seo::propertyListingSchema($property, $propertyUrl)) !!}</script>
+<script type="application/ld+json">{!! \App\Support\Seo::jsonLd(\App\Support\Seo::breadcrumbSchema([
+    ['name' => 'Home', 'url' => route('home')],
+    ['name' => 'Properties', 'url' => route('properties.index')],
+    ['name' => $property->title, 'url' => $propertyUrl],
+])) !!}</script>
+@endpush
 @section('content')
 <section
     @class(['property-show-hero section-padding', 'property-show-hero--has-image' => filled($heroImageUrl)])

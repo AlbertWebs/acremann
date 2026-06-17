@@ -1,4 +1,8 @@
 @extends('layouts.app')
+@php
+    $metaTitle = 'Referrals & loyalty program | '.$settings->company_name;
+    $metaDescription = 'Refer friends to Acremann Properties and earn loyalty rewards on verified plot purchases across Nairobi, Kiambu, Kikuyu and Nachu.';
+@endphp
 @section('content')
 <section class="section-padding">
     <div class="container-site max-w-3xl">

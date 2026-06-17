@@ -2,6 +2,14 @@
 @php
     $metaTitle = $service->seoTitle();
     $metaDescription = $service->seoDescription();
+    $metaImage = $service->featuredImageUrl();
+    $serviceUrl = route('services.show', $service);
+@endphp
+@push('schema')
+<script type="application/ld+json">{!! \App\Support\Seo::jsonLd(\App\Support\Seo::serviceSchema($service, $serviceUrl)) !!}</script>
+@endpush
+@section('content')
+@php
     $headerImageUrl = $service->headerImageUrl();
     $waMessage = "Hello Acremann, I would like to enquire about your {$service->title} service.";
     $localSummary = $service->plainLocalSummary() ?: 'Whether you are buying your first plot in Nairobi, Kiambu, Kikuyu or Nachu, or adding to an existing portfolio, we provide on-ground verification, transparent pricing, and advisory through handover.';

@@ -4,7 +4,12 @@
     $metaDescription = $post->seoDescription();
     $metaImage = $post->featuredImageUrl();
     $heroImageUrl = $post->featuredImageUrl();
+    $postUrl = route('posts.show', $post);
+    $metaType = 'article';
 @endphp
+@push('schema')
+<script type="application/ld+json">{!! \App\Support\Seo::jsonLd(\App\Support\Seo::articleSchema($post, $postUrl)) !!}</script>
+@endpush
 @section('content')
 <article>
     <header @class(['insight-show-hero section-padding', 'insight-show-hero--has-image' => filled($heroImageUrl)])>
