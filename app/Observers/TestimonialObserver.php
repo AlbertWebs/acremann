@@ -9,7 +9,11 @@ class TestimonialObserver
 {
     public function saved(Testimonial $testimonial): void
     {
-        if (! $testimonial->wasChanged('photo_path')) {
+        if (! filled($testimonial->photo_path)) {
+            return;
+        }
+
+        if (! $testimonial->wasRecentlyCreated && ! $testimonial->wasChanged('photo_path')) {
             return;
         }
 
@@ -19,9 +23,7 @@ class TestimonialObserver
             TestimonialPhotoProcessor::deleteVariants($previousPath);
         }
 
-        if (filled($testimonial->photo_path)) {
-            TestimonialPhotoProcessor::process($testimonial->photo_path);
-        }
+        TestimonialPhotoProcessor::process($testimonial->photo_path);
     }
 
     public function deleted(Testimonial $testimonial): void

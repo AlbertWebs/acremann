@@ -50,16 +50,32 @@ class Testimonial extends Model
         $parts = [];
 
         foreach (TestimonialPhotoProcessor::existingVariantPaths($this->photo_path) as $path) {
-            $dimensions = @getimagesize(Storage::disk('public')->path($path));
+            $width = self::variantPixelWidth($path);
 
-            if ($dimensions === false) {
+            if ($width === null) {
                 continue;
             }
 
-            $parts[] = PublicStorage::url($path).' '.$dimensions[0].'w';
+            $parts[] = PublicStorage::url($path).' '.$width.'w';
         }
 
         return $parts !== [] ? implode(', ', $parts) : null;
+    }
+
+    private static function variantPixelWidth(string $path): ?int
+    {
+        $fullPath = Storage::disk('public')->path($path);
+        $dimensions = @getimagesize($fullPath);
+
+        if ($dimensions !== false) {
+            return $dimensions[0];
+        }
+
+        if (preg_match('/-(\d+)w\.webp$/', $path, $matches) === 1) {
+            return (int) $matches[1];
+        }
+
+        return null;
     }
 
     public function photoSizes(): string
