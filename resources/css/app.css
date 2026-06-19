@@ -1167,7 +1167,7 @@
     }
 
     .testimonials-showcase-photo {
-        @apply aspect-[4/5] w-full object-cover md:aspect-[5/6] lg:min-h-[24rem];
+        @apply aspect-[4/5] w-full object-cover object-center md:aspect-[5/6] lg:min-h-[24rem];
     }
 
     .testimonials-showcase-photo-placeholder {

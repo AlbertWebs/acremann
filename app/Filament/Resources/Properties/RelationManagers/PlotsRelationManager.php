@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Properties\RelationManagers;
 
+use App\Support\Money;
 use App\Support\PropertyFormOptions;
 use Filament\Actions\Action;
 use Filament\Actions\CreateAction;
@@ -40,7 +41,7 @@ class PlotsRelationManager extends RelationManager
                 TextColumn::make('price')
                     ->label('Price')
                     ->formatStateUsing(fn (?string $state): string => filled($state)
-                        ? 'KES '.number_format((float) $state, 0)
+                        ? Money::formatKesPrefixed($state)
                         : '—'),
                 TextColumn::make('status')
                     ->badge()

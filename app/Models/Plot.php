@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Support\Money;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -17,5 +18,12 @@ class Plot extends Model
     public function property(): BelongsTo
     {
         return $this->belongsTo(Property::class);
+    }
+
+    public function formattedPrice(): string
+    {
+        return filled($this->price)
+            ? Money::formatKesPrefixed($this->price)
+            : '—';
     }
 }

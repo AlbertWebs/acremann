@@ -1,4 +1,5 @@
 @php
+    use App\Support\Money;
     use App\Support\PublicStorage;
     use Illuminate\Support\Facades\Storage;
 
@@ -41,7 +42,7 @@
                 {{ $get('location') ?: 'Location' }}
             </p>
             <p class="acremann-property-media-preview-price">
-                {{ filled($get('price_label')) ? $get('price_label') : (filled($get('price_from')) ? 'KES '.number_format((float) $get('price_from'), 0) : 'Contact for pricing') }}
+                {{ Money::formatPropertyPrice($get('price_from'), $get('price_label')) }}
             </p>
         </div>
     </div>

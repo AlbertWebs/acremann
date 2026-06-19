@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Testimonial;
+use App\Observers\TestimonialObserver;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
@@ -25,6 +27,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Testimonial::observe(TestimonialObserver::class);
+
         Vite::useHotFile(storage_path('vite.hot'));
 
         RateLimiter::for('client-portal', function (Request $request) {

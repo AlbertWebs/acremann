@@ -167,7 +167,7 @@
                                     <tr>
                                         <td>{{ $plot->plot_number }}</td>
                                         <td>{{ $plot->size ?: '—' }}</td>
-                                        <td>{{ $plot->price ? 'KES '.number_format($plot->price, 0) : '—' }}</td>
+                                        <td>{{ $plot->formattedPrice() }}</td>
                                         <td>
                                             <span @class([
                                                 'table-badge',

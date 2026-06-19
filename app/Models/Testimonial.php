@@ -3,8 +3,10 @@
 namespace App\Models;
 
 use App\Support\PublicStorage;
+use App\Support\TestimonialPhotoProcessor;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class Testimonial extends Model
@@ -34,7 +36,35 @@ class Testimonial extends Model
 
     public function photoUrl(): ?string
     {
+        $variants = TestimonialPhotoProcessor::existingVariantPaths($this->photo_path);
+
+        if ($variants !== []) {
+            return PublicStorage::url(end($variants));
+        }
+
         return PublicStorage::url($this->photo_path);
+    }
+
+    public function photoSrcset(): ?string
+    {
+        $parts = [];
+
+        foreach (TestimonialPhotoProcessor::existingVariantPaths($this->photo_path) as $path) {
+            $dimensions = @getimagesize(Storage::disk('public')->path($path));
+
+            if ($dimensions === false) {
+                continue;
+            }
+
+            $parts[] = PublicStorage::url($path).' '.$dimensions[0].'w';
+        }
+
+        return $parts !== [] ? implode(', ', $parts) : null;
+    }
+
+    public function photoSizes(): string
+    {
+        return '(min-width: 1024px) 600px, 100vw';
     }
 
     public function plainQuote(): string

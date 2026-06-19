@@ -24,8 +24,9 @@ class TestimonialForm
                             ->image()
                             ->directory('testimonials')
                             ->disk('public')
-                            ->maxSize(5120)
+                            ->maxSize(10240)
                             ->imagePreviewHeight('12rem')
+                            ->helperText('Portrait photo, at least 1200 px wide for a sharp carousel (JPG, PNG, or WebP).')
                             ->columnSpanFull(),
                     ])
                     ->columnSpanFull(),

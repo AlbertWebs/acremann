@@ -66,8 +66,15 @@
                                 @if($photoUrl = $testimonial->photoUrl())
                                     <img
                                         src="{{ $photoUrl }}"
+                                        @if($srcset = $testimonial->photoSrcset())
+                                            srcset="{{ $srcset }}"
+                                            sizes="{{ $testimonial->photoSizes() }}"
+                                        @endif
                                         alt="{{ $testimonial->client_name }} — Acremann client"
                                         class="testimonials-showcase-photo"
+                                        width="600"
+                                        height="750"
+                                        decoding="async"
                                         loading="lazy"
                                     >
                                 @else

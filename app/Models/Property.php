@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Support\Money;
 use App\Support\PublicStorage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -125,14 +126,7 @@ class Property extends Model implements HasMedia
 
     public function formattedPrice(): string
     {
-        if ($this->price_label) {
-            return $this->price_label;
-        }
-        if ($this->price_from) {
-            return 'KES '.number_format($this->price_from, 0);
-        }
-
-        return 'Contact for pricing';
+        return Money::formatPropertyPrice($this->price_from, $this->price_label);
     }
 
     public function hasPlotInventory(): bool
