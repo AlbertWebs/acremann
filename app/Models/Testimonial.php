@@ -80,7 +80,7 @@ class Testimonial extends Model
 
     public function photoSizes(): string
     {
-        return '(min-width: 1024px) 600px, 100vw';
+        return '(min-width: 1024px) 640px, 100vw';
     }
 
     public function plainQuote(): string

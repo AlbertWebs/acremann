@@ -72,7 +72,7 @@
                                         @endif
                                         alt="{{ $testimonial->client_name }} — Acremann client"
                                         class="testimonials-showcase-photo"
-                                        width="600"
+                                        width="1200"
                                         height="750"
                                         decoding="async"
                                         loading="lazy"

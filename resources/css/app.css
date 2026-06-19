@@ -1159,7 +1159,7 @@
     }
 
     .testimonials-showcase-slide {
-        @apply grid w-full shrink-0 items-stretch gap-8 md:gap-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-12;
+        @apply grid w-full shrink-0 items-stretch gap-6 md:gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-center lg:gap-10;
     }
 
     .testimonials-showcase-media {
@@ -1167,11 +1167,11 @@
     }
 
     .testimonials-showcase-photo {
-        @apply aspect-[4/5] w-full object-cover object-center md:aspect-[5/6] lg:min-h-[24rem];
+        @apply aspect-[16/10] w-full object-cover object-center;
     }
 
     .testimonials-showcase-photo-placeholder {
-        @apply flex aspect-[4/5] w-full flex-col items-center justify-center gap-3 bg-gradient-to-br from-forest/90 to-forest px-6 text-center md:aspect-[5/6] lg:min-h-[24rem];
+        @apply flex aspect-[16/10] w-full flex-col items-center justify-center gap-3 bg-gradient-to-br from-forest/90 to-forest px-6 text-center;
     }
 
     .testimonials-showcase-photo-placeholder-text {

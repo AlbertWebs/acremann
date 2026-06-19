@@ -17,7 +17,7 @@ class TestimonialForm
         return $schema
             ->components([
                 Section::make('Client photo')
-                    ->description('Shown in the homepage “What our clients say” carousel (client holding title deed, keys, etc.). Portrait or 4:5 photos work best.')
+                    ->description('Shown in the homepage “What our clients say” carousel (client holding title deed, keys, etc.). Landscape photos work best.')
                     ->schema([
                         FileUpload::make('photo_path')
                             ->label('Photo')
@@ -26,7 +26,7 @@ class TestimonialForm
                             ->disk('public')
                             ->maxSize(10240)
                             ->imagePreviewHeight('12rem')
-                            ->helperText('Portrait photo, at least 1200 px wide for a sharp carousel (JPG, PNG, or WebP).')
+                            ->helperText('Landscape photo recommended — at least 1200 px wide (16:10 or 3:2). JPG, PNG, or WebP.')
                             ->columnSpanFull(),
                     ])
                     ->columnSpanFull(),
