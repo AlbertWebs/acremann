@@ -21,18 +21,18 @@ class TeamController extends Controller
             ->published()
             ->firstOrFail();
 
-        $otherMembersQuery = TeamMember::published()->whereKeyNot($member->id);
+        $otherLeadersQuery = TeamMember::published()->whereKeyNot($member->id);
 
         if ($member->is_leadership) {
-            $otherMembersQuery->leadership();
+            $otherLeadersQuery->leadership();
         } else {
-            $otherMembersQuery->where('is_leadership', false);
+            $otherLeadersQuery->where('is_leadership', false);
         }
 
         return view('team.show', [
             'settings' => $this->settings(),
             'member' => $member,
-            'otherMembers' => $otherMembersQuery->get(),
+            'otherLeaders' => $otherLeadersQuery->get(),
         ]);
     }
 }
